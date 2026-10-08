@@ -10,9 +10,10 @@
     --border-black: #000000;
     --text-black: #000000;
     --text-muted: #555555;
+    --font-outfit: 'Outfit', sans-serif;
     --font-syne: 'Syne', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --font-sans: 'Space Grotesk', -apple-system, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', 'Space Grotesk', -apple-system, sans-serif;
     --font-script: 'Caveat', cursive;
     --font-manga: 'Bebas Neue', sans-serif;
 }

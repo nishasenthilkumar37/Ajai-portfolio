@@ -12,7 +12,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@500;700;800;900&family=Syne:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;700;800;900&family=Syne:wght@800;900&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,9 +21,11 @@
             theme: {
                 extend: {
                     fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        jakarta: ['Plus Jakarta Sans', 'sans-serif'],
                         syne: ['Syne', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
-                        sans: ['Space Grotesk', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'Space Grotesk', 'sans-serif'],
                         script: ['Caveat', 'cursive'],
                         manga: ['Bebas Neue', 'sans-serif']
                     },
@@ -108,12 +110,8 @@
                 <!-- RIGHT PAGE: PHASE 01, BUILDING!!, Character with Speedlines -->
                 <div class="p-6 sm:p-10 md:p-14 flex flex-col justify-between relative overflow-hidden bg-[#f4f0e6]">
                     
-                    <!-- Top Tag: PHASE 01 -->
-                    <div class="flex items-center justify-between z-10">
-                        <span class="px-2 py-0.5 bg-black text-white font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-wider rounded-none">
-                            PHASE 01
-                        </span>
-                    </div>
+                    <!-- Top Spacer -->
+                    <div></div>
 
                     <!-- Top Right Action Text: BUILDING!! (Small & Clean) -->
                     <div class="absolute top-6 right-8 sm:top-8 sm:right-10 z-10 transform rotate-[-2deg]">
