@@ -60,47 +60,29 @@
     <!-- ========================================================================= -->
     <!-- 1. EXACT MANGA DOUBLE-PAGE SPREAD OPENING (MATCHING REFERENCE IMAGE)      -->
     <!-- ========================================================================= -->
-    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-3 sm:p-6 md:p-10 select-none overflow-hidden transition-all duration-1000">
+    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex items-center justify-center p-3 sm:p-6 md:p-12 select-none overflow-hidden transition-all duration-1000 cursor-pointer">
         
-        <!-- Top Control Bar -->
-        <div class="w-full max-w-5xl flex items-center justify-between text-xs font-mono text-neutral-400 tracking-widest pb-3 px-2 z-20">
-            <div class="flex items-center gap-2 text-[11px]">
-                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-neutral-300 font-bold">VOL.09 // MANGA SPREAD</span>
-            </div>
-            
-            <div class="flex items-center gap-3">
-                <button id="audio-toggle-landing" class="border border-neutral-700 bg-neutral-900 px-3 py-1.5 text-[11px] font-mono hover:bg-white hover:text-black transition-colors rounded flex items-center gap-1.5 text-neutral-200">
-                    <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                    <span id="audio-status-text">AUDIO ON</span>
-                </button>
-                <button id="skip-intro-btn" class="border-2 border-white bg-white text-black px-4 py-1.5 text-[11px] font-mono font-bold hover:bg-neutral-200 transition-colors rounded">
-                    [ ENTER PORTFOLIO ➔ ]
-                </button>
-            </div>
-        </div>
-
-        <!-- The Manga Book Double-Page Spread -->
-        <div class="relative w-full max-w-5xl max-h-[84vh] aspect-[16/10] bg-[#f4f0e6] text-black border-2 border-black shadow-[0_0_90px_rgba(255,255,255,0.22)] flex flex-col overflow-hidden z-10 cursor-pointer group" id="manga-book-container">
+        <!-- The Manga Book Double-Page Spread (Exact Screenshot Match) -->
+        <div class="relative w-full max-w-5xl aspect-[16/10] bg-[#f4f0e6] text-black border-2 border-black shadow-[0_0_80px_rgba(255,255,255,0.15)] flex flex-col overflow-hidden z-10 transition-transform duration-700 hover:scale-[1.01]" id="manga-book-container">
             
             <!-- Book Spine Central Divider Line -->
-            <div class="absolute top-0 bottom-0 left-1/2 w-[2px] -translate-x-1/2 bg-black z-20 hidden md:block pointer-events-none"></div>
+            <div class="absolute top-0 bottom-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-black z-20 hidden md:block pointer-events-none"></div>
 
             <!-- Double-Page Spread Content Grid -->
             <div class="w-full h-full grid grid-cols-1 md:grid-cols-2 relative manga-dot-grid">
                 
-                <!-- LEFT PAGE: VOL.09, AJAIKANTH, Subtitle, Tag Boxes, URL -->
-                <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black relative">
+                <!-- LEFT PAGE: VOL.09 - PORTFOLIO, AJAIKANTH, Subtitle, Tag Boxes, URL -->
+                <div class="p-6 sm:p-10 md:p-14 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black relative">
                     
                     <!-- Top Header: VOL.09 - PORTFOLIO -->
                     <div>
-                        <div class="font-sans text-[11px] sm:text-xs font-bold text-neutral-800 tracking-wider">
+                        <div class="font-sans text-[10px] sm:text-xs font-bold text-neutral-600 tracking-wider">
                             VOL.09 - PORTFOLIO
                         </div>
                     </div>
 
                     <!-- Center Typography: AJAIKANTH + The Developer Chronicles + Tag Boxes -->
-                    <div class="my-auto py-4">
+                    <div class="my-auto py-2">
                         <!-- Main Bold Italic Name with Deep 3D Shadow -->
                         <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-syne italic uppercase tracking-tighter text-black leading-none drop-shadow-[5px_5px_0px_#000]">
                             AJAIKANTH
@@ -122,49 +104,43 @@
                     </div>
 
                     <!-- Bottom URL Watermark -->
-                    <div class="font-sans text-[10px] sm:text-xs font-bold text-neutral-800 tracking-wider">
-                        AJAIKANTH.AI
+                    <div class="font-sans text-[10px] sm:text-xs font-bold text-neutral-600 tracking-wider">
+                        IAMAJAIKANTH.IN
                     </div>
                 </div>
 
-                <!-- RIGHT PAGE: PHASE 01, BUILDING!!, Character with Speedlines, Start CTA -->
-                <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between relative overflow-hidden bg-[#f4f0e6]">
+                <!-- RIGHT PAGE: PHASE 01, BUILDING!!, Character with Speedlines, Episode -->
+                <div class="p-6 sm:p-10 md:p-14 flex flex-col justify-between relative overflow-hidden bg-[#f4f0e6]">
                     
                     <!-- Top Tag: PHASE 01 -->
                     <div class="flex items-center justify-between z-10">
-                        <span class="px-2.5 py-1 bg-black text-white font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-wider rounded-none">
+                        <span class="px-2 py-0.5 bg-black text-white font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-wider rounded-none">
                             PHASE 01
                         </span>
                     </div>
 
                     <!-- Top Right Action Text: BUILDING!! -->
-                    <div class="absolute top-6 right-8 z-10 transform rotate-[-2deg]">
+                    <div class="absolute top-6 right-8 sm:top-8 sm:right-10 z-10 transform rotate-[-2deg]">
                         <div class="text-4xl sm:text-5xl md:text-6xl font-black font-syne italic text-black tracking-tighter drop-shadow-[2px_2px_0px_#fff]">
                             BUILDING!!
                         </div>
                     </div>
 
                     <!-- Character Artwork with Radiating Speedlines -->
-                    <div class="relative flex-1 flex items-center justify-center my-1">
+                    <div class="relative flex-1 flex items-center justify-center my-auto">
                         <!-- Full-Body Standing Manga Character (Matching Reference) -->
-                        <div class="relative h-[240px] sm:h-[300px] md:h-[380px] max-h-full flex items-center justify-center z-10 transition-transform duration-500 group-hover:scale-105">
+                        <div class="relative h-[250px] sm:h-[320px] md:h-[400px] max-h-full flex items-center justify-center z-10">
                             <img src="assets/images/manga-ref-character.jpg" 
                                  alt="Ajaikanth Saravanan Manga Reference Character" 
                                  class="h-full w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.25)] rounded-sm">
                         </div>
                     </div>
 
-                    <!-- Bottom Action Section: Click to Start Button & Episode Watermark -->
-                    <div class="flex items-center justify-between gap-3 pt-2 z-10">
-                        <!-- Click to Start CTA -->
-                        <button id="book-start-btn" class="px-6 py-2.5 bg-black text-white font-syne font-black text-xs sm:text-sm uppercase tracking-wider rounded border-2 border-black hover:bg-neutral-800 transition-all shadow-[3px_3px_0px_rgba(0,0,0,0.3)] flex items-center gap-2 group">
-                            <i data-lucide="play" class="w-4 h-4 fill-white group-hover:translate-x-0.5 transition-transform"></i>
-                            <span>CLICK TO START</span>
-                        </button>
-
-                        <div class="font-mono text-[11px] text-neutral-700 font-bold">
+                    <!-- Bottom Episode Watermark -->
+                    <div class="text-right z-10">
+                        <span class="font-mono text-[10px] sm:text-[11px] text-neutral-600 font-bold tracking-wider">
                             EPISODE - 01//10
-                        </div>
+                        </span>
                     </div>
 
                 </div>

@@ -195,8 +195,8 @@ function initCinematicEntrance() {
         launchFullPortfolio();
     });
 
-    if (bookContainer) {
-        bookContainer.addEventListener('click', launchFullPortfolio);
+    if (landing) {
+        landing.addEventListener('click', launchFullPortfolio);
     }
 
     // Replay Book Cover from Navbar
