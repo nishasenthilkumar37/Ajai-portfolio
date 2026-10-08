@@ -106,86 +106,133 @@ function playCinematicZoomSound() {
 
 
 // ========================================================================= //
-// 2. CINEMATIC MANGA ENTRANCE (2-STAGE ZOOM & SCROLL CONTROLLER)            //
+// 2. MANGA SPREAD BOOK & INTERACTIVE GREETING CONTROLLER                    //
 // ========================================================================= //
 function initCinematicEntrance() {
     const landing = document.getElementById('cinematic-landing');
-    const stage = document.getElementById('entrance-stage');
-    const portal = document.getElementById('portal-trigger');
-    const charWrapper = document.getElementById('landing-character-wrapper');
-    const stageTiny = document.getElementById('stage-tiny-info');
-    const stageZoomed = document.getElementById('stage-zoomed-info');
-    const zoomInBtn = document.getElementById('zoom-in-btn');
-    const zoomOutBtn = document.getElementById('zoom-out-btn');
-    const startBtn = document.getElementById('start-portfolio-btn');
+    const bookTrack = document.getElementById('manga-spreads-track');
+    const scrollbar = document.getElementById('book-scrollbar');
+    const prevBtn = document.getElementById('book-prev-btn');
+    const nextBtn = document.getElementById('book-next-btn');
+    const pageIndicator = document.getElementById('book-page-indicator');
+    const startBtn = document.getElementById('book-start-btn');
+    const skipBtn = document.getElementById('skip-intro-btn');
+    const replayBtn = document.getElementById('replay-intro-btn');
     const buildingOverlay = document.getElementById('building-overlay');
     const buildingProgress = document.getElementById('building-progress');
     const buildingConsole = document.getElementById('building-console');
     const portfolioApp = document.getElementById('portfolio-app');
-    const skipBtn = document.getElementById('skip-intro-btn');
-    const replayBtn = document.getElementById('replay-intro-btn');
+    const greetingBubble = document.getElementById('character-greeting-bubble');
+    const greetingText = document.getElementById('greeting-text');
 
-    let isZoomed = false;
-    let isEntering = false;
+    let currentSpread = 1;
+    const totalSpreads = 4;
+    let isLaunching = false;
 
-    // Stage 1 -> Stage 2: Zoom In
-    function zoomIn() {
-        if (isZoomed || isEntering) return;
-        isZoomed = true;
+    // Greeting Quotes Generator
+    const greetings = [
+        "\"Hey there! I'm Ajaikanth. Welcome to my developer chronicles! Tap me to talk or click below to enter!\"",
+        "\"Looking for an AI & Data Science Engineer? Drag the scrollbar below to flip through my chapters!\"",
+        "\"I build neural networks in PyTorch, distributed backends in Java, and production GenAI systems!\"",
+        "\"Ready to explore my full interactive portfolio? Click the START button below to enter!\""
+    ];
+    let greetingIdx = 0;
+
+    function greetUser() {
+        playTone(720, 'sine', 0.1, 0.05);
+        setTimeout(() => playTone(960, 'sine', 0.15, 0.05), 80);
         
-        playTone(660, 'sine', 0.15, 0.05);
-        setTimeout(() => playTone(880, 'triangle', 0.2, 0.05), 100);
-
-        stage.classList.remove('state-tiny');
-        stage.classList.add('state-zoomed');
-
-        stageTiny.classList.add('hidden');
-        stageZoomed.classList.remove('hidden');
-        stageZoomed.classList.add('flex');
-
-        lucide.createIcons();
+        greetingIdx = (greetingIdx + 1) % greetings.length;
+        if (greetingText) {
+            greetingText.style.opacity = '0';
+            setTimeout(() => {
+                greetingText.textContent = greetings[greetingIdx];
+                greetingText.style.opacity = '1';
+            }, 150);
+        }
     }
 
-    // Stage 2 -> Stage 1: Zoom Out
-    function zoomOut() {
-        if (!isZoomed || isEntering) return;
-        isZoomed = false;
-
-        playTone(440, 'sine', 0.1, 0.04);
-
-        stage.classList.remove('state-zoomed');
-        stage.classList.add('state-tiny');
-
-        stageZoomed.classList.add('hidden');
-        stageZoomed.classList.remove('flex');
-        stageTiny.classList.remove('hidden');
-
-        lucide.createIcons();
+    if (greetingBubble) {
+        greetingBubble.addEventListener('click', greetUser);
     }
 
-    // Stage 2 -> Launch: Click to Start & Full Cinematic Burst
-    function launchPortfolio() {
-        if (isEntering) return;
-        isEntering = true;
+    // Horizontal Spread Navigation
+    function goToSpread(index) {
+        if (!bookTrack) return;
+        currentSpread = Math.max(1, Math.min(totalSpreads, index));
+        
+        const spreadWidth = bookTrack.clientWidth;
+        bookTrack.scrollTo({
+            left: (currentSpread - 1) * spreadWidth,
+            behavior: 'smooth'
+        });
+
+        if (scrollbar) scrollbar.value = currentSpread;
+        if (pageIndicator) pageIndicator.textContent = `SPREAD ${currentSpread} / ${totalSpreads}`;
+        playTone(520, 'triangle', 0.08, 0.03);
+    }
+
+    if (scrollbar) {
+        scrollbar.addEventListener('input', (e) => {
+            goToSpread(parseInt(e.target.value));
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentSpread > 1) goToSpread(currentSpread - 1);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentSpread < totalSpreads) goToSpread(currentSpread + 1);
+        });
+    }
+
+    // Track scroll synchronization
+    if (bookTrack) {
+        bookTrack.addEventListener('scroll', () => {
+            const spreadWidth = bookTrack.clientWidth;
+            if (spreadWidth > 0) {
+                const newIndex = Math.round(bookTrack.scrollLeft / spreadWidth) + 1;
+                if (newIndex !== currentSpread && newIndex >= 1 && newIndex <= totalSpreads) {
+                    currentSpread = newIndex;
+                    if (scrollbar) scrollbar.value = currentSpread;
+                    if (pageIndicator) pageIndicator.textContent = `SPREAD ${currentSpread} / ${totalSpreads}`;
+                }
+            }
+        }, { passive: true });
+
+        // Mouse wheel horizontal navigation
+        bookTrack.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaY) > 20) {
+                if (e.deltaY > 0 && currentSpread < totalSpreads) {
+                    goToSpread(currentSpread + 1);
+                } else if (e.deltaY < 0 && currentSpread > 1) {
+                    goToSpread(currentSpread - 1);
+                }
+            }
+        }, { passive: true });
+    }
+
+    // Launch Transition into Full Site
+    function launchFullPortfolio() {
+        if (isLaunching) return;
+        isLaunching = true;
 
         playCinematicZoomSound();
 
-        // 1. Zoom Character Beyond Screen & Fade Info
-        charWrapper.classList.add('zooming-active');
-        stageZoomed.style.opacity = '0';
-        stageZoomed.style.transform = 'translateY(20px)';
-
-        // 2. Show "BUILDING..." Overlay
+        // 1. Show Building Overlay
         setTimeout(() => {
-            buildingOverlay.style.opacity = '1';
-            buildingOverlay.style.pointerEvents = 'auto';
-            
-            // Progress Bar Animation
-            setTimeout(() => {
-                buildingProgress.style.width = '100%';
-            }, 100);
+            if (buildingOverlay) {
+                buildingOverlay.style.opacity = '1';
+                buildingOverlay.style.pointerEvents = 'auto';
+            }
+            if (buildingProgress) {
+                setTimeout(() => buildingProgress.style.width = '100%', 100);
+            }
 
-            // Diagnostics Feed cycling
             const logs = [
                 '> Loading neural weights...',
                 '> Initializing PyTorch & CUDA engines...',
@@ -197,103 +244,50 @@ function initCinematicEntrance() {
             let logIdx = 0;
             const logTimer = setInterval(() => {
                 logIdx++;
-                if (logIdx < logs.length) {
+                if (logIdx < logs.length && buildingConsole) {
                     buildingConsole.innerHTML = `<span>${logs[logIdx]}</span>`;
                 } else {
                     clearInterval(logTimer);
                 }
-            }, 280);
+            }, 260);
 
-        }, 350);
+        }, 200);
 
-        // 3. Seamless Transition to Homepage
+        // 2. Reveal Homepage
         setTimeout(() => {
-            landing.style.opacity = '0';
-            landing.style.pointerEvents = 'none';
-            portfolioApp.style.opacity = '1';
+            if (landing) {
+                landing.style.opacity = '0';
+                landing.style.pointerEvents = 'none';
+            }
+            if (portfolioApp) {
+                portfolioApp.style.opacity = '1';
+            }
             document.body.style.overflow = 'auto';
-
-            // Refresh icons after DOM display
             lucide.createIcons();
-            
-            // Cleanup entrance classes
+
             setTimeout(() => {
-                charWrapper.classList.remove('zooming-active');
-                buildingOverlay.style.opacity = '0';
-                buildingProgress.style.width = '0%';
-                stageZoomed.style.opacity = '1';
-                stageZoomed.style.transform = 'none';
-                zoomOut();
-                isEntering = false;
+                if (buildingOverlay) buildingOverlay.style.opacity = '0';
+                if (buildingProgress) buildingProgress.style.width = '0%';
+                isLaunching = false;
             }, 1000);
 
-        }, 1850);
+        }, 1600);
     }
 
-    // Event Triggers
-    if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
-    if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
-    if (startBtn) startBtn.addEventListener('click', launchPortfolio);
+    if (startBtn) startBtn.addEventListener('click', launchFullPortfolio);
+    if (skipBtn) skipBtn.addEventListener('click', launchFullPortfolio);
 
-    // Clicking Character: if tiny -> zoom in; if zoomed -> launch!
-    if (portal) {
-        portal.addEventListener('click', () => {
-            if (!isZoomed) {
-                zoomIn();
-            } else {
-                launchPortfolio();
-            }
-        });
-    }
-
-    // Mouse Wheel Scroll on Entrance Screen
-    if (landing) {
-        landing.addEventListener('wheel', (e) => {
-            if (landing.style.pointerEvents === 'none') return;
-            if (e.deltaY > 15 && !isZoomed) {
-                zoomIn();
-            } else if (e.deltaY < -15 && isZoomed) {
-                zoomOut();
-            }
-        }, { passive: true });
-
-        // Touch Swipe on Mobile
-        let touchStartY = 0;
-        landing.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        landing.addEventListener('touchend', (e) => {
-            const touchEndY = e.changedTouches[0].clientY;
-            const diff = touchStartY - touchEndY;
-            if (diff > 30 && !isZoomed) {
-                zoomIn(); // Swiped up/scrolled down
-            } else if (diff < -30 && isZoomed) {
-                zoomOut(); // Swiped down/scrolled up
-            }
-        }, { passive: true });
-    }
-
-    // Skip Intro Button
-    if (skipBtn) {
-        skipBtn.addEventListener('click', () => {
-            landing.style.opacity = '0';
-            landing.style.pointerEvents = 'none';
-            portfolioApp.style.opacity = '1';
-            document.body.style.overflow = 'auto';
-            lucide.createIcons();
-        });
-    }
-
-    // Replay Intro Button in Navbar
+    // Replay Book Cover from Navbar
     if (replayBtn) {
         replayBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'instant' });
-            portfolioApp.style.opacity = '0';
-            landing.style.opacity = '1';
-            landing.style.pointerEvents = 'auto';
+            if (portfolioApp) portfolioApp.style.opacity = '0';
+            if (landing) {
+                landing.style.opacity = '1';
+                landing.style.pointerEvents = 'auto';
+            }
             document.body.style.overflow = 'hidden';
-            zoomOut();
+            goToSpread(1);
         });
     }
 }
