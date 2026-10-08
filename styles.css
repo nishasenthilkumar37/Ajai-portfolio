@@ -110,8 +110,35 @@ body {
 }
 
 /* ========================================================================= */
-/* MANGA BOOK SPREAD & OPENING STYLES (DARK THEME)                           */
+/* MANGA BOOK SPREAD & OPENING STYLES (EXACT REFERENCE MATCH)                */
 /* ========================================================================= */
+
+.manga-dot-grid {
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.12) 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+.manga-exact-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #f4f0e6;
+    border: 1.5px solid #000000;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+    color: #000000;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px #000000;
+    transition: all 0.2s ease;
+}
+.manga-exact-tag:hover {
+    background: #000000;
+    color: #ffffff;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.4);
+}
 
 .manga-ref-tag {
     display: inline-block;
@@ -175,30 +202,42 @@ body {
     border-right: 6px solid transparent;
     border-top: 10px solid #ffffff;
 }
+.speech-tail::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid #000000;
+    z-index: -1;
+}
 
-/* Custom Manga Scrollbar Slider (Dark Theme) */
-.manga-range-slider {
+/* Custom Manga Scrollbar Slider */
+.manga-exact-range, .manga-range-slider {
     -webkit-appearance: none;
     appearance: none;
     height: 6px;
-    background: #262626;
-    border: 1.5px solid #525252;
-    border-radius: 3px;
+    background: #e5e5e5;
+    border: 1.5px solid #000000;
+    border-radius: 2px;
     outline: none;
 }
-.manga-range-slider::-webkit-slider-thumb {
+.manga-exact-range::-webkit-slider-thumb, .manga-range-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 22px;
     height: 16px;
-    background: #ffffff;
-    border: 2px solid #000000;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    background: #000000;
+    border: 2px solid #ffffff;
+    box-shadow: 2px 2px 0px #000000;
     border-radius: 2px;
     cursor: pointer;
     transition: transform 0.1s ease;
 }
-.manga-range-slider::-webkit-slider-thumb:hover {
+.manga-exact-range::-webkit-slider-thumb:hover, .manga-range-slider::-webkit-slider-thumb:hover {
     transform: scale(1.2);
 }
 

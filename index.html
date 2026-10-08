@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajaikanth Saravanan | AI & Data Science Engineer</title>
-    <meta name="description" content="Portfolio of Ajaikanth Saravanan - AI & Data Science Engineer specializing in Deep Learning, Full Stack AI Systems, and Distributed Computing.">
-    <meta name="keywords" content="Ajaikanth Saravanan, AI Engineer, Data Scientist, Machine Learning, Deep Learning, Full Stack, Python, Java">
+    <meta name="description" content="Portfolio of Ajaikanth Saravanan - AI & Data Science Engineer.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-weight='900' fill='white'>A</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-weight='900' fill='black'>A</text></svg>">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@500;700;800;900&family=Syne:wght@800;900&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,9 +38,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-black text-white font-sans antialiased selection:bg-white selection:text-black overflow-x-hidden">
+<body class="bg-black text-white font-sans antialiased selection:bg-black selection:text-white overflow-x-hidden">
 
-    <!-- Manga Speedlines Canvas (Global Ambient Effect) -->
+    <!-- Global Speedlines Canvas -->
     <canvas id="speedlines-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-20"></canvas>
     
     <!-- Custom Anime Cursor -->
@@ -55,140 +54,130 @@
 
 
     <!-- ========================================================================= -->
-    <!-- 1. MANGA BOOK SPREAD OPENING EXPERIENCE (DARK MONOCHROME THEME)           -->
+    <!-- 1. EXACT MANGA DOUBLE-PAGE BOOK SPREAD (REFERENCE MATCH)                  -->
     <!-- ========================================================================= -->
-    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-3 sm:p-6 md:p-8 select-none overflow-hidden transition-all duration-1000">
+    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-2 sm:p-4 md:p-8 select-none overflow-hidden transition-all duration-1000">
         
-        <!-- Ambient Halftone Background Layer -->
-        <div class="absolute inset-0 manga-screentone-bg opacity-25 pointer-events-none"></div>
-
-        <!-- Top Status Bar on Opening Page -->
-        <div class="w-full max-w-5xl flex items-center justify-between text-xs font-mono text-neutral-400 tracking-widest pb-3 px-2 z-20">
-            <div class="flex items-center gap-2">
+        <!-- Top Control Bar -->
+        <div class="w-full max-w-5xl flex items-center justify-between text-xs font-mono text-neutral-400 tracking-widest pb-2 px-2 z-20">
+            <div class="flex items-center gap-2 text-[11px]">
                 <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>VOL.09 // MANGA PORTFOLIO SPREAD</span>
+                <span>VOL.09 // MANGA SPREAD</span>
             </div>
             
             <div class="flex items-center gap-3">
-                <button id="audio-toggle-landing" class="border border-neutral-700 bg-neutral-900 px-3 py-1 text-[11px] font-mono hover:bg-white hover:text-black transition-colors rounded flex items-center gap-1.5">
+                <button id="audio-toggle-landing" class="border border-neutral-800 bg-neutral-900 px-2.5 py-1 text-[11px] font-mono hover:bg-white hover:text-black transition-colors rounded flex items-center gap-1.5">
                     <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
                     <span id="audio-status-text">AUDIO ON</span>
                 </button>
-                <button id="skip-intro-btn" class="border border-neutral-700 bg-neutral-900 px-3 py-1 text-[11px] font-mono hover:bg-white hover:text-black transition-colors rounded">
-                    [ ENTER FULL SITE ➔ ]
+                <button id="skip-intro-btn" class="border border-neutral-800 bg-neutral-900 px-3 py-1 text-[11px] font-mono hover:bg-white hover:text-black transition-colors rounded">
+                    [ ENTER PORTFOLIO ➔ ]
                 </button>
             </div>
         </div>
 
-        <!-- Manga Double-Page Book Container in Dark Theme with Glowing Borders -->
-        <div class="relative w-full max-w-5xl max-h-[82vh] aspect-[16/10] bg-neutral-950 text-white rounded-xl border-2 border-white/80 shadow-[0_0_80px_rgba(255,255,255,0.2)] flex flex-col overflow-hidden z-10" id="manga-book-container">
+        <!-- The Manga Book Double-Page Spread -->
+        <div class="relative w-full max-w-5xl max-h-[82vh] aspect-[16/10] bg-[#f4f0e6] text-black border-2 border-black shadow-[0_0_90px_rgba(255,255,255,0.18)] flex flex-col overflow-hidden z-10" id="manga-book-container">
             
             <!-- Book Spine Central Divider Line -->
-            <div class="absolute top-0 bottom-0 left-1/2 w-0.5 -translate-x-1/2 bg-neutral-800 z-20 hidden md:block pointer-events-none"></div>
+            <div class="absolute top-0 bottom-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-black z-20 hidden md:block pointer-events-none"></div>
 
-            <!-- Horizontal Manga Spreads Carousel Wrapper -->
+            <!-- Horizontal Manga Spreads Carousel Track -->
             <div id="manga-spreads-track" class="flex-1 flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar select-text">
                 
                 <!-- ============================================================== -->
-                <!-- SPREAD 1: EXACT MATCH TO USER REFERENCE COVER SPREAD (DARK)   -->
+                <!-- SPREAD 1: EXACT MATCH TO USER REFERENCE COVER                  -->
                 <!-- ============================================================== -->
-                <div class="w-full flex-shrink-0 snap-center grid grid-cols-1 md:grid-cols-2 h-full bg-black relative" data-page="1">
-                    <div class="absolute inset-0 manga-screentone-bg opacity-30 pointer-events-none"></div>
-
-                    <!-- LEFT PAGE: Typography, Name, Tags, Volume -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-neutral-800 relative z-10">
-                        <!-- Top Left Vol Tag -->
-                        <div class="space-y-1">
-                            <div class="font-mono text-[11px] sm:text-xs font-bold text-neutral-400 tracking-widest uppercase">
-                                VOL.09 • PORTFOLIO
+                <div class="w-full flex-shrink-0 snap-center grid grid-cols-1 md:grid-cols-2 h-full bg-[#f4f0e6] relative manga-dot-grid" data-page="1">
+                    
+                    <!-- LEFT PAGE: VOL.09, AJAIKANTH, Subtitle, Tag Boxes, URL -->
+                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black relative">
+                        
+                        <!-- Top Header: VOL.09 - PORTFOLIO -->
+                        <div>
+                            <div class="font-sans text-[11px] sm:text-xs font-semibold text-neutral-700 tracking-wider">
+                                VOL.09 - PORTFOLIO
                             </div>
                         </div>
 
-                        <!-- Center Title & Subtitle (Exact Manga Reference Style in High Contrast) -->
+                        <!-- Center Typography: AJAIKANTH + The AI Chronicles + Tag Boxes -->
                         <div class="my-auto py-4">
-                            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-syne uppercase tracking-tight text-white leading-none drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]">
+                            <!-- Main Bold Italic Name with Deep 3D Shadow -->
+                            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-syne italic uppercase tracking-tighter text-black leading-none drop-shadow-[5px_5px_0px_#000]">
                                 AJAIKANTH
                             </h1>
-                            <div class="font-script text-2xl sm:text-3xl md:text-4xl text-neutral-300 mt-2 transform -rotate-1">
-                                The AI & Data Science Chronicles
+                            
+                            <!-- Cursive Italic Script Subtitle -->
+                            <div class="font-script text-2xl sm:text-3xl md:text-4xl text-neutral-800 mt-2">
+                                The Developer Chronicles
                             </div>
 
-                            <!-- Small Tags in Boxed Manga Badges -->
+                            <!-- Small Boxed Tags Matching Reference -->
                             <div class="flex flex-wrap gap-2 pt-6">
-                                <span class="manga-ref-tag">AI & ML</span>
-                                <span class="manga-ref-tag">FULL STACK</span>
-                                <span class="manga-ref-tag">JAVA</span>
-                                <span class="manga-ref-tag">PYTHON</span>
-                                <span class="manga-ref-tag">OPEN SOURCE</span>
+                                <span class="manga-exact-tag">FULL STACK</span>
+                                <span class="manga-exact-tag">AI & ML</span>
+                                <span class="manga-exact-tag">JAVA</span>
+                                <span class="manga-exact-tag">PYTHON</span>
+                                <span class="manga-exact-tag">OPEN SOURCE</span>
                             </div>
                         </div>
 
                         <!-- Bottom URL Watermark -->
-                        <div class="flex items-center justify-between font-mono text-[10px] sm:text-xs text-neutral-500 font-bold tracking-widest uppercase">
-                            <span>AJAIKANTH.AI</span>
-                            <span class="md:hidden">SPREAD 01 // COVER</span>
+                        <div class="font-sans text-[10px] sm:text-xs font-semibold text-neutral-700 tracking-wider">
+                            AJAIKANTH.AI
                         </div>
                     </div>
 
-                    <!-- RIGHT PAGE: Character, Radiating Speedlines, "BUILDING!!", Greeting Bubble -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between relative overflow-hidden bg-black z-10">
+                    <!-- RIGHT PAGE: PHASE 01, BUILDING!!, Character with Speedlines, Greeting Bubble -->
+                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between relative overflow-hidden bg-[#f4f0e6]">
                         
-                        <!-- Top Header Tag -->
+                        <!-- Top Tag: PHASE 01 -->
                         <div class="flex items-center justify-between z-10">
-                            <span class="px-2.5 py-0.5 bg-white text-black font-mono font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-sm">
+                            <span class="px-2 py-0.5 bg-black text-white font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-wider rounded-none">
                                 PHASE 01
-                            </span>
-                            
-                            <!-- Sound Effect Kanji Stamp -->
-                            <span class="font-syne font-black text-sm text-neutral-400">
-                                ズッ (AWAKEN)
                             </span>
                         </div>
 
-                        <!-- Central "BUILDING!!" Manga Action Text -->
-                        <div class="absolute top-8 right-8 z-10 transform rotate-[-4deg]">
-                            <div class="text-4xl sm:text-5xl md:text-6xl font-black font-syne italic text-white tracking-tighter drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                        <!-- Top Right Action Text: BUILDING!! -->
+                        <div class="absolute top-6 right-8 z-10 transform rotate-[-2deg]">
+                            <div class="text-4xl sm:text-5xl md:text-6xl font-black font-syne italic text-black tracking-tighter drop-shadow-[2px_2px_0px_#fff]">
                                 BUILDING!!
                             </div>
                         </div>
 
-                        <!-- Character Visual Container with Speedlines & Greeting Bubble -->
-                        <div class="relative flex-1 flex items-center justify-center my-2 group">
+                        <!-- Character Artwork with Radiating Speedlines & Greeting Bubble -->
+                        <div class="relative flex-1 flex items-center justify-center my-1 group">
                             
-                            <!-- Manga Speedlines Background Burst -->
-                            <div class="manga-speedline-dark-burst"></div>
-
-                            <!-- Standing Manga Character -->
-                            <div class="relative h-[240px] sm:h-[300px] md:h-[360px] max-h-full flex items-center justify-center z-10 transition-transform duration-500 group-hover:scale-105">
-                                <img src="assets/images/manga-standing-hero.jpg" 
-                                     alt="Ajaikanth Saravanan Manga Character" 
-                                     class="h-full w-auto object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] rounded-md">
+                            <!-- Full-Body Standing Manga Character (Matching Reference) -->
+                            <div class="relative h-[240px] sm:h-[300px] md:h-[370px] max-h-full flex items-center justify-center z-10 transition-transform duration-500 group-hover:scale-105">
+                                <img src="assets/images/manga-ref-character.jpg" 
+                                     alt="Ajaikanth Saravanan Manga Reference Character" 
+                                     class="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.2)] rounded-sm">
                             </div>
 
                             <!-- Interactive Speech Bubble Greeting the User -->
-                            <div id="character-greeting-bubble" class="manga-speech-bubble absolute -top-2 left-2 sm:left-4 z-30 max-w-[220px] sm:max-w-[260px] p-3 sm:p-3.5 bg-white text-black border-2 border-white rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.5)] cursor-pointer hover:scale-105 transition-all">
-                                <div class="flex items-center justify-between pb-1 border-b border-neutral-300 mb-1">
+                            <div id="character-greeting-bubble" class="manga-speech-bubble absolute -top-2 left-2 sm:left-4 z-30 max-w-[220px] sm:max-w-[260px] p-3 bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000] cursor-pointer hover:scale-105 transition-all">
+                                <div class="flex items-center justify-between pb-1 border-b border-neutral-200 mb-1">
                                     <span class="font-syne font-bold text-[10px] text-black">AJAIKANTH</span>
-                                    <span class="font-mono text-[8px] text-neutral-600">VOICE ACTIVE 🔊</span>
+                                    <span class="font-mono text-[8px] text-neutral-500">VOICE ACTIVE 🔊</span>
                                 </div>
                                 <p id="greeting-text" class="font-sans text-[11px] sm:text-xs font-semibold text-black leading-tight">
-                                    "Hey there! I'm Ajaikanth. Welcome to my developer chronicles! Tap me to talk or click below to enter!"
+                                    "Hey there! I'm Ajaikanth. Welcome to my developer chronicles! Click below to enter!"
                                 </p>
-                                <!-- Tail of speech bubble pointing to character -->
                                 <div class="speech-tail"></div>
                             </div>
                         </div>
 
-                        <!-- Bottom Action Section: Click to Start Button -->
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 z-10">
+                        <!-- Bottom Action Section: Click to Start Button & Episode Watermark -->
+                        <div class="flex items-center justify-between gap-3 pt-1 z-10">
                             <!-- Click to Start CTA -->
-                            <button id="book-start-btn" class="w-full sm:w-auto px-6 py-2.5 bg-white text-black font-syne font-black text-xs sm:text-sm uppercase tracking-wider rounded border-2 border-white hover:bg-black hover:text-white transition-all shadow-[0_0_25px_rgba(255,255,255,0.4)] flex items-center justify-center gap-2 group">
-                                <i data-lucide="play" class="w-4 h-4 fill-current group-hover:translate-x-0.5 transition-transform"></i>
-                                <span>CLICK TO START PORTFOLIO</span>
+                            <button id="book-start-btn" class="px-5 py-2 bg-black text-white font-syne font-black text-xs sm:text-sm uppercase tracking-wider rounded border-2 border-black hover:bg-neutral-800 transition-all shadow-[3px_3px_0px_rgba(0,0,0,0.3)] flex items-center gap-2 group">
+                                <i data-lucide="play" class="w-3.5 h-3.5 fill-white group-hover:translate-x-0.5 transition-transform"></i>
+                                <span>CLICK TO START</span>
                             </button>
 
-                            <div class="font-mono text-[10px] text-neutral-400 hidden sm:block">
-                                EPISODE // 01
+                            <div class="font-mono text-[10px] text-neutral-600 font-semibold">
+                                EPISODE - 01//10
                             </div>
                         </div>
 
@@ -199,48 +188,40 @@
                 <!-- ============================================================== -->
                 <!-- SPREAD 2: CHAPTER 01 // ABOUT & ORIGINS                        -->
                 <!-- ============================================================== -->
-                <div class="w-full flex-shrink-0 snap-center grid grid-cols-1 md:grid-cols-2 h-full bg-black relative" data-page="2">
-                    <div class="absolute inset-0 manga-screentone-bg opacity-30 pointer-events-none"></div>
-
-                    <!-- Left: Narrative -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-neutral-800 relative z-10">
+                <div class="w-full flex-shrink-0 snap-center grid grid-cols-1 md:grid-cols-2 h-full bg-[#f4f0e6] relative manga-dot-grid" data-page="2">
+                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black">
                         <div>
-                            <div class="font-mono text-[11px] font-bold text-neutral-400 tracking-widest uppercase">CHAPTER 01 // THE ARCHITECT</div>
-                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne uppercase mt-2 text-white">ENGINEERING ORIGINS</h2>
-                            <div class="font-script text-xl sm:text-2xl text-neutral-300 mt-1">Bridging Mathematical Foundations with Scalable Code</div>
-                            <p class="text-xs sm:text-sm text-neutral-300 font-sans mt-4 leading-relaxed">
-                                I am an AI & Data Science Engineer specialized in crafting deep learning architectures, scalable Java backends, and low-latency predictive pipelines. From autonomous agent orchestration to distributed BigQuery workflows, I build systems engineered for speed and precision.
+                            <div class="font-sans text-[11px] font-bold text-neutral-700 tracking-wider">CHAPTER 01 - THE ARCHITECT</div>
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne italic uppercase mt-2 text-black">ENGINEERING ORIGINS</h2>
+                            <div class="font-script text-xl sm:text-2xl text-neutral-800 mt-1">Bridging Mathematics with Scalable Code</div>
+                            <p class="text-xs sm:text-sm text-neutral-800 font-sans mt-4 leading-relaxed">
+                                AI & Data Science Engineer specialized in deep learning architectures, scalable Java distributed backends, and low-latency predictive pipelines.
                             </p>
                         </div>
                         <div class="pt-4 flex flex-wrap gap-2">
-                            <span class="manga-ref-tag">PyTorch</span>
-                            <span class="manga-ref-tag">Java 21</span>
-                            <span class="manga-ref-tag">Apache Spark</span>
-                            <span class="manga-ref-tag">FastAPI</span>
+                            <span class="manga-exact-tag">PyTorch</span>
+                            <span class="manga-exact-tag">Java 21</span>
+                            <span class="manga-exact-tag">Spark</span>
+                            <span class="manga-exact-tag">FastAPI</span>
                         </div>
                     </div>
-                    <!-- Right: Portrait Card & Stats -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between relative z-10">
+                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between">
                         <div class="flex items-center justify-between">
-                            <span class="px-2 py-0.5 bg-white text-black font-mono text-[10px] font-bold">STATUS MATRIX</span>
-                            <span class="font-mono text-xs text-neutral-400">LVL: MAX</span>
+                            <span class="px-2 py-0.5 bg-black text-white font-mono text-[9px] font-bold">STATUS MATRIX</span>
+                            <span class="font-mono text-xs text-neutral-500">LVL: MAX</span>
                         </div>
                         <div class="space-y-3 font-mono text-xs my-auto py-2">
-                            <div class="flex justify-between border-b border-neutral-800 pb-1.5">
-                                <span class="text-neutral-400 font-bold">NAME</span>
-                                <span class="font-bold text-white">Ajaikanth Saravanan</span>
+                            <div class="flex justify-between border-b border-neutral-300 pb-1.5">
+                                <span class="text-neutral-600 font-bold">NAME</span>
+                                <span class="font-bold">Ajaikanth Saravanan</span>
                             </div>
-                            <div class="flex justify-between border-b border-neutral-800 pb-1.5">
-                                <span class="text-neutral-400 font-bold">EXPERIENCE</span>
-                                <span class="font-bold text-white">Cognitive Labs // AI Engineer</span>
+                            <div class="flex justify-between border-b border-neutral-300 pb-1.5">
+                                <span class="text-neutral-600 font-bold">ROLE</span>
+                                <span class="font-bold">AI & ML Engineer</span>
                             </div>
-                            <div class="flex justify-between border-b border-neutral-800 pb-1.5">
-                                <span class="text-neutral-400 font-bold">DEGREE</span>
-                                <span class="font-bold text-white">B.Tech CS (AI & Data Science)</span>
-                            </div>
-                            <div class="flex justify-between border-b border-neutral-800 pb-1.5">
-                                <span class="text-neutral-400 font-bold">ACCURACY</span>
-                                <span class="font-bold text-emerald-400">99.2% Model Benchmark</span>
+                            <div class="flex justify-between border-b border-neutral-300 pb-1.5">
+                                <span class="text-neutral-600 font-bold">ACCURACY</span>
+                                <span class="font-bold text-emerald-800">99.2% Model Benchmark</span>
                             </div>
                         </div>
                         <div class="text-right font-mono text-[10px] text-neutral-500">PAGE 02</div>
@@ -251,95 +232,40 @@
                 <!-- ============================================================== -->
                 <!-- SPREAD 3: CHAPTER 02 // TECHNICAL ARSENAL                      -->
                 <!-- ============================================================== -->
-                <div class="w-full flex-shrink-0 snap-center grid grid-cols-1 md:grid-cols-2 h-full bg-black relative" data-page="3">
-                    <div class="absolute inset-0 manga-screentone-bg opacity-30 pointer-events-none"></div>
-
-                    <!-- Left: AI & Data Skills -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-neutral-800 relative z-10">
+                <div class="w-full flex-shrink-0 snap-center grid grid-cols-1 md:grid-cols-2 h-full bg-[#f4f0e6] relative manga-dot-grid" data-page="3">
+                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black">
                         <div>
-                            <div class="font-mono text-[11px] font-bold text-neutral-400 tracking-widest uppercase">CHAPTER 02 // ARSENAL</div>
-                            <h2 class="text-3xl sm:text-4xl font-black font-syne uppercase mt-2 text-white">AI & DATA SCIENCE</h2>
+                            <div class="font-sans text-[11px] font-bold text-neutral-700 tracking-wider">CHAPTER 02 - ARSENAL</div>
+                            <h2 class="text-3xl sm:text-4xl font-black font-syne italic uppercase mt-2 text-black">AI & MACHINE LEARNING</h2>
                             <div class="space-y-2 mt-4 font-mono text-xs">
                                 <div>
-                                    <div class="flex justify-between text-neutral-300"><span>PyTorch / Transformers</span><span class="text-white">96%</span></div>
-                                    <div class="w-full h-2 bg-neutral-900 rounded border border-neutral-700 overflow-hidden"><div class="h-full bg-white" style="width:96%"></div></div>
+                                    <div class="flex justify-between"><span>PyTorch / Transformers</span><span class="font-bold">96%</span></div>
+                                    <div class="w-full h-2 bg-neutral-300 rounded-none border border-black overflow-hidden"><div class="h-full bg-black" style="width:96%"></div></div>
                                 </div>
                                 <div>
-                                    <div class="flex justify-between text-neutral-300"><span>Computer Vision (CV)</span><span class="text-white">92%</span></div>
-                                    <div class="w-full h-2 bg-neutral-900 rounded border border-neutral-700 overflow-hidden"><div class="h-full bg-white" style="width:92%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-neutral-300"><span>LLMs & LangGraph Agents</span><span class="text-white">95%</span></div>
-                                    <div class="w-full h-2 bg-neutral-900 rounded border border-neutral-700 overflow-hidden"><div class="h-full bg-white" style="width:95%"></div></div>
+                                    <div class="flex justify-between"><span>Computer Vision (CV)</span><span class="font-bold">92%</span></div>
+                                    <div class="w-full h-2 bg-neutral-300 rounded-none border border-black overflow-hidden"><div class="h-full bg-black" style="width:92%"></div></div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-left font-mono text-[10px] text-neutral-500">PAGE 03</div>
                     </div>
-                    <!-- Right: Full Stack & Systems -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between relative z-10">
+                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between">
                         <div>
-                            <div class="font-mono text-[11px] font-bold text-neutral-400 tracking-widest uppercase">CHAPTER 02 // SYSTEMS</div>
-                            <h2 class="text-3xl sm:text-4xl font-black font-syne uppercase mt-2 text-white">FULL STACK & JAVA</h2>
+                            <div class="font-sans text-[11px] font-bold text-neutral-700 tracking-wider">CHAPTER 02 - SYSTEMS</div>
+                            <h2 class="text-3xl sm:text-4xl font-black font-syne italic uppercase mt-2 text-black">FULL STACK & JAVA</h2>
                             <div class="space-y-2 mt-4 font-mono text-xs">
                                 <div>
-                                    <div class="flex justify-between text-neutral-300"><span>Python (Advanced)</span><span class="text-white">98%</span></div>
-                                    <div class="w-full h-2 bg-neutral-900 rounded border border-neutral-700 overflow-hidden"><div class="h-full bg-white" style="width:98%"></div></div>
+                                    <div class="flex justify-between"><span>Python (Advanced)</span><span class="font-bold">98%</span></div>
+                                    <div class="w-full h-2 bg-neutral-300 rounded-none border border-black overflow-hidden"><div class="h-full bg-black" style="width:98%"></div></div>
                                 </div>
                                 <div>
-                                    <div class="flex justify-between text-neutral-300"><span>Java & Spring Boot</span><span class="text-white">92%</span></div>
-                                    <div class="w-full h-2 bg-neutral-900 rounded border border-neutral-700 overflow-hidden"><div class="h-full bg-white" style="width:92%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-neutral-300"><span>Docker & Cloud (AWS/GCP)</span><span class="text-white">90%</span></div>
-                                    <div class="w-full h-2 bg-neutral-900 rounded border border-neutral-700 overflow-hidden"><div class="h-full bg-white" style="width:90%"></div></div>
+                                    <div class="flex justify-between"><span>Java & Spring Boot</span><span class="font-bold">92%</span></div>
+                                    <div class="w-full h-2 bg-neutral-300 rounded-none border border-black overflow-hidden"><div class="h-full bg-black" style="width:92%"></div></div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-right font-mono text-[10px] text-neutral-500">PAGE 04</div>
-                    </div>
-                </div>
-
-
-                <!-- ============================================================== -->
-                <!-- SPREAD 4: CHAPTER 03 // FEATURED PROJECTS                      -->
-                <!-- ============================================================== -->
-                <div class="w-full flex-shrink-0 snap-center grid grid-cols-1 md:grid-cols-2 h-full bg-black relative" data-page="4">
-                    <div class="absolute inset-0 manga-screentone-bg opacity-30 pointer-events-none"></div>
-
-                    <!-- Project 1 & 2 -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-neutral-800 relative z-10">
-                        <div>
-                            <div class="font-mono text-[11px] font-bold text-neutral-400 tracking-widest uppercase">CHAPTER 03 // WORKS</div>
-                            <h2 class="text-3xl sm:text-4xl font-black font-syne uppercase mt-1 text-white">FLAGSHIP AI</h2>
-                            
-                            <div class="mt-4 p-3 bg-neutral-900 border border-neutral-700 rounded">
-                                <div class="font-syne font-black text-sm text-white">OMNIVISION NEURAL ENGINE</div>
-                                <div class="font-mono text-[10px] text-neutral-400">Real-Time Multimodal Vision & Scene Synthesis</div>
-                            </div>
-                            <div class="mt-3 p-3 bg-neutral-900 border border-neutral-700 rounded">
-                                <div class="font-syne font-black text-sm text-white">NEXUS AGENTIC WORKFLOW</div>
-                                <div class="font-mono text-[10px] text-neutral-400">Autonomous Multi-Agent Data Science Pipeline</div>
-                            </div>
-                        </div>
-                        <div class="text-left font-mono text-[10px] text-neutral-500">PAGE 05</div>
-                    </div>
-                    <!-- Project 3 & 4 -->
-                    <div class="p-6 sm:p-10 md:p-12 flex flex-col justify-between relative z-10">
-                        <div>
-                            <div class="font-mono text-[11px] font-bold text-neutral-400 tracking-widest uppercase">CHAPTER 03 // SYSTEMS</div>
-                            <h2 class="text-3xl sm:text-4xl font-black font-syne uppercase mt-1 text-white">DATA ENGINES</h2>
-                            
-                            <div class="mt-4 p-3 bg-neutral-900 border border-neutral-700 rounded">
-                                <div class="font-syne font-black text-sm text-white">DEEPINSIGHT FORECASTER</div>
-                                <div class="font-mono text-[10px] text-neutral-400">Temporal Fusion Transformer Time-Series (98.4% Acc)</div>
-                            </div>
-                            <div class="mt-3 p-3 bg-neutral-900 border border-neutral-700 rounded">
-                                <div class="font-syne font-black text-sm text-white">NEURALDOC ENTERPRISE RAG</div>
-                                <div class="font-mono text-[10px] text-neutral-400">Hybrid Vector Search Knowledge Retrieval Engine</div>
-                            </div>
-                        </div>
-                        <div class="text-right font-mono text-[10px] text-neutral-500">PAGE 06</div>
                     </div>
                 </div>
 
@@ -348,28 +274,24 @@
             <!-- ============================================================== -->
             <!-- INTERNAL MANGA SCROLL BAR & CONTROLS TO GO TO NEXT PAGE       -->
             <!-- ============================================================== -->
-            <div class="p-3 sm:p-4 bg-neutral-950 border-t border-neutral-800 flex items-center justify-between gap-4 z-30 select-none">
+            <div class="p-3 bg-white border-t-2 border-black flex items-center justify-between gap-4 z-30 select-none">
                 
-                <!-- Prev Button -->
-                <button id="book-prev-btn" class="px-3 py-1.5 rounded border border-neutral-700 bg-neutral-900 text-neutral-300 hover:bg-white hover:text-black font-mono text-xs font-bold transition-colors flex items-center gap-1">
-                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">PREV SPREAD</span>
+                <button id="book-prev-btn" class="px-3 py-1 rounded-none border border-black bg-neutral-100 hover:bg-black hover:text-white font-mono text-xs font-bold transition-colors flex items-center gap-1">
+                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                    <span class="hidden sm:inline">PREV</span>
                 </button>
 
-                <!-- Scroll Bar Slider Indicator -->
                 <div class="flex-1 flex flex-col items-center max-w-md mx-auto">
-                    <div class="w-full flex items-center justify-between text-[10px] font-mono text-neutral-400 font-bold mb-1">
-                        <span id="book-page-indicator">SPREAD 1 / 4</span>
-                        <span>DRAG SCROLLBAR OR ARROWS ➔</span>
+                    <div class="w-full flex items-center justify-between text-[10px] font-mono text-neutral-600 font-bold mb-1">
+                        <span id="book-page-indicator">SPREAD 1 / 3</span>
+                        <span>DRAG SCROLLBAR TO FLIP PAGES ➔</span>
                     </div>
-                    <!-- Custom Range Slider / Scrollbar -->
-                    <input type="range" id="book-scrollbar" min="1" max="4" value="1" step="1" class="w-full manga-range-slider cursor-pointer">
+                    <input type="range" id="book-scrollbar" min="1" max="3" value="1" step="1" class="w-full manga-exact-range cursor-pointer">
                 </div>
 
-                <!-- Next Button -->
-                <button id="book-next-btn" class="px-3 py-1.5 rounded border border-neutral-700 bg-neutral-900 text-neutral-300 hover:bg-white hover:text-black font-mono text-xs font-bold transition-colors flex items-center gap-1">
-                    <span class="hidden sm:inline">NEXT SPREAD</span>
-                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <button id="book-next-btn" class="px-3 py-1 rounded-none border border-black bg-neutral-100 hover:bg-black hover:text-white font-mono text-xs font-bold transition-colors flex items-center gap-1">
+                    <span class="hidden sm:inline">NEXT</span>
+                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                 </button>
 
             </div>
@@ -413,13 +335,10 @@
         <div class="fixed inset-0 manga-screentone-bg opacity-15 pointer-events-none z-0"></div>
         <div class="fixed inset-0 manga-grid-overlay opacity-10 pointer-events-none z-0"></div>
 
-        <!-- ========================================================================= -->
-        <!-- NAVIGATION BAR                                                            -->
-        <!-- ========================================================================= -->
+        <!-- Navigation Bar -->
         <header class="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-neutral-800/80 transition-all duration-300" id="navbar">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
                 
-                <!-- Logo -->
                 <a href="#hero" class="flex items-center gap-3 group">
                     <div class="w-9 h-9 rounded-lg bg-white text-black font-black font-syne text-lg flex items-center justify-center border border-white group-hover:bg-black group-hover:text-white transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)]">
                         A
@@ -434,7 +353,6 @@
                     </div>
                 </a>
 
-                <!-- Desktop Nav Links -->
                 <nav class="hidden lg:flex items-center gap-7 text-xs font-mono tracking-widest">
                     <a href="#about" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">01. ABOUT</a>
                     <a href="#skills" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">02. SKILLS</a>
@@ -446,7 +364,6 @@
                     <a href="#contact" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">08. CONTACT</a>
                 </nav>
 
-                <!-- Right Action Controls -->
                 <div class="flex items-center gap-3">
                     <button id="audio-toggle-btn" title="Toggle Sound FX" class="w-9 h-9 rounded border border-neutral-800 bg-neutral-900/70 hover:bg-white hover:text-black text-neutral-300 flex items-center justify-center transition-colors text-xs font-mono">
                         <i data-lucide="volume-2" class="w-4 h-4"></i>
@@ -454,7 +371,7 @@
 
                     <button id="replay-intro-btn" title="View Manga Book Cover" class="flex items-center gap-1 px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900/70 hover:bg-white hover:text-black text-neutral-300 transition-colors text-xs font-mono">
                         <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
-                        <span>MANGA SPREAD</span>
+                        <span>MANGA COVER</span>
                     </button>
 
                     <a href="#contact" class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-white text-black font-syne font-bold text-xs uppercase tracking-wider hover:bg-neutral-200 transition-all rounded shadow-md border border-white">
@@ -574,7 +491,7 @@
                             
                             <div id="hero-manga-card" class="relative w-full max-w-md aspect-square rounded-2xl bg-neutral-950 border-2 border-white/80 p-3 shadow-[0_0_50px_rgba(255,255,255,0.15)] group transition-all duration-300">
                                 <div class="w-full h-full rounded-xl overflow-hidden relative bg-black flex items-center justify-center">
-                                    <img src="assets/images/manga-standing-hero.jpg" 
+                                    <img src="assets/images/manga-ref-character.jpg" 
                                          alt="Ajaikanth Anime Illustration" 
                                          class="w-full h-full object-cover filter contrast-125 brightness-105 transition-transform duration-700 group-hover:scale-105">
                                     
@@ -607,7 +524,6 @@
                     </div>
                 </div>
 
-                <!-- Hero Bottom Scroll Down Indicator Button -->
                 <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-20">
                     <a href="#about" class="flex flex-col items-center gap-1 text-[10px] font-mono tracking-widest text-neutral-400 hover:text-white transition-colors group">
                         <span class="uppercase">SCROLL TO EXPLORE</span>
@@ -633,13 +549,9 @@
                                 ABOUT <span class="manga-text-outline">AJAIKANTH</span>
                             </h2>
                         </div>
-                        <div class="font-mono text-xs text-neutral-400 max-w-xs">
-                            Driven by deep neural representations, computational efficiency, and robust full-stack software craftsmanship.
-                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                        <!-- Left: Anime Profile Spotlight Card -->
                         <div class="lg:col-span-5 manga-card flex flex-col justify-between p-6">
                             <div class="relative w-full aspect-square rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950 mb-6 group">
                                 <img src="assets/images/manga-character-profile.jpg" alt="Ajaikanth Profile" class="w-full h-full object-cover filter contrast-125 transition-transform duration-500 group-hover:scale-105">
@@ -670,7 +582,6 @@
                             </div>
                         </div>
 
-                        <!-- Right: Detailed Narrative & Core Pillars -->
                         <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
                             <div class="manga-card p-6 sm:p-8 space-y-4">
                                 <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-white flex items-center gap-2">
@@ -680,31 +591,18 @@
                                 <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">
                                     I am an <strong class="text-white">AI & Data Science Engineer</strong> passionate about transforming intricate data structures and deep learning research into resilient, production-ready systems. My expertise spans machine learning model development, data engineering pipelines, distributed cloud backends, and responsive web applications.
                                 </p>
-                                <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">
-                                    Whether architecting scalable Java microservices, fine-tuning neural architectures in PyTorch, or writing clean Python algorithms for predictive modeling, I build software that balances mathematical rigor with sleek user experiences.
-                                </p>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="manga-card-sm p-5 space-y-2">
                                     <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">01</div>
                                     <h4 class="font-syne font-bold text-white text-base">Neural Architecture</h4>
-                                    <p class="text-neutral-400 text-xs leading-relaxed">Deep learning models, transformers, computer vision, and NLP optimized for low inference latency.</p>
+                                    <p class="text-neutral-400 text-xs leading-relaxed">Deep learning models, transformers, and computer vision optimized for low latency.</p>
                                 </div>
                                 <div class="manga-card-sm p-5 space-y-2">
                                     <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">02</div>
                                     <h4 class="font-syne font-bold text-white text-base">Scalable Data Pipelines</h4>
-                                    <p class="text-neutral-400 text-xs leading-relaxed">High-volume distributed ETL, feature stores, BigQuery analytics, and streaming pipelines.</p>
-                                </div>
-                                <div class="manga-card-sm p-5 space-y-2">
-                                    <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">03</div>
-                                    <h4 class="font-syne font-bold text-white text-base">Full Stack Integration</h4>
-                                    <p class="text-neutral-400 text-xs leading-relaxed">Robust Java / Python backends, FastAPI endpoints, React interfaces, and containerized cloud workflows.</p>
-                                </div>
-                                <div class="manga-card-sm p-5 space-y-2">
-                                    <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">04</div>
-                                    <h4 class="font-syne font-bold text-white text-base">Open Source & Research</h4>
-                                    <p class="text-neutral-400 text-xs leading-relaxed">Continuous contribution to developer communities, reproducibility in ML, and state-of-the-art benchmarks.</p>
+                                    <p class="text-neutral-400 text-xs leading-relaxed">High-volume distributed ETL, feature stores, and streaming pipelines.</p>
                                 </div>
                             </div>
                         </div>
@@ -713,7 +611,7 @@
             </section>
 
             <!-- ========================================================================= -->
-            <!-- SECTION 2: SKILLS (TECH STACK ARSENAL)                                    -->
+            <!-- SECTION 2: SKILLS & TECHNICAL ARSENAL                                     -->
             <!-- ========================================================================= -->
             <section id="skills" class="py-24 border-b border-neutral-800/80 relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -733,124 +631,76 @@
                             <button class="skill-tab-btn" data-filter="ai">AI / ML</button>
                             <button class="skill-tab-btn" data-filter="programming">PROGRAMMING</button>
                             <button class="skill-tab-btn" data-filter="data">DATA SCIENCE</button>
-                            <button class="skill-tab-btn" data-filter="devops">DEVOPS & CLOUD</button>
+                            <button class="skill-tab-btn" data-filter="devops">DEVOPS</button>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="skills-grid">
-                        <!-- AI & ML -->
                         <div class="manga-card p-6 space-y-4 skill-card" data-category="ai">
                             <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="brain" class="w-5 h-5 text-white"></i>
-                                    <h3 class="font-syne font-bold text-white text-base">AI & Machine Learning</h3>
-                                </div>
+                                <h3 class="font-syne font-bold text-white text-base">AI & Machine Learning</h3>
                                 <span class="font-mono text-[10px] text-neutral-400">LVL: 98</span>
                             </div>
                             <div class="space-y-3 font-mono text-xs">
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>PyTorch / TensorFlow</span><span class="text-white">96%</span></div>
+                                    <div class="flex justify-between mb-1"><span>PyTorch / TensorFlow</span><span>96%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 96%"></div></div>
                                 </div>
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>LLMs & Transformers</span><span class="text-white">94%</span></div>
+                                    <div class="flex justify-between mb-1"><span>LLMs & Transformers</span><span>94%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 94%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>Computer Vision (CV)</span><span class="text-white">90%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>Scikit-Learn / XGBoost</span><span class="text-white">95%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Programming -->
                         <div class="manga-card p-6 space-y-4 skill-card" data-category="programming">
                             <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="code" class="w-5 h-5 text-white"></i>
-                                    <h3 class="font-syne font-bold text-white text-base">Programming & Core</h3>
-                                </div>
+                                <h3 class="font-syne font-bold text-white text-base">Programming & Core</h3>
                                 <span class="font-mono text-[10px] text-neutral-400">LVL: 95</span>
                             </div>
                             <div class="space-y-3 font-mono text-xs">
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>Python (Advanced)</span><span class="text-white">98%</span></div>
+                                    <div class="flex justify-between mb-1"><span>Python (Advanced)</span><span>98%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 98%"></div></div>
                                 </div>
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>Java (OOP & Systems)</span><span class="text-white">92%</span></div>
+                                    <div class="flex justify-between mb-1"><span>Java (OOP & Systems)</span><span>92%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>TypeScript / React</span><span class="text-white">90%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>FastAPI / Spring Boot</span><span class="text-white">90%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Data Science -->
                         <div class="manga-card p-6 space-y-4 skill-card" data-category="data">
                             <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="database" class="w-5 h-5 text-white"></i>
-                                    <h3 class="font-syne font-bold text-white text-base">Data & Analytics</h3>
-                                </div>
+                                <h3 class="font-syne font-bold text-white text-base">Data & Analytics</h3>
                                 <span class="font-mono text-[10px] text-neutral-400">LVL: 94</span>
                             </div>
                             <div class="space-y-3 font-mono text-xs">
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>Pandas & NumPy</span><span class="text-white">98%</span></div>
+                                    <div class="flex justify-between mb-1"><span>Pandas & NumPy</span><span>98%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 98%"></div></div>
                                 </div>
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>SQL / PostgreSQL</span><span class="text-white">95%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>Apache Spark & BigQuery</span><span class="text-white">88%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>Statistical Modeling</span><span class="text-white">92%</span></div>
+                                    <div class="flex justify-between mb-1"><span>Apache Spark & SQL</span><span>92%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- DevOps -->
                         <div class="manga-card p-6 space-y-4 skill-card" data-category="devops">
                             <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="cloud" class="w-5 h-5 text-white"></i>
-                                    <h3 class="font-syne font-bold text-white text-base">DevOps & Cloud</h3>
-                                </div>
+                                <h3 class="font-syne font-bold text-white text-base">DevOps & Cloud</h3>
                                 <span class="font-mono text-[10px] text-neutral-400">LVL: 91</span>
                             </div>
                             <div class="space-y-3 font-mono text-xs">
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>Docker & Containers</span><span class="text-white">94%</span></div>
+                                    <div class="flex justify-between mb-1"><span>Docker & Kubernetes</span><span>94%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 94%"></div></div>
                                 </div>
                                 <div>
-                                    <div class="flex justify-between mb-1"><span>AWS & GCP Cloud</span><span class="text-white">89%</span></div>
+                                    <div class="flex justify-between mb-1"><span>AWS & GCP Cloud</span><span>89%</span></div>
                                     <div class="skill-bar"><div class="skill-progress" style="width: 89%"></div></div>
                                 </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>Git & CI/CD Pipelines</span><span class="text-white">95%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1"><span>MLflow & MLOps</span><span class="text-white">88%</span></div>
-                                    <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -858,88 +708,7 @@
             </section>
 
             <!-- ========================================================================= -->
-            <!-- SECTION 3: EXPERIENCE (CHRONICLES OF IMPACT)                              -->
-            <!-- ========================================================================= -->
-            <section id="experience" class="py-24 border-b border-neutral-800/80 relative">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                        <div>
-                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
-                                <span class="w-2 h-2 bg-white inline-block"></span>
-                                <span>CHAPTER 03 // CAREER CHRONICLES</span>
-                            </div>
-                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
-                                WORK <span class="manga-text-outline">EXPERIENCE</span>
-                            </h2>
-                        </div>
-                        <div class="font-mono text-xs text-neutral-400">
-                            Proven track record of designing, shipping, and scaling mission-critical AI systems.
-                        </div>
-                    </div>
-
-                    <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-8 before:w-0.5 before:bg-neutral-800">
-                        <!-- Experience Card 1 -->
-                        <div class="relative pl-12 md:pl-20 group">
-                            <div class="absolute left-2.5 md:left-6.5 top-6 w-3.5 h-3.5 rounded-full bg-black border-2 border-white group-hover:bg-white group-hover:scale-125 transition-all shadow-[0_0_10px_#fff]"></div>
-                            
-                            <div class="manga-card p-6 sm:p-8 space-y-4">
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-neutral-800">
-                                    <div>
-                                        <span class="px-2 py-0.5 bg-white text-black font-mono font-bold text-[10px] tracking-wider uppercase rounded-sm mr-2">CURRENT</span>
-                                        <h3 class="text-lg sm:text-xl font-black font-syne text-white inline-block">AI & Machine Learning Engineer</h3>
-                                        <div class="text-neutral-400 font-mono text-xs mt-1">Cognitive Labs // Advanced AI Solutions</div>
-                                    </div>
-                                    <div class="font-mono text-xs text-neutral-400 bg-neutral-900 px-3 py-1 rounded border border-neutral-800 self-start sm:self-auto">
-                                        2024 - PRESENT
-                                    </div>
-                                </div>
-                                <p class="text-neutral-300 text-sm leading-relaxed">
-                                    Leading the development of scalable agentic AI workflows and LLM-powered enterprise knowledge engines. Architected low-latency inference pipelines handling millions of requests with automated continuous evaluation.
-                                </p>
-                                <ul class="space-y-2 text-xs sm:text-sm text-neutral-400 font-mono">
-                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Decreased model inference latency by 42% through quantization and TensorRT engine optimizations.</li>
-                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Deployed multi-agent RAG system improving context retrieval accuracy from 74% to 96.8%.</li>
-                                </ul>
-                                <div class="flex flex-wrap gap-2 pt-2">
-                                    <span class="manga-tag">PyTorch</span>
-                                    <span class="manga-tag">FastAPI</span>
-                                    <span class="manga-tag">LangChain</span>
-                                    <span class="manga-tag">Docker</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Experience Card 2 -->
-                        <div class="relative pl-12 md:pl-20 group">
-                            <div class="absolute left-2.5 md:left-6.5 top-6 w-3.5 h-3.5 rounded-full bg-black border-2 border-neutral-600 group-hover:border-white group-hover:bg-white group-hover:scale-125 transition-all"></div>
-                            
-                            <div class="manga-card p-6 sm:p-8 space-y-4">
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-neutral-800">
-                                    <div>
-                                        <h3 class="text-lg sm:text-xl font-black font-syne text-white">Data Science & Backend Engineer</h3>
-                                        <div class="text-neutral-400 font-mono text-xs mt-1">DataMatrix Technologies // Distributed Systems</div>
-                                    </div>
-                                    <div class="font-mono text-xs text-neutral-400 bg-neutral-900 px-3 py-1 rounded border border-neutral-800 self-start sm:self-auto">
-                                        2023 - 2024
-                                    </div>
-                                </div>
-                                <p class="text-neutral-300 text-sm leading-relaxed">
-                                    Engineered high-throughput predictive data pipelines in Java and Python. Processed over 15M+ daily transaction records using Apache Spark and distributed Java backends.
-                                </p>
-                                <div class="flex flex-wrap gap-2 pt-2">
-                                    <span class="manga-tag">Java 21</span>
-                                    <span class="manga-tag">Apache Spark</span>
-                                    <span class="manga-tag">Spring Boot</span>
-                                    <span class="manga-tag">AWS</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========================================================================= -->
-            <!-- SECTION 4: PROJECTS (FLAGSHIP CREATIONS)                                   -->
+            <!-- SECTION 3: PROJECTS                                                       -->
             <!-- ========================================================================= -->
             <section id="projects" class="py-24 border-b border-neutral-800/80 relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -947,112 +716,54 @@
                         <div>
                             <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
                                 <span class="w-2 h-2 bg-white inline-block"></span>
-                                <span>CHAPTER 04 // FLAGSHIP PROJECTS</span>
+                                <span>CHAPTER 03 // FLAGSHIP PROJECTS</span>
                             </div>
                             <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
                                 FEATURED <span class="manga-text-outline">SYSTEMS</span>
                             </h2>
                         </div>
-                        
-                        <div class="flex flex-wrap gap-2" id="project-filter-tabs">
-                            <button class="project-filter-btn active" data-filter="all">ALL</button>
-                            <button class="project-filter-btn" data-filter="ai">AI / ML</button>
-                            <button class="project-filter-btn" data-filter="fullstack">FULL STACK</button>
-                            <button class="project-filter-btn" data-filter="data">DATA PIPELINES</button>
-                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-                        <!-- Project 1: OmniVision -->
-                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="ai">
-                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
-                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
-                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
-                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
-                                        OMNIVISION // AI
-                                    </div>
-                                </div>
-                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
-                                    VISION & LLM
-                                </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="font-mono text-[10px] text-neutral-400">COMPUTER VISION // LLM</div>
+                                <h3 class="text-xl font-black font-syne text-white">OmniVision Neural Engine</h3>
+                                <p class="text-neutral-400 text-xs leading-relaxed">Real-time multimodal computer vision and semantic scene synthesis platform.</p>
                             </div>
-                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                                <div class="space-y-2">
-                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
-                                        OmniVision Neural Engine
-                                    </h3>
-                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                                        Real-time multimodal computer vision and semantic scene synthesis platform with zero-shot tracking.
-                                    </p>
-                                </div>
-                                <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
-                                    <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="omnivision">
-                                        <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                                    </button>
-                                    <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
-                                </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-neutral-800 font-mono text-xs">
+                                <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="omnivision">
+                                    <span>VIEW SPECS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
                             </div>
                         </div>
 
-                        <!-- Project 2: NexusAI -->
-                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="ai">
-                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
-                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
-                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
-                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
-                                        NEXUS AGENTS // V2
-                                    </div>
-                                </div>
-                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
-                                    MULTI-AGENT
-                                </div>
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="font-mono text-[10px] text-neutral-400">MULTI-AGENT AI</div>
+                                <h3 class="text-xl font-black font-syne text-white">NexusAI Agentic Workflow</h3>
+                                <p class="text-neutral-400 text-xs leading-relaxed">Autonomous multi-agent orchestration framework for data science pipelines.</p>
                             </div>
-                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                                <div class="space-y-2">
-                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
-                                        NexusAI Agentic Workflow
-                                    </h3>
-                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                                        Autonomous multi-agent orchestration framework for automated feature engineering and reporting.
-                                    </p>
-                                </div>
-                                <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
-                                    <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="nexus">
-                                        <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                                    </button>
-                                    <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
-                                </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-neutral-800 font-mono text-xs">
+                                <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="nexus">
+                                    <span>VIEW SPECS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
                             </div>
                         </div>
 
-                        <!-- Project 3: DeepInsight Forecaster -->
-                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="data">
-                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
-                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
-                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
-                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
-                                        DEEPINSIGHT // ML
-                                    </div>
-                                </div>
-                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
-                                    TIME SERIES
-                                </div>
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="font-mono text-[10px] text-neutral-400">TIME SERIES // ML</div>
+                                <h3 class="text-xl font-black font-syne text-white">DeepInsight Forecaster</h3>
+                                <p class="text-neutral-400 text-xs leading-relaxed">High-frequency predictive analytics engine utilizing Temporal Fusion Transformers.</p>
                             </div>
-                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                                <div class="space-y-2">
-                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
-                                        DeepInsight Time-Series Forecaster
-                                    </h3>
-                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                                        High-frequency predictive analytics engine utilizing Temporal Fusion Transformers (98.4% accuracy).
-                                    </p>
-                                </div>
-                                <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
-                                    <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="deepinsight">
-                                        <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                                    </button>
-                                    <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
-                                </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-neutral-800 font-mono text-xs">
+                                <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="deepinsight">
+                                    <span>VIEW SPECS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
                             </div>
                         </div>
                     </div>
@@ -1060,64 +771,7 @@
             </section>
 
             <!-- ========================================================================= -->
-            <!-- SECTION 5: ACHIEVEMENTS & AWARDS                                          -->
-            <!-- ========================================================================= -->
-            <section id="achievements" class="py-24 border-b border-neutral-800/80 relative">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                        <div>
-                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
-                                <span class="w-2 h-2 bg-white inline-block"></span>
-                                <span>CHAPTER 05 // MILESTONES & HONORS</span>
-                            </div>
-                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
-                                AWARDS & <span class="manga-text-outline">HONORS</span>
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="manga-card p-6 space-y-3 relative group">
-                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
-                                <i data-lucide="trophy" class="w-6 h-6"></i>
-                            </div>
-                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">NATIONAL HACKATHON</div>
-                            <h3 class="font-syne font-black text-white text-lg">1st Place Winner</h3>
-                            <p class="text-neutral-400 text-xs leading-relaxed">Grand Prize for Edge AI autonomous inspection drone model.</p>
-                        </div>
-
-                        <div class="manga-card p-6 space-y-3 relative group">
-                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
-                                <i data-lucide="award" class="w-6 h-6"></i>
-                            </div>
-                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">COMPETITIVE ML</div>
-                            <h3 class="font-syne font-black text-white text-lg">Kaggle Expert</h3>
-                            <p class="text-neutral-400 text-xs leading-relaxed">Ranked in top 2% across global benchmark vision competitions.</p>
-                        </div>
-
-                        <div class="manga-card p-6 space-y-3 relative group">
-                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
-                                <i data-lucide="star" class="w-6 h-6"></i>
-                            </div>
-                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">OPEN SOURCE IMPACT</div>
-                            <h3 class="font-syne font-black text-white text-lg">1,500+ Stars</h3>
-                            <p class="text-neutral-400 text-xs leading-relaxed">Authored popular deep learning template repositories.</p>
-                        </div>
-
-                        <div class="manga-card p-6 space-y-3 relative group">
-                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
-                                <i data-lucide="medal" class="w-6 h-6"></i>
-                            </div>
-                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">RESEARCH</div>
-                            <h3 class="font-syne font-black text-white text-lg">Academic Excellence</h3>
-                            <p class="text-neutral-400 text-xs leading-relaxed">Dean's Honor List and Department Gold Medal for algorithmic research.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========================================================================= -->
-            <!-- SECTION 8: CONTACT & AI TERMINAL BOT                                       -->
+            <!-- SECTION 8: CONTACT                                                        -->
             <!-- ========================================================================= -->
             <section id="contact" class="py-24 relative overflow-hidden">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1134,7 +788,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                        <!-- Left: Transmission Form -->
                         <div class="lg:col-span-7 manga-card p-6 sm:p-8 space-y-6">
                             <form id="contact-form" class="space-y-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1162,7 +815,6 @@
                             </div>
                         </div>
 
-                        <!-- Right: Direct Channels & Interactive Mini Terminal -->
                         <div class="lg:col-span-5 space-y-6">
                             <div class="manga-card p-6 space-y-4">
                                 <h3 class="font-syne font-bold text-white text-base uppercase">DIRECT CHANNELS</h3>
@@ -1181,25 +833,6 @@
                                     </a>
                                 </div>
                             </div>
-
-                            <!-- Terminal Bot Simulator -->
-                            <div class="manga-card p-5 space-y-3 bg-black">
-                                <div class="flex items-center justify-between text-xs font-mono text-neutral-400 pb-2 border-b border-neutral-800">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
-                                        <span class="text-white">ajai-bot // v1.0</span>
-                                    </div>
-                                    <span class="text-[10px]">AI AGENT</span>
-                                </div>
-                                <div id="terminal-output" class="font-mono text-xs text-neutral-300 space-y-1 h-28 overflow-y-auto p-1 leading-relaxed">
-                                    <div class="text-emerald-400">> Hello! I'm Ajaikanth's AI avatar. Type 'help', 'skills', or 'projects'!</div>
-                                </div>
-                                <form id="terminal-form" class="flex items-center gap-2 pt-2 border-t border-neutral-800">
-                                    <span class="font-mono text-xs text-neutral-400">></span>
-                                    <input type="text" id="terminal-input" placeholder="Type 'skills' or 'projects'..." class="bg-transparent border-none outline-none font-mono text-xs text-white flex-1">
-                                    <button type="submit" class="px-2 py-1 bg-white text-black font-mono text-[10px] font-bold rounded">SEND</button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1207,7 +840,6 @@
 
         </main>
 
-        <!-- Footer -->
         <footer class="border-t border-neutral-800 bg-neutral-950 py-12 relative z-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-3">
@@ -1223,7 +855,7 @@
             </div>
         </footer>
 
-        <!-- Floating Manga Scroll-To-Top Action Button -->
+        <!-- Floating Scroll-To-Top Button -->
         <div id="scroll-top-fab" class="fixed bottom-6 right-6 z-40 opacity-0 pointer-events-none translate-y-4 transition-all duration-300">
             <button id="scroll-top-btn" title="Scroll to Top" class="relative w-12 h-12 rounded-full bg-neutral-950 border-2 border-white text-white flex items-center justify-center hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,255,255,0.35)] group">
                 <svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 36 36">
@@ -1236,10 +868,7 @@
 
     </div>
 
-
-    <!-- ========================================================================= -->
-    <!-- MODAL: RESUME VIEWER & DOWNLOAD                                           -->
-    <!-- ========================================================================= -->
+    <!-- Modals -->
     <div id="resume-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="manga-card max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden bg-neutral-950 border-2 border-white shadow-2xl">
             <div class="p-4 sm:p-6 border-b border-neutral-800 flex items-center justify-between">
@@ -1263,10 +892,6 @@
         </div>
     </div>
 
-
-    <!-- ========================================================================= -->
-    <!-- MODAL: PROJECT DETAIL POPUP                                               -->
-    <!-- ========================================================================= -->
     <div id="project-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="manga-card max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden bg-neutral-950 border-2 border-white shadow-2xl">
             <div class="p-4 sm:p-6 border-b border-neutral-800 flex items-center justify-between">
@@ -1288,7 +913,6 @@
         </div>
     </div>
 
-    <!-- Custom JavaScript Application -->
     <script src="script.js"></script>
     <script>
         lucide.createIcons();
