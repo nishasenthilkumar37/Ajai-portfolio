@@ -1,14 +1,16 @@
 // ========================================================================= //
-// AJAIKANTH SARAVANAN - MANGA PORTFOLIO INTERACTIVE CONTROLLER               //
+// AJAIKANTH SARAVANAN - THE DEVELOPER CHRONICLES                            //
+// 2.5D CINEMATIC MANGA INTERACTIVE ENGINE                                   //
 // ========================================================================= //
 
 document.addEventListener('DOMContentLoaded', () => {
     initAudioSystem();
-    initCinematicEntrance();
-    initSpeedlinesCanvas();
-    initTypewriter();
+    initIntroParticleCanvas();
+    initCinematicIntroParallax();
+    initIntroFlow();
     initCustomCursor();
     initHeroTilt();
+    initTypewriter();
     initFilterTabs();
     initModals();
     initContactForm();
@@ -17,40 +19,40 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========================================================================= //
-// 1. SOUND EFFECTS SYNTHESIZER (WEB AUDIO API)                              //
+// 1. WEB AUDIO API SYNTHESIZER (CINEMATIC SFX)                              //
 // ========================================================================= //
 let audioCtx = null;
 let soundEnabled = true;
 
 function initAudioSystem() {
     const audioBtn = document.getElementById('audio-toggle-btn');
-    const audioLandingBtn = document.getElementById('audio-toggle-landing');
-    const audioStatusText = document.getElementById('audio-status-text');
-    
-    function toggleAudio() {
+    const introAudioBtn = document.getElementById('intro-audio-btn');
+
+    function toggleAudio(e) {
+        if (e) e.stopPropagation();
         soundEnabled = !soundEnabled;
         const icon = soundEnabled ? 'volume-2' : 'volume-x';
         
         if (audioBtn) {
             audioBtn.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 ${soundEnabled ? 'text-black' : 'text-neutral-400'}"></i>`;
         }
-        if (audioLandingBtn) {
-            audioLandingBtn.innerHTML = `<i data-lucide="${icon}" class="w-3.5 h-3.5"></i> <span id="audio-status-text">${soundEnabled ? 'AUDIO ON' : 'AUDIO OFF'}</span>`;
+        if (introAudioBtn) {
+            introAudioBtn.innerHTML = `<i data-lucide="${icon}" class="w-3.5 h-3.5 text-white"></i> <span class="text-[10px] font-mono font-bold tracking-widest text-white/80">${soundEnabled ? 'SFX ON' : 'SFX OFF'}</span>`;
         }
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
         if (soundEnabled) playTone(880, 'sine', 0.1, 0.05);
     }
 
     if (audioBtn) audioBtn.addEventListener('click', toggleAudio);
-    if (audioLandingBtn) audioLandingBtn.addEventListener('click', toggleAudio);
+    if (introAudioBtn) introAudioBtn.addEventListener('click', toggleAudio);
 
-    // Attach click SFX to buttons & links
+    // Attach ambient click & hover SFX
     document.querySelectorAll('button, a, .manga-exact-tag, .manga-card, .project-modal-trigger').forEach(el => {
         el.addEventListener('mouseenter', () => {
-            if (soundEnabled) playTone(540, 'triangle', 0.04, 0.02);
+            if (soundEnabled) playTone(580, 'triangle', 0.03, 0.015);
         });
         el.addEventListener('click', (e) => {
-            if (soundEnabled) playTone(880, 'sine', 0.08, 0.04);
+            if (soundEnabled) playTone(920, 'sine', 0.06, 0.03);
             createMangaSFX(e.clientX, e.clientY);
         });
     });
@@ -66,7 +68,7 @@ function getAudioContext() {
     return audioCtx;
 }
 
-function playTone(freq, type = 'sine', duration = 0.1, vol = 0.05) {
+function playTone(freq, type = 'sine', duration = 0.1, vol = 0.04) {
     if (!soundEnabled) return;
     try {
         const ctx = getAudioContext();
@@ -75,14 +77,12 @@ function playTone(freq, type = 'sine', duration = 0.1, vol = 0.05) {
         osc.type = type;
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
         gain.gain.setValueAtTime(vol, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
         osc.stop(ctx.currentTime + duration);
-    } catch (e) {
-        // Ignore audio policy errors before interaction
-    }
+    } catch (e) {}
 }
 
 function playCinematicZoomSound() {
@@ -91,134 +91,34 @@ function playCinematicZoomSound() {
         const ctx = getAudioContext();
         const now = ctx.currentTime;
         
-        // Deep sub bass sweep
+        // Sub-bass sweep
         const subOsc = ctx.createOscillator();
         const subGain = ctx.createGain();
         subOsc.type = 'sawtooth';
-        subOsc.frequency.setValueAtTime(60, now);
-        subOsc.frequency.exponentialRampToValueAtTime(800, now + 1.2);
-        subGain.gain.setValueAtTime(0.08, now);
-        subGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+        subOsc.frequency.setValueAtTime(50, now);
+        subOsc.frequency.exponentialRampToValueAtTime(650, now + 1.1);
+        subGain.gain.setValueAtTime(0.09, now);
+        subGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.1);
         subOsc.connect(subGain);
         subGain.connect(ctx.destination);
         subOsc.start(now);
-        subOsc.stop(now + 1.2);
+        subOsc.stop(now + 1.1);
 
-        // Cyber chime
-        setTimeout(() => playTone(1200, 'sine', 0.3, 0.05), 400);
-        setTimeout(() => playTone(1600, 'sine', 0.4, 0.06), 800);
+        // High frequency chime
+        setTimeout(() => playTone(1200, 'sine', 0.25, 0.04), 300);
+        setTimeout(() => playTone(1600, 'sine', 0.35, 0.05), 650);
     } catch (e) {}
 }
 
 
 // ========================================================================= //
-// 2. CINEMATIC MANGA ENTRANCE CONTROLLER                                    //
+// 2. PARTICLES & AMBIENT DUST CANVAS ENGINE                                 //
 // ========================================================================= //
-function initCinematicEntrance() {
-    const landing = document.getElementById('cinematic-landing');
-    const bookContainer = document.getElementById('manga-book-container');
-    const startBtn = document.getElementById('book-start-btn');
-    const skipBtn = document.getElementById('skip-intro-btn');
-    const replayBtn = document.getElementById('replay-intro-btn');
-    const buildingOverlay = document.getElementById('building-overlay');
-    const buildingProgress = document.getElementById('building-progress');
-    const buildingConsole = document.getElementById('building-console');
-    const portfolioApp = document.getElementById('portfolio-app');
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
 
-    let isLaunching = false;
-
-    // Launch Transition into Full Site
-    function launchFullPortfolio() {
-        if (isLaunching) return;
-        isLaunching = true;
-
-        playCinematicZoomSound();
-
-        // 1. Show Building Overlay
-        setTimeout(() => {
-            if (buildingOverlay) {
-                buildingOverlay.style.opacity = '1';
-                buildingOverlay.style.pointerEvents = 'auto';
-            }
-            if (buildingProgress) {
-                setTimeout(() => buildingProgress.style.width = '100%', 100);
-            }
-
-            const logs = [
-                '> Loading neural weights...',
-                '> Initializing PyTorch & CUDA engines...',
-                '> Compiling Java high-throughput services...',
-                '> Verifying data pipeline integrity...',
-                '> Deploying Ajaikanth Portfolio System [OK]'
-            ];
-            
-            let logIdx = 0;
-            const logTimer = setInterval(() => {
-                logIdx++;
-                if (logIdx < logs.length && buildingConsole) {
-                    buildingConsole.innerHTML = `<span>${logs[logIdx]}</span>`;
-                } else {
-                    clearInterval(logTimer);
-                }
-            }, 250);
-
-        }, 150);
-
-        // 2. Reveal Homepage
-        setTimeout(() => {
-            if (landing) {
-                landing.style.opacity = '0';
-                landing.style.pointerEvents = 'none';
-            }
-            if (portfolioApp) {
-                portfolioApp.style.opacity = '1';
-            }
-            document.body.style.overflow = 'auto';
-            lucide.createIcons();
-
-            setTimeout(() => {
-                if (buildingOverlay) buildingOverlay.style.opacity = '0';
-                if (buildingProgress) buildingProgress.style.width = '0%';
-                isLaunching = false;
-            }, 1000);
-
-        }, 1500);
-    }
-
-    if (startBtn) startBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        launchFullPortfolio();
-    });
-
-    if (skipBtn) skipBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        launchFullPortfolio();
-    });
-
-    if (landing) {
-        landing.addEventListener('click', launchFullPortfolio);
-    }
-
-    // Replay Book Cover from Navbar
-    if (replayBtn) {
-        replayBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'instant' });
-            if (portfolioApp) portfolioApp.style.opacity = '0';
-            if (landing) {
-                landing.style.opacity = '1';
-                landing.style.pointerEvents = 'auto';
-            }
-            document.body.style.overflow = 'hidden';
-        });
-    }
-}
-
-
-// ========================================================================= //
-// 3. AMBIENT MANGA SPEEDLINES CANVAS                                        //
-// ========================================================================= //
-function initSpeedlinesCanvas() {
-    const canvas = document.getElementById('speedlines-canvas');
+function initIntroParticleCanvas() {
+    const canvas = document.getElementById('intro-particle-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
@@ -230,119 +130,280 @@ function initSpeedlinesCanvas() {
         height = canvas.height = window.innerHeight;
     });
 
-    const lines = [];
-    const numLines = 30;
+    const particles = [];
+    const numParticles = window.innerWidth < 768 ? 35 : 75;
 
-    for (let i = 0; i < numLines; i++) {
-        lines.push({
+    for (let i = 0; i < numParticles; i++) {
+        particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            length: Math.random() * 80 + 30,
-            speed: Math.random() * 2 + 1,
-            opacity: Math.random() * 0.25 + 0.05,
-            width: Math.random() * 1.5 + 0.5
+            radius: Math.random() * 1.6 + 0.4,
+            speedX: (Math.random() - 0.5) * 0.4,
+            speedY: -Math.random() * 0.6 - 0.2,
+            opacity: Math.random() * 0.5 + 0.1,
+            pulse: Math.random() * Math.PI
         });
     }
 
-    function animate() {
+    function render() {
         ctx.clearRect(0, 0, width, height);
 
-        ctx.strokeStyle = '#000000';
-        lines.forEach(line => {
-            ctx.beginPath();
-            ctx.lineWidth = line.width;
-            ctx.globalAlpha = line.opacity;
-            ctx.moveTo(line.x, line.y);
-            ctx.lineTo(line.x, line.y + line.length);
-            ctx.stroke();
+        // Subtle radial mouse glow
+        const gradient = ctx.createRadialGradient(mouseX, mouseY, 10, mouseX, mouseY, 320);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.04)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
 
-            line.y += line.speed;
-            if (line.y > height) {
-                line.y = -line.length;
-                line.x = Math.random() * width;
+        // Draw dust particles
+        particles.forEach(p => {
+            p.y += p.speedY;
+            p.x += p.speedX;
+            p.pulse += 0.02;
+
+            if (p.y < -10) {
+                p.y = height + 10;
+                p.x = Math.random() * width;
             }
+            if (p.x < -10) p.x = width + 10;
+            if (p.x > width + 10) p.x = -10;
+
+            const alpha = p.opacity * (0.7 + 0.3 * Math.sin(p.pulse));
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.shadowBlur = 4;
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
+            ctx.fill();
+            ctx.shadowBlur = 0;
         });
 
-        requestAnimationFrame(animate);
+        requestAnimationFrame(render);
     }
 
-    animate();
+    render();
 }
 
 
 // ========================================================================= //
-// 4. TYPEWRITER EFFECT FOR HERO HEADLINE                                    //
+// 3. 2.5D MOUSE PARALLAX & IDLE MOVEMENT CONTROLLER                         //
 // ========================================================================= //
-function initTypewriter() {
-    const target = document.getElementById('hero-typewriter');
-    if (!target) return;
+function initCinematicIntroParallax() {
+    const introStage = document.getElementById('intro-stage');
+    const layerBg = document.querySelector('.intro-layer-bg');
+    const layerChar = document.querySelector('.intro-layer-character');
+    const layerFg = document.querySelector('.intro-layer-fg');
+    const layerLight = document.getElementById('intro-cursor-light');
 
-    const roles = [
-        "AI & Data Science Student",
-        "Java & Python Developer",
-        "React Native Mobile Dev",
-        "SIH 2025 National Winner"
-    ];
+    if (!introStage) return;
 
-    let roleIdx = 0;
-    let charIdx = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
 
-    function type() {
-        const currentRole = roles[roleIdx];
-        
-        if (isDeleting) {
-            target.textContent = currentRole.substring(0, charIdx - 1);
-            charIdx--;
-            typingSpeed = 50;
-        } else {
-            target.textContent = currentRole.substring(0, charIdx + 1);
-            charIdx++;
-            typingSpeed = 110;
-        }
-
-        if (!isDeleting && charIdx === currentRole.length) {
-            isDeleting = true;
-            typingSpeed = 1800; // Pause at full word
-        } else if (isDeleting && charIdx === 0) {
-            isDeleting = false;
-            roleIdx = (roleIdx + 1) % roles.length;
-            typingSpeed = 400;
-        }
-
-        setTimeout(type, typingSpeed);
-    }
-
-    type();
-}
-
-
-// ========================================================================= //
-// 5. CUSTOM ANIME CURSOR                                                    //
-// ========================================================================= //
-function initCustomCursor() {
-    const cursor = document.getElementById('custom-cursor');
-    if (!cursor) return;
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-
+    // Track mouse coordinates
     window.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        targetX = (e.clientX - centerX) / centerX;
+        targetY = (e.clientY - centerY) / centerY;
+
+        if (layerLight) {
+            layerLight.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+        }
     });
 
-    document.querySelectorAll('a, button, input, textarea, .manga-exact-tag, .manga-card').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-    });
+    // Touch support for mobile tilt
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+            const touch = e.touches[0];
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            targetX = (touch.clientX - centerX) / centerX;
+            targetY = (touch.clientY - centerY) / centerY;
+        }
+    }, { passive: true });
+
+    // Smooth inertia interpolation (Lerp loop)
+    function animateParallax() {
+        currentX += (targetX - currentX) * 0.06;
+        currentY += (targetY - currentY) * 0.06;
+
+        if (layerBg) {
+            layerBg.style.transform = `translate3d(${currentX * 12}px, ${currentY * 10}px, 0px) scale(1.02)`;
+        }
+        if (layerChar) {
+            // Character moves slightly opposite for true 2.5D depth
+            layerChar.style.transform = `translate3d(${-currentX * 18}px, ${-currentY * 14}px, 40px) rotateY(${currentX * 3.5}deg) rotateX(${-currentY * 3.5}deg)`;
+        }
+        if (layerFg) {
+            layerFg.style.transform = `translate3d(${currentX * 8}px, ${currentY * 6}px, 70px)`;
+        }
+
+        requestAnimationFrame(animateParallax);
+    }
+
+    animateParallax();
 }
 
 
 // ========================================================================= //
-// 6. 3D TILT EFFECT ON HERO MANGA CARD                                      //
+// 4. CINEMATIC INTRO FLOW & ENTER THE CHRONICLES CONTROLLER                 //
+// ========================================================================= //
+function initIntroFlow() {
+    const intro = document.getElementById('cinematic-intro');
+    const enterBtn = document.getElementById('enter-chronicles-btn');
+    const skipBtn = document.getElementById('skip-intro-btn');
+    const replayBtn = document.getElementById('replay-intro-btn');
+    const portfolioApp = document.getElementById('portfolio-app');
+
+    let hasTransitioned = false;
+
+    // Check if user already saw intro in current session
+    const introSeen = sessionStorage.getItem('ajai_intro_seen');
+    if (introSeen === 'true' && portfolioApp && intro) {
+        intro.style.display = 'none';
+        portfolioApp.style.opacity = '1';
+        document.body.style.overflow = 'auto';
+        if (window.lucide) lucide.createIcons();
+    } else {
+        // Initial Cinematic Fade Sequence
+        setTimeout(() => {
+            const charContainer = document.getElementById('intro-character-container');
+            const introTitle = document.getElementById('intro-hero-title');
+            const introCta = document.getElementById('intro-cta-wrapper');
+
+            if (charContainer) {
+                charContainer.style.opacity = '1';
+                charContainer.style.filter = 'contrast(1.1) brightness(1)';
+            }
+            if (introTitle) {
+                introTitle.style.opacity = '1';
+                introTitle.style.transform = 'translateY(0)';
+            }
+            if (introCta) {
+                introCta.style.opacity = '1';
+                introCta.style.transform = 'translateY(0)';
+            }
+        }, 300);
+    }
+
+    function enterChronicles(immediate = false) {
+        if (hasTransitioned) return;
+        hasTransitioned = true;
+        sessionStorage.setItem('ajai_intro_seen', 'true');
+
+        if (immediate) {
+            if (intro) {
+                intro.style.opacity = '0';
+                intro.style.pointerEvents = 'none';
+                setTimeout(() => intro.style.display = 'none', 400);
+            }
+            if (portfolioApp) portfolioApp.style.opacity = '1';
+            document.body.style.overflow = 'auto';
+            if (window.lucide) lucide.createIcons();
+            return;
+        }
+
+        // Play Cinematic Sound
+        playCinematicZoomSound();
+
+        // 3D Zoom Camera Rush Effect
+        if (intro) {
+            intro.classList.add('zoom-rush-active');
+        }
+
+        setTimeout(() => {
+            if (intro) {
+                intro.style.opacity = '0';
+                intro.style.pointerEvents = 'none';
+                setTimeout(() => intro.style.display = 'none', 600);
+            }
+            if (portfolioApp) {
+                portfolioApp.style.opacity = '1';
+            }
+            document.body.style.overflow = 'auto';
+            if (window.lucide) lucide.createIcons();
+        }, 900);
+    }
+
+    if (enterBtn) enterBtn.addEventListener('click', () => enterChronicles(false));
+    if (skipBtn) skipBtn.addEventListener('click', () => enterChronicles(true));
+
+    // Replay Intro from Navbar
+    if (replayBtn) {
+        replayBtn.addEventListener('click', () => {
+            hasTransitioned = false;
+            if (intro) {
+                intro.style.display = 'flex';
+                intro.classList.remove('zoom-rush-active');
+                setTimeout(() => {
+                    intro.style.opacity = '1';
+                    intro.style.pointerEvents = 'auto';
+                }, 50);
+            }
+            if (portfolioApp) portfolioApp.style.opacity = '0';
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            document.body.style.overflow = 'hidden';
+        });
+    }
+}
+
+
+// ========================================================================= //
+// 5. DYNAMIC CUSTOM CURSOR (DESKTOP)                                        //
+// ========================================================================= //
+function initCustomCursor() {
+    const cursor = document.getElementById('custom-cursor');
+    const label = document.getElementById('cursor-label');
+    if (!cursor) return;
+
+    // Hide custom cursor on mobile / touch
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        cursor.style.display = 'none';
+        return;
+    }
+
+    window.addEventListener('mousemove', (e) => {
+        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+
+    // Handle cursor modes & labels
+    function updateCursorTargets() {
+        document.querySelectorAll('a, button, [data-cursor], .manga-card, .project-modal-trigger, .skill-tab-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovering');
+                const customText = el.getAttribute('data-cursor') || (el.tagName === 'A' ? 'GO →' : 'OPEN');
+                if (label) label.textContent = customText;
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovering');
+                if (label) label.textContent = '';
+            });
+        });
+    }
+
+    updateCursorTargets();
+
+    // Change cursor color when over light/cream areas
+    window.addEventListener('scroll', () => {
+        const intro = document.getElementById('cinematic-intro');
+        if (intro && intro.style.display !== 'none' && intro.style.opacity !== '0') {
+            cursor.classList.remove('on-cream');
+        } else {
+            cursor.classList.add('on-cream');
+        }
+    }, { passive: true });
+}
+
+
+// ========================================================================= //
+// 6. HERO 3D MANGA CARD PERSPECTIVE TILT                                    //
 // ========================================================================= //
 function initHeroTilt() {
     const card = document.getElementById('hero-manga-card');
@@ -353,8 +414,8 @@ function initHeroTilt() {
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
 
-        const tiltX = (y / (rect.height / 2)) * -8;
-        const tiltY = (x / (rect.width / 2)) * 8;
+        const tiltX = (y / (rect.height / 2)) * -6;
+        const tiltY = (x / (rect.width / 2)) * 6;
 
         card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
     });
@@ -366,7 +427,56 @@ function initHeroTilt() {
 
 
 // ========================================================================= //
-// 7. MANGA SFX FLOATING KANJI ON CLICKS                                     //
+// 7. TYPEWRITER EFFECT FOR HERO HEADLINE                                    //
+// ========================================================================= //
+function initTypewriter() {
+    const target = document.getElementById('hero-typewriter');
+    if (!target) return;
+
+    const roles = [
+        "AI & Data Science Undergrad",
+        "Applied Machine Learning",
+        "Java & Python Developer",
+        "React Native Mobile Engineer",
+        "Smart India Hackathon '25 Winner"
+    ];
+
+    let roleIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    let typingSpeed = 90;
+
+    function type() {
+        const currentRole = roles[roleIdx];
+        
+        if (isDeleting) {
+            target.textContent = currentRole.substring(0, charIdx - 1);
+            charIdx--;
+            typingSpeed = 40;
+        } else {
+            target.textContent = currentRole.substring(0, charIdx + 1);
+            charIdx++;
+            typingSpeed = 95;
+        }
+
+        if (!isDeleting && charIdx === currentRole.length) {
+            isDeleting = true;
+            typingSpeed = 1900;
+        } else if (isDeleting && charIdx === 0) {
+            isDeleting = false;
+            roleIdx = (roleIdx + 1) % roles.length;
+            typingSpeed = 350;
+        }
+
+        setTimeout(type, typingSpeed);
+    }
+
+    type();
+}
+
+
+// ========================================================================= //
+// 8. FLOATING SFX KANJI CLICK EFFECT                                        //
 // ========================================================================= //
 function createMangaSFX(x, y) {
     const container = document.getElementById('sfx-container');
@@ -376,9 +486,8 @@ function createMangaSFX(x, y) {
         "ドドド (DODODO)",
         "ゴゴゴ (GOGOGO)",
         "バァン (BAAAM)",
-        "ズキュウウウン",
+        "ズキュウウン",
         "シュッ (SWOOSH)",
-        "ビシッ (SPARK)",
         "カチッ (CLICK)"
     ];
 
@@ -387,18 +496,15 @@ function createMangaSFX(x, y) {
     sfx.textContent = sfxList[Math.floor(Math.random() * sfxList.length)];
     sfx.style.left = `${x}px`;
     sfx.style.top = `${y}px`;
-    sfx.style.fontSize = `${Math.floor(Math.random() * 6 + 13)}px`;
+    sfx.style.fontSize = `${Math.floor(Math.random() * 5 + 13)}px`;
 
     container.appendChild(sfx);
-
-    setTimeout(() => {
-        sfx.remove();
-    }, 1200);
+    setTimeout(() => sfx.remove(), 1200);
 }
 
 
 // ========================================================================= //
-// 8. FILTER TABS (SKILLS)                                                   //
+// 9. SKILLS FILTER TABS CONTROLLER                                          //
 // ========================================================================= //
 function initFilterTabs() {
     const skillBtns = document.querySelectorAll('.skill-tab-btn');
@@ -413,10 +519,10 @@ function initFilterTabs() {
             skillCards.forEach(card => {
                 if (filter === 'all' || card.getAttribute('data-category') === filter) {
                     card.style.display = 'block';
-                    setTimeout(() => card.style.opacity = '1', 50);
+                    setTimeout(() => card.style.opacity = '1', 40);
                 } else {
                     card.style.opacity = '0';
-                    setTimeout(() => card.style.display = 'none', 200);
+                    setTimeout(() => card.style.display = 'none', 180);
                 }
             });
         });
@@ -425,55 +531,65 @@ function initFilterTabs() {
 
 
 // ========================================================================= //
-// 9. MODALS SYSTEM (PROJECT DETAIL & RESUME VIEWER)                         //
+// 10. CASE FILES & RESUME MODAL SYSTEM                                      //
 // ========================================================================= //
 const projectData = {
     medroute: {
         title: "MedRoute - Emergency Ambulance Optimization",
-        category: "MOBILE APP & GEO-ROUTING (JAVA / FIREBASE / MAPS API)",
-        description: "Mobile application developed to optimize emergency ambulance response routes by calculating shortest time paths and integrating real-time traffic updates. Incorporates live GPS location tracking for dispatch units and patient destinations.",
-        architecture: "Java, Android SDK, Firebase Realtime Database, Google Maps API, GPS Geolocation.",
-        metrics: "Calculates optimized response routes, integrates real-time traffic updates, and enables live ambulance tracking.",
+        caseNum: "CASE FILE // 001",
+        category: "MOBILE APP & GEO-ROUTING (JAVA / FIREBASE / GOOGLE MAPS)",
+        description: "Mobile application engineered to optimize emergency ambulance response times by dynamically computing shortest travel paths and factoring in real-time traffic conditions. Incorporates live GPS tracking for dispatch stations and hospital arrival forecasting.",
+        architecture: "Java, Android SDK, Firebase Realtime Database, Google Maps API, Geolocation Services.",
+        role: "Solo Lead Developer (Architecture, Google Maps API Integration & Firebase Database Sync)",
+        metrics: "Dynamic shortest-time route recalculation and real-time GPS telemetry for emergency response.",
         github: "https://github.com/Ajaikanth123"
     },
     medimartx: {
-        title: "MediMartX - Healthcare Ecommerce & Medicine Delivery",
+        title: "MediMartX - Healthcare E-Commerce Platform",
+        caseNum: "CASE FILE // 002",
         category: "HEALTHCARE ECOMMERCE (REACT NATIVE / FIREBASE)",
-        description: "Cross-platform mobile commerce platform for purchasing medicines online, featuring prescription upload processing, live order status updates, category filtering, and real-time inventory management.",
+        description: "Cross-platform mobile e-commerce application for ordering medicines online. Features digital prescription uploads, live order tracking, category filtering, and real-time inventory management with cloud sync.",
         architecture: "React Native, Expo, Firebase Firestore, Cloud Storage, Authentication.",
-        metrics: "Seamless prescription uploads, real-time inventory sync, and responsive checkout workflow.",
+        role: "Full-Stack Mobile Developer (UI/UX, Prescription Pipeline, Firestore Cloud Backend)",
+        metrics: "End-to-end medicine ordering flow with verified prescription upload workflows.",
         github: "https://github.com/Ajaikanth123"
     },
     cookify: {
-        title: "Cookify - Recipe Discovery & Meal Planning App",
+        title: "Cookify - Recipe Discovery & Meal Planning",
+        caseNum: "CASE FILE // 003",
         category: "RECIPE DISCOVERY APP (REACT NATIVE / REST API)",
-        description: "Mobile application enabling users to search, discover, and follow culinary recipes with category filtering, detailed ingredient breakdowns, step-by-step preparation guides, and bookmarking.",
-        architecture: "React Native, RESTful APIs, Local AsyncStorage, State Management.",
-        metrics: "Instant recipe search, category filtering, and step-by-step cooking companion mode.",
+        description: "Mobile culinary companion enabling users to search, filter, and follow structured recipes with category filters, detailed ingredient breakdowns, step-by-step preparation guides, and offline recipe bookmarking.",
+        architecture: "React Native, RESTful APIs, AsyncStorage, State Management.",
+        role: "Mobile App Developer (API Integration, Client Caching, Interactive Step-by-Step UI)",
+        metrics: "Instant recipe search and step-by-step cooking guide companion.",
         github: "https://github.com/Ajaikanth123"
     },
     gym: {
         title: "Gym Attendance & Member Management",
-        category: "CLIENT MOBILE APPLICATION (REACT NATIVE / FIREBASE)",
-        description: "Freelance production mobile solution for daily member check-ins, automated attendance records, membership renewal notifications, workout log tracking, and real-time sync with Firebase.",
-        architecture: "React Native, Firebase Firestore, Push Notifications, Authentication.",
-        metrics: "Deployed for real client operations with automated daily check-in logs and renewal reminders.",
+        caseNum: "CASE FILE // 004",
+        category: "CLIENT PRODUCTION APPLICATION (REACT NATIVE / FIREBASE)",
+        description: "Freelance production mobile solution delivered for an active gym client. Streamlines daily member check-ins, automated attendance logs, membership renewal alerts, workout history tracking, and cloud sync.",
+        architecture: "React Native, Firebase Firestore, Cloud Messaging, Authentication.",
+        role: "Freelance Full-Stack Developer (Direct Client Delivery with full client payout and performance bonus)",
+        metrics: "Production deployment with automated attendance logs and renewal notifications.",
         github: "https://github.com/Ajaikanth123"
     },
     lunarguardians: {
         title: "Team Lunar Guardians - SIH 2025 National Winner",
+        caseNum: "CASE FILE // 005",
         category: "SPACE TECHNOLOGY / AI & DATA SCIENCE",
-        description: "National Winner at Smart India Hackathon (SIH) 2025 under the Space Tech domain. Selected as Pre-Incubatee at Aakam360 incubation center for pioneering aerospace and space data tech solutions.",
+        description: "National 1st Prize Winner at Smart India Hackathon (SIH) 2025 in the Space Technology domain. Selected as Pre-Incubatee at Aakam360 incubation center for pioneering aerospace and space data tech solutions.",
         architecture: "Python, AI/ML, Data Science, System Design, Space Tech.",
-        metrics: "Smart India Hackathon (SIH) 2025 National 1st Prize Winner & Pre-Incubatee @ Aakam360.",
+        role: "Team Lunar Guardians Member & AI/Data Specialist",
+        metrics: "National 1st Prize Winner at SIH 2025 & Pre-Incubatee @ Aakam360.",
         github: "https://github.com/Ajaikanth123"
     }
 };
 
 function initModals() {
-    // Project Modal Elements
     const projectModal = document.getElementById('project-modal');
     const closeProjectModal = document.getElementById('close-project-modal');
+    const modalCaseNum = document.getElementById('modal-case-num');
     const modalTitle = document.getElementById('modal-project-title');
     const modalCategory = document.getElementById('modal-project-category');
     const modalBody = document.getElementById('modal-project-body');
@@ -485,65 +601,75 @@ function initModals() {
             const data = projectData[key];
             if (!data) return;
 
-            modalTitle.textContent = data.title;
-            modalCategory.textContent = data.category;
-            modalGithub.href = data.github;
+            if (modalCaseNum) modalCaseNum.textContent = data.caseNum;
+            if (modalTitle) modalTitle.textContent = data.title;
+            if (modalCategory) modalCategory.textContent = data.category;
+            if (modalGithub) modalGithub.href = data.github;
 
-            modalBody.innerHTML = `
-                <div class="space-y-4">
-                    <div>
-                        <h4 class="font-syne font-bold text-black text-sm uppercase">Overview</h4>
-                        <p class="text-xs text-neutral-800 mt-1 leading-relaxed">${data.description}</p>
+            if (modalBody) {
+                modalBody.innerHTML = `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-syne font-bold text-black text-xs uppercase tracking-wider">PROJECT OVERVIEW</h4>
+                            <p class="text-xs text-neutral-800 mt-1 leading-relaxed">${data.description}</p>
+                        </div>
+                        <div class="p-4 bg-[#fdfcf9] border-2 border-black space-y-2.5 shadow-[2px_2px_0px_#000]">
+                            <div class="font-mono text-xs text-neutral-900"><strong class="text-black">ROLE & SCOPE:</strong> ${data.role}</div>
+                            <div class="font-mono text-xs text-neutral-900"><strong class="text-black">TECH STACK:</strong> ${data.architecture}</div>
+                            <div class="font-mono text-xs text-emerald-800 font-bold"><strong class="text-black">DELIVERABLE:</strong> ${data.metrics}</div>
+                        </div>
                     </div>
-                    <div class="p-4 bg-white border-2 border-black space-y-2 shadow-[2px_2px_0px_#000]">
-                        <div class="font-mono text-xs text-neutral-800"><strong class="text-black">ARCHITECTURE:</strong> ${data.architecture}</div>
-                        <div class="font-mono text-xs text-emerald-800"><strong class="text-black">KEY METRICS:</strong> ${data.metrics}</div>
-                    </div>
-                </div>
-            `;
+                `;
+            }
 
-            projectModal.style.opacity = '1';
-            projectModal.style.pointerEvents = 'auto';
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons();
+            if (projectModal) {
+                projectModal.style.opacity = '1';
+                projectModal.style.pointerEvents = 'auto';
+                document.body.style.overflow = 'hidden';
+                if (window.lucide) lucide.createIcons();
+            }
         });
     });
 
     if (closeProjectModal) {
         closeProjectModal.addEventListener('click', () => {
-            projectModal.style.opacity = '0';
-            projectModal.style.pointerEvents = 'none';
-            document.body.style.overflow = 'auto';
+            if (projectModal) {
+                projectModal.style.opacity = '0';
+                projectModal.style.pointerEvents = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
     }
 
-    // Resume Modal Elements
+    // Resume Modal
     const resumeModal = document.getElementById('resume-modal');
     const heroResumeBtn = document.getElementById('hero-resume-btn');
     const closeResumeModal = document.getElementById('close-resume-modal');
     const downloadResumeBtn = document.getElementById('download-resume-btn');
 
     function openResume() {
-        resumeModal.style.opacity = '1';
-        resumeModal.style.pointerEvents = 'auto';
-        document.body.style.overflow = 'hidden';
-        lucide.createIcons();
+        if (resumeModal) {
+            resumeModal.style.opacity = '1';
+            resumeModal.style.pointerEvents = 'auto';
+            document.body.style.overflow = 'hidden';
+            if (window.lucide) lucide.createIcons();
+        }
     }
 
     if (heroResumeBtn) heroResumeBtn.addEventListener('click', openResume);
 
     if (closeResumeModal) {
         closeResumeModal.addEventListener('click', () => {
-            resumeModal.style.opacity = '0';
-            resumeModal.style.pointerEvents = 'none';
-            document.body.style.overflow = 'auto';
+            if (resumeModal) {
+                resumeModal.style.opacity = '0';
+                resumeModal.style.pointerEvents = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
     }
 
     if (downloadResumeBtn) {
-        downloadResumeBtn.addEventListener('click', () => {
-            window.print();
-        });
+        downloadResumeBtn.addEventListener('click', () => window.print());
     }
 
     // Close on backdrop click
@@ -561,7 +687,7 @@ function initModals() {
 
 
 // ========================================================================= //
-// 10. CONTACT FORM HANDLER                                                  //
+// 11. CONTACT FORM TRANSMISSION HANDLER                                     //
 // ========================================================================= //
 function initContactForm() {
     const form = document.getElementById('contact-form');
@@ -573,27 +699,33 @@ function initContactForm() {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="animate-spin inline-block mr-2">⚙</span> TRANSMITTING...';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">⚙</span> TRANSMITTING SIGNAL...';
+        }
 
         setTimeout(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> TRANSMITTED';
-            status.classList.remove('hidden');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> TRANSMITTED SUCCESSFULLY';
+            }
+            if (status) status.classList.remove('hidden');
             form.reset();
-            lucide.createIcons();
+            if (window.lucide) lucide.createIcons();
 
             setTimeout(() => {
-                submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> TRANSMIT SIGNAL';
-                lucide.createIcons();
-            }, 4000);
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> TRANSMIT SIGNAL';
+                    if (window.lucide) lucide.createIcons();
+                }
+            }, 3500);
         }, 1200);
     });
 }
 
 
 // ========================================================================= //
-// 11. MOBILE NAVIGATION DRAWER                                              //
+// 12. MOBILE NAVIGATION DRAWER                                              //
 // ========================================================================= //
 function initMobileNav() {
     const btn = document.getElementById('mobile-menu-btn');
@@ -606,11 +738,7 @@ function initMobileNav() {
 
     function toggleMenu() {
         isOpen = !isOpen;
-        if (isOpen) {
-            drawer.style.maxHeight = '600px';
-        } else {
-            drawer.style.maxHeight = '0px';
-        }
+        drawer.style.maxHeight = isOpen ? '600px' : '0px';
     }
 
     btn.addEventListener('click', toggleMenu);
@@ -625,7 +753,7 @@ function initMobileNav() {
 
 
 // ========================================================================= //
-// 12. FLOATING SCROLL-TO-TOP & PROGRESS CONTROLLER                          //
+// 13. FLOATING SCROLL PROGRESS & RETURN TO TOP                              //
 // ========================================================================= //
 function initScrollTopButton() {
     const fab = document.getElementById('scroll-top-fab');
@@ -643,7 +771,7 @@ function initScrollTopButton() {
             circle.setAttribute('stroke-dasharray', `${progress.toFixed(1)}, 100`);
         }
 
-        if (scrollTop > 350) {
+        if (scrollTop > 400) {
             fab.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
             fab.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
         } else {
@@ -654,9 +782,6 @@ function initScrollTopButton() {
 
     btn.addEventListener('click', () => {
         playTone(660, 'triangle', 0.12, 0.04);
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }

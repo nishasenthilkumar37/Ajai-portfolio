@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajaikanth Saravanan | AI & Data Science Engineer</title>
-    <meta name="description" content="Portfolio of Ajaikanth Saravanan - AI & Data Science Engineer, SIH 2025 National Winner.">
+    <title>Ajaikanth Saravanan | The Developer Chronicles</title>
+    <meta name="description" content="Cinematic Portfolio of Ajaikanth Saravanan - AI & Data Science Developer, Smart India Hackathon 2025 National Winner.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-weight='900' fill='black'>A</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050505'/><text y='.75em' x='50%' text-anchor='middle' font-size='68' font-weight='900' fill='%23ffffff' font-family='sans-serif'>A</text></svg>">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;700;800;900&family=Syne:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;700;800;900&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,8 +30,10 @@
                         manga: ['Bebas Neue', 'sans-serif']
                     },
                     colors: {
+                        dark: '#050505',
+                        'dark-surface': '#0c0c0c',
                         cream: '#f4f0e6',
-                        'cream-card': '#fcfbf8'
+                        'cream-card': '#fdfcf9'
                     }
                 }
             }
@@ -46,141 +48,131 @@
 </head>
 <body class="bg-[#f4f0e6] text-black font-sans antialiased selection:bg-black selection:text-white overflow-x-hidden">
 
-    <!-- Global Speedlines Canvas -->
-    <canvas id="speedlines-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-15"></canvas>
-    
-    <!-- Custom Anime Cursor -->
+    <!-- Global Custom Dynamic Cursor (Desktop Only) -->
     <div id="custom-cursor" class="custom-cursor pointer-events-none hidden md:block">
         <div class="cursor-dot"></div>
-        <div class="cursor-ring"></div>
+        <div class="cursor-ring">
+            <span id="cursor-label" class="cursor-label"></span>
+        </div>
     </div>
 
-    <!-- SFX Floating Manga Sound Tags Container -->
+    <!-- SFX Floating Manga Sound Kanji Container -->
     <div id="sfx-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div>
 
 
     <!-- ========================================================================= -->
-    <!-- 1. EXACT MANGA DOUBLE-PAGE SPREAD OPENING (FULL PAGE // NO SPLIT NAME)   -->
+    <!-- 1. CINEMATIC 2.5D OPENING STAGE (MINIMAL BLACK SCREEN -> DEEP REVEAL)     -->
     <!-- ========================================================================= -->
-    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex items-center justify-center p-0 md:p-4 lg:p-6 select-none overflow-hidden transition-all duration-1000 cursor-pointer">
+    <div id="cinematic-intro" class="fixed inset-0 z-[100] bg-[#050505] text-white flex flex-col justify-between select-none overflow-hidden transition-all duration-700">
         
-        <!-- The Manga Book Double-Page Spread (Full Page / Exact Screenshot Match) -->
-        <div class="relative w-full h-full md:max-w-6xl md:max-h-[94vh] md:aspect-[16/10] bg-[#f4f0e6] text-black border-0 md:border-2 border-black shadow-[0_0_90px_rgba(255,255,255,0.18)] flex flex-col overflow-hidden z-10 transition-transform duration-700" id="manga-book-container">
+        <!-- Interactive Particle & Light Canvas -->
+        <canvas id="intro-particle-canvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
+        <div id="intro-cursor-light" class="absolute w-[500px] h-[500px] rounded-full bg-white/[0.03] blur-3xl pointer-events-none transition-transform duration-100 ease-out z-0"></div>
+
+        <!-- Top HUD System Bar -->
+        <header class="relative z-20 w-full px-6 py-6 md:px-12 flex items-center justify-between border-b border-white/10 bg-black/40 backdrop-blur-sm">
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                <span class="font-mono text-[11px] font-bold tracking-widest text-white/80 uppercase">
+                    SYS // CHRONICLES_2026
+                </span>
+                <span class="hidden sm:inline font-mono text-[10px] text-white/40 tracking-wider">
+                    [11.58° N, 77.86° E]
+                </span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button id="intro-audio-btn" data-cursor="SFX" class="flex items-center gap-1.5 px-3 py-1.5 border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 text-white transition-colors rounded-none">
+                    <i data-lucide="volume-2" class="w-3.5 h-3.5 text-white"></i>
+                    <span class="text-[10px] font-mono font-bold tracking-widest text-white/80">SFX ON</span>
+                </button>
+
+                <button id="skip-intro-btn" data-cursor="SKIP" class="flex items-center gap-1.5 px-4 py-1.5 border border-white/30 bg-white/10 hover:bg-white hover:text-black text-white font-mono text-xs font-bold tracking-wider transition-all rounded-none">
+                    <span>SKIP INTRO</span>
+                    <i data-lucide="chevrons-right" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2.5D Interactive Parallax Stage -->
+        <main class="relative z-10 flex-1 flex items-center justify-center p-4 md:p-8" id="intro-stage">
             
-            <!-- Book Spine Central Divider Line -->
-            <div class="absolute top-0 bottom-0 left-1/2 w-[2px] -translate-x-1/2 bg-black z-20 hidden md:block pointer-events-none"></div>
+            <!-- Layer 1: Background Grid & Manga Screentone Texture -->
+            <div class="intro-layer intro-layer-bg">
+                <div class="w-full h-full manga-grid-overlay-dark opacity-30"></div>
+                <div class="w-full h-full manga-dot-grid-dark opacity-20"></div>
+            </div>
 
-            <!-- Double-Page Spread Content Grid -->
-            <div class="w-full h-full grid grid-cols-1 md:grid-cols-2 relative manga-dot-grid overflow-y-auto md:overflow-hidden">
-                
-                <!-- LEFT PAGE: AJAIKANTH SARAVANAN (SINGLE LINE), Subtitle, Tag Boxes, Contact -->
-                <div class="p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r-2 border-black relative">
-                    
-                    <!-- Top Spacer -->
-                    <div></div>
-
-                    <!-- Center Typography: AJAIKANTH SARAVANAN (Single Line) + The Developer Chronicles + Tag Boxes -->
-                    <div class="my-auto py-4">
-                        <!-- Main Bold Name (Two-line Layout) -->
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-syne tracking-tight text-black leading-[1.05] drop-shadow-[2px_2px_0px_#000]">
-                            <span class="block">Ajaykanth</span>
-                            <span class="block text-neutral-800">saravanan</span>
-                        </h1>
-                        
-                        <!-- Cursive Italic Script Subtitle -->
-                        <div class="font-script text-xl sm:text-2xl md:text-3xl text-neutral-800 mt-2">
-                            The Developer Chronicles
-                        </div>
-
-                        <!-- Small Boxed Tags Matching Actual Skills -->
-                        <div class="flex flex-wrap gap-2 pt-6">
-                            <span class="manga-exact-tag">JAVA</span>
-                            <span class="manga-exact-tag">PYTHON</span>
-                            <span class="manga-exact-tag">AI & ML</span>
-                            <span class="manga-exact-tag">REACT NATIVE</span>
-                            <span class="manga-exact-tag">FIREBASE</span>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Location / Email Watermark -->
-                    <div class="font-sans text-[11px] sm:text-xs font-bold text-neutral-700 tracking-wider pt-2">
-                        SANKARI, TAMIL NADU, INDIA • AJAIKANTHSARAVANAN@GMAIL.COM
-                    </div>
-                </div>
-
-                <!-- RIGHT PAGE: BUILDING!!, Character with Speedlines -->
-                <div class="p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-between relative overflow-hidden bg-[#f4f0e6]">
-                    
-                    <!-- Top Spacer -->
-                    <div></div>
-
-                    <!-- Top Right Action Text: BUILDING!! (Small & Clean) -->
-                    <div class="absolute top-5 right-6 sm:top-7 sm:right-8 z-10 transform rotate-[-2deg]">
-                        <div class="text-lg sm:text-xl md:text-2xl font-black font-syne italic text-black tracking-tight">
-                            BUILDING!!
-                        </div>
-                    </div>
-
-                    <!-- Character Artwork with Radiating Speedlines -->
-                    <div class="relative flex-1 flex items-center justify-center my-auto py-2">
-                        <!-- Full-Body Standing Manga Character -->
-                        <div class="relative h-[260px] sm:h-[340px] md:h-[420px] max-h-full flex items-center justify-center z-10">
-                            <img src="assets/images/manga-ref-character.jpg" 
-                                 alt="Ajaikanth Saravanan Manga Reference Character" 
-                                 class="h-full w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.25)] rounded-sm">
-                        </div>
-                    </div>
-
-                    <!-- Bottom Spacer -->
-                    <div></div>
-
+            <!-- Layer 2 & 3: 2.5D Manga Character Artwork with Vignette & Idle Float -->
+            <div class="intro-layer intro-layer-character">
+                <div id="intro-character-container" class="relative max-h-[58vh] sm:max-h-[64vh] md:max-h-[70vh] aspect-[3/4] flex items-center justify-center manga-idle-float opacity-0 transition-all duration-1000">
+                    <img src="assets/images/manga-ref-character.jpg" 
+                         alt="Ajaikanth Saravanan Manga Avatar" 
+                         class="h-full w-auto object-contain character-vignette-mask filter brightness-90 contrast-125 drop-shadow-[0_0_60px_rgba(255,255,255,0.12)]">
                 </div>
             </div>
 
-        </div>
+            <!-- Layer 4: Foreground Dramatic Typography -->
+            <div class="intro-layer intro-layer-fg flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+                <div id="intro-hero-title" class="space-y-3 opacity-0 translate-y-4 transition-all duration-1000 delay-200">
+                    
+                    <div class="font-mono text-xs sm:text-sm font-bold tracking-[0.3em] text-neutral-400 uppercase">
+                        THE DEVELOPER CHRONICLES
+                    </div>
 
-        <!-- Cinematic Building / Initializing State Overlay -->
-        <div id="building-overlay" class="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-            <div class="manga-speedline-burst"></div>
-            
-            <div class="relative z-10 flex flex-col items-center text-center px-4 max-w-md">
-                <div class="text-6xl md:text-7xl font-black font-syne text-white tracking-widest animate-pulse mb-4 drop-shadow-[0_0_20px_#ffffff]">
-                    構築中
-                </div>
-                <div class="text-2xl md:text-3xl font-black font-mono tracking-widest text-white uppercase glitch-text" data-text="BUILDING...">
-                    BUILDING...
-                </div>
-                <div class="text-xs font-mono text-neutral-400 mt-2 tracking-widest uppercase">
-                    INITIALIZING AJAIS PORTFOLIO SYSTEM
-                </div>
+                    <!-- Dramatic High-Contrast Title -->
+                    <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black font-syne uppercase tracking-tight text-white leading-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)]">
+                        AJAIKANTH SARAVANAN
+                    </h1>
 
-                <div class="w-64 md:w-80 h-2 bg-neutral-900 border border-neutral-700 rounded-full mt-6 overflow-hidden p-0.5">
-                    <div id="building-progress" class="h-full bg-white rounded-full transition-all duration-1200 w-0"></div>
-                </div>
-
-                <div id="building-console" class="mt-4 font-mono text-[10px] text-neutral-400 h-6 overflow-hidden">
-                    <span>> Loading SeeDataMD & SIH 2025 credentials...</span>
+                    <div class="font-mono text-xs sm:text-sm text-neutral-300 tracking-wider font-semibold pt-1">
+                        AI & DATA SCIENCE DEVELOPER <span class="text-neutral-500">•</span> SMART INDIA HACKATHON '25 WINNER
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Layer 5: Main Call-To-Action (Enter The Chronicles) -->
+            <div class="intro-layer intro-layer-interactive flex flex-col items-center justify-end pb-4 md:pb-8">
+                <div id="intro-cta-wrapper" class="opacity-0 translate-y-4 transition-all duration-1000 delay-500">
+                    <button id="enter-chronicles-btn" data-cursor="ENTER" class="btn-enter-chronicles group">
+                        <span>ENTER THE CHRONICLES</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1.5"></i>
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Metadata Footer -->
+        <footer class="relative z-20 w-full px-6 py-4 md:px-12 flex items-center justify-between border-t border-white/10 bg-black/40 backdrop-blur-sm text-[10px] font-mono text-neutral-400">
+            <div>
+                SRI SHANMUGHA COLLEGE • ANNA UNIVERSITY [8.69 CGPA]
+            </div>
+            <div class="hidden sm:block">
+                SEEDATAMD INTERN • JAVA / PYTHON / REACT NATIVE
+            </div>
+            <div>
+                © 2026 AJAIKANTH
+            </div>
+        </footer>
 
     </div>
 
 
     <!-- ========================================================================= -->
-    <!-- 2. MAIN PORTFOLIO APPLICATION (EXACT RESUME DATA IN MANGA THEME)          -->
+    <!-- 2. MAIN PORTFOLIO APPLICATION (EDITORIAL CHAPTER-BASED SYSTEM)             -->
     <!-- ========================================================================= -->
-    <div id="portfolio-app" class="relative min-h-screen bg-[#f4f0e6] text-black opacity-0 transition-opacity duration-1000">
+    <div id="portfolio-app" class="relative min-h-screen bg-[#f4f0e6] text-black opacity-0 transition-opacity duration-700">
 
-        <!-- Background Halftone Grid Pattern -->
+        <!-- Background Halftone Screentone Pattern -->
         <div class="fixed inset-0 manga-dot-grid opacity-60 pointer-events-none z-0"></div>
         <div class="fixed inset-0 manga-grid-overlay opacity-30 pointer-events-none z-0"></div>
 
         <!-- Navigation Bar -->
-        <header class="fixed top-0 left-0 right-0 z-40 bg-[#f4f0e6]/95 backdrop-blur-md border-b-2 border-black transition-all duration-300 shadow-sm" id="navbar">
+        <header class="fixed top-0 left-0 right-0 z-40 bg-[#f4f0e6]/95 backdrop-blur-md border-b-2 border-black transition-all duration-300" id="navbar">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
                 
-                <a href="#hero" class="flex items-center gap-3 group">
+                <a href="#hero" data-cursor="HOME" class="flex items-center gap-3 group">
                     <div class="w-9 h-9 rounded-none bg-black text-white font-black font-syne text-lg flex items-center justify-center border-2 border-black group-hover:bg-white group-hover:text-black transition-all shadow-[2px_2px_0px_#000]">
                         A
                     </div>
@@ -195,35 +187,35 @@
                 </a>
 
                 <nav class="hidden lg:flex items-center gap-6 text-xs font-mono tracking-wider font-bold">
-                    <a href="#about" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">01. ABOUT</a>
-                    <a href="#skills" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">02. SKILLS</a>
-                    <a href="#experience" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">03. EXP</a>
-                    <a href="#projects" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">04. PROJECTS</a>
-                    <a href="#achievements" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">05. AWARDS</a>
-                    <a href="#certifications" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">06. CERTS</a>
-                    <a href="#education" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">07. EDU</a>
-                    <a href="#contact" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">08. CONTACT</a>
+                    <a href="#about" data-cursor="01. ABOUT" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">01. ABOUT</a>
+                    <a href="#skills" data-cursor="02. SKILLS" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">02. SKILLS</a>
+                    <a href="#experience" data-cursor="03. EXP" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">03. EXP</a>
+                    <a href="#projects" data-cursor="04. CASES" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">04. CASES</a>
+                    <a href="#achievements" data-cursor="05. CLIMAX" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">05. AWARDS</a>
+                    <a href="#certifications" data-cursor="06. CERTS" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">06. CERTS</a>
+                    <a href="#education" data-cursor="07. EDU" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">07. EDU</a>
+                    <a href="#contact" data-cursor="08. SIGNAL" class="nav-link text-neutral-800 hover:text-black py-1 transition-all">08. CONTACT</a>
                 </nav>
 
                 <div class="flex items-center gap-3">
-                    <button id="audio-toggle-btn" title="Toggle Sound FX" class="w-9 h-9 rounded-none border-2 border-black bg-white hover:bg-black hover:text-white text-black flex items-center justify-center transition-colors text-xs font-mono shadow-[2px_2px_0px_#000]">
+                    <button id="audio-toggle-btn" data-cursor="SFX" title="Toggle Sound FX" class="w-9 h-9 rounded-none border-2 border-black bg-white hover:bg-black hover:text-white text-black flex items-center justify-center transition-colors text-xs font-mono shadow-[2px_2px_0px_#000]">
                         <i data-lucide="volume-2" class="w-4 h-4"></i>
                     </button>
 
-                    <button id="replay-intro-btn" title="View Manga Book Cover" class="flex items-center gap-1 px-3 py-1.5 rounded-none border-2 border-black bg-white hover:bg-black hover:text-white text-black transition-colors text-xs font-mono font-bold shadow-[2px_2px_0px_#000]">
-                        <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
-                        <span class="hidden sm:inline">MANGA SPREAD</span>
+                    <button id="replay-intro-btn" data-cursor="INTRO" title="Replay Cinematic Intro" class="flex items-center gap-1.5 px-3 py-1.5 rounded-none border-2 border-black bg-white hover:bg-black hover:text-white text-black transition-colors text-xs font-mono font-bold shadow-[2px_2px_0px_#000]">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        <span class="hidden sm:inline">REPLAY INTRO</span>
                     </button>
 
-                    <a href="#contact" class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-black text-white font-syne font-black text-xs uppercase tracking-wider hover:bg-neutral-800 transition-all rounded-none border-2 border-black shadow-[3px_3px_0px_#000]">
-                        <span>CONTACT ME</span>
+                    <a href="#contact" data-cursor="TRANSMIT" class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-black text-white font-syne font-black text-xs uppercase tracking-wider hover:bg-neutral-800 transition-all rounded-none border-2 border-black shadow-[3px_3px_0px_#000]">
+                        <span>TRANSMIT</span>
                         <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                     </a>
 
-                    <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 border-2 border-black bg-white flex flex-col items-center justify-center gap-1.5 rounded-none text-black shadow-[2px_2px_0px_#000]">
-                        <span class="w-5 h-0.5 bg-black transition-all" id="bar1"></span>
-                        <span class="w-5 h-0.5 bg-black transition-all" id="bar2"></span>
-                        <span class="w-5 h-0.5 bg-black transition-all" id="bar3"></span>
+                    <button id="mobile-menu-btn" data-cursor="MENU" class="lg:hidden w-10 h-10 border-2 border-black bg-white flex flex-col items-center justify-center gap-1.5 rounded-none text-black shadow-[2px_2px_0px_#000]">
+                        <span class="w-5 h-0.5 bg-black transition-all"></span>
+                        <span class="w-5 h-0.5 bg-black transition-all"></span>
+                        <span class="w-5 h-0.5 bg-black transition-all"></span>
                     </button>
                 </div>
             </div>
@@ -234,8 +226,8 @@
                     <a href="#about" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>01. ABOUT</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     <a href="#skills" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>02. SKILLS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     <a href="#experience" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>03. EXPERIENCE</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
-                    <a href="#projects" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>04. PROJECTS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
-                    <a href="#achievements" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>05. ACHIEVEMENTS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#projects" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>04. CASE FILES</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#achievements" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>05. AWARDS (SIH)</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     <a href="#certifications" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>06. CERTS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     <a href="#education" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between border-b border-neutral-300"><span>07. EDUCATION</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     <a href="#contact" class="mobile-nav-link text-neutral-800 hover:text-black py-1 flex items-center justify-between"><span>08. CONTACT</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
@@ -243,21 +235,22 @@
             </div>
         </header>
 
-        <main class="relative z-10 pt-20 md:pt-24">
 
-            <!-- ========================================================================= -->
-            <!-- HERO SECTION (SPLIT SCREEN MANGA LAYOUT // FULL NAME SINGLE LINE)         -->
-            <!-- ========================================================================= -->
+        <!-- ========================================================================= -->
+        <!-- HERO SECTION (2.5D MANGA SHOWCASE // RESUME DATA)                         -->
+        <!-- ========================================================================= -->
+        <main class="relative z-10 pt-20 md:pt-24">
+            
             <section id="hero" class="relative min-h-[calc(100vh-5rem)] flex items-center py-12 md:py-16 border-b-2 border-black overflow-hidden">
-                
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
                         
-                        <!-- Left Column: Typography, Titles, Badges, CTAs -->
+                        <!-- Left Column: Typography, Dynamic Typewriter, Stats & CTAs -->
                         <div class="lg:col-span-7 flex flex-col justify-center space-y-6">
+                            
                             <div class="flex items-center gap-3">
                                 <span class="px-2.5 py-1 bg-black text-white font-syne font-black text-[10px] tracking-widest uppercase rounded-none border border-black shadow-[2px_2px_0px_#000]">
-                                    ACT I // PORTFOLIO
+                                    ACT I // PROLOGUE
                                 </span>
                                 <div class="h-0.5 flex-1 max-w-[120px] bg-black"></div>
                                 <span class="font-mono text-xs text-neutral-700 tracking-widest font-bold">
@@ -266,51 +259,49 @@
                             </div>
 
                             <div class="space-y-1">
-                                <!-- Full Name formatted across two lines -->
-                                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-syne tracking-tight text-black leading-[1.05] drop-shadow-[3px_3px_0px_#000]">
-                                    <span class="block">Ajaykanth</span>
-                                    <span class="block text-neutral-800">saravanan</span>
+                                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-syne uppercase tracking-tight text-black leading-tight drop-shadow-[3px_3px_0px_#000]">
+                                    AJAIKANTH SARAVANAN
                                 </h1>
                                 <div class="font-script text-xl sm:text-2xl md:text-3xl text-neutral-800 pt-1">
-                                    AI & Data Science Undergrad • Smart India Hackathon '25 Winner
+                                    The Developer Chronicles • Applied AI & Full-Stack
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-2">
                                 <span class="font-mono text-base sm:text-xl text-black font-bold tracking-tight">
-                                    <span class="text-neutral-600 font-normal">Expertise in</span> <span id="hero-typewriter" class="border-r-2 border-black pr-1">Applied AI</span>
+                                    <span class="text-neutral-600 font-normal">Domain:</span> <span id="hero-typewriter" class="border-r-2 border-black pr-1">Applied AI</span>
                                 </span>
                             </div>
 
                             <div class="flex flex-wrap items-center gap-2 pt-1">
-                                <span class="manga-exact-tag"><i data-lucide="coffee" class="w-3 h-3 inline mr-1"></i> Java</span>
-                                <span class="manga-exact-tag"><i data-lucide="terminal" class="w-3 h-3 inline mr-1"></i> Python</span>
-                                <span class="manga-exact-tag"><i data-lucide="code" class="w-3 h-3 inline mr-1"></i> C</span>
-                                <span class="manga-exact-tag"><i data-lucide="smartphone" class="w-3 h-3 inline mr-1"></i> React Native</span>
-                                <span class="manga-exact-tag"><i data-lucide="database" class="w-3 h-3 inline mr-1"></i> Firebase</span>
-                                <span class="manga-exact-tag"><i data-lucide="award" class="w-3 h-3 inline mr-1"></i> 100+ LeetCode DSA</span>
+                                <span class="manga-exact-tag"><i data-lucide="coffee" class="w-3 h-3 inline"></i> Java (OOP)</span>
+                                <span class="manga-exact-tag"><i data-lucide="terminal" class="w-3 h-3 inline"></i> Python</span>
+                                <span class="manga-exact-tag"><i data-lucide="code" class="w-3 h-3 inline"></i> C Language</span>
+                                <span class="manga-exact-tag"><i data-lucide="smartphone" class="w-3 h-3 inline"></i> React Native</span>
+                                <span class="manga-exact-tag"><i data-lucide="database" class="w-3 h-3 inline"></i> Firebase</span>
+                                <span class="manga-exact-tag"><i data-lucide="award" class="w-3 h-3 inline"></i> 100+ LeetCode DSA</span>
                             </div>
 
                             <p class="text-sm sm:text-base text-neutral-800 font-sans leading-relaxed max-w-xl">
-                                AI & Data Science undergraduate at Sri Shanmugha College of Engineering and Technology (Anna University) and National Winner, Smart India Hackathon 2025 (Space Technology). Hands-on experience in AI, full-stack development, and product Go-To-Market execution as an intern at SeeDataMD, plus delivery of two independent client mobile applications.
+                                AI & Data Science undergraduate at Sri Shanmugha College of Engineering and Technology (Anna University) and National Winner, Smart India Hackathon 2025 (Space Technology). Hands-on experience in applied AI, full-stack development, and product Go-To-Market execution as an intern at SeeDataMD, plus delivery of two independent client mobile applications.
                             </p>
 
                             <div class="flex flex-wrap items-center gap-3 pt-2">
-                                <button id="hero-resume-btn" class="manga-btn-primary flex items-center gap-2">
+                                <button id="hero-resume-btn" data-cursor="RESUME" class="manga-btn-primary flex items-center gap-2">
                                     <i data-lucide="file-text" class="w-4 h-4"></i>
-                                    <span>RESUME</span>
+                                    <span>VIEW RESUME</span>
                                 </button>
-                                <a href="https://github.com/Ajaikanth123" target="_blank" class="manga-btn-secondary flex items-center gap-2">
+                                <a href="https://github.com/Ajaikanth123" target="_blank" data-cursor="GITHUB" class="manga-btn-secondary flex items-center gap-2">
                                     <i data-lucide="github" class="w-4 h-4"></i>
                                     <span>GITHUB</span>
                                 </a>
-                                <a href="https://linkedin.com/in/ajaikanth-saravanan-bb2a1231a" target="_blank" class="manga-btn-secondary flex items-center gap-2">
+                                <a href="https://linkedin.com/in/ajaikanth-saravanan-bb2a1231a" target="_blank" data-cursor="LINKEDIN" class="manga-btn-secondary flex items-center gap-2">
                                     <i data-lucide="linkedin" class="w-4 h-4"></i>
                                     <span>LINKEDIN</span>
                                 </a>
-                                <a href="#contact" class="manga-btn-secondary flex items-center gap-2">
-                                    <i data-lucide="mail" class="w-4 h-4"></i>
-                                    <span>CONTACT</span>
+                                <a href="#projects" data-cursor="CASES" class="manga-btn-secondary flex items-center gap-2">
+                                    <i data-lucide="folder-git-2" class="w-4 h-4"></i>
+                                    <span>CASE FILES</span>
                                 </a>
                             </div>
 
@@ -328,11 +319,11 @@
                                     <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-widest font-bold">LeetCode (Java)</div>
                                 </div>
                             </div>
+
                         </div>
 
-                        <!-- Right Column: Anime Illustration with 3D Tilt Effect -->
+                        <!-- Right Column: Anime Illustration with 3D Perspective Tilt -->
                         <div class="lg:col-span-5 flex items-center justify-center relative">
-                            
                             <div id="hero-manga-card" class="relative w-full max-w-md bg-white border-2 border-black p-3 shadow-[6px_6px_0px_#000] group transition-all duration-300">
                                 <div class="w-full aspect-[4/5] overflow-hidden relative bg-[#f4f0e6] border border-black flex items-center justify-center">
                                     <img src="assets/images/manga-ref-character.jpg" 
@@ -348,7 +339,7 @@
 
                                     <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md border-2 border-black p-2.5 text-xs font-mono text-black flex items-center justify-between shadow-[3px_3px_0px_#000]">
                                         <div>
-                                            <div class="text-black font-black font-syne text-sm">AJAYKANTH SARAVANAN</div>
+                                            <div class="text-black font-black font-syne text-sm">AJAIKANTH SARAVANAN</div>
                                             <div class="text-[10px] text-neutral-600 font-bold">AI & DATA SCIENCE (ANNA UNIV)</div>
                                         </div>
                                         <div class="text-right">
@@ -368,8 +359,8 @@
                 </div>
 
                 <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-20">
-                    <a href="#about" class="flex flex-col items-center gap-1 text-[10px] font-mono tracking-widest text-neutral-700 hover:text-black font-bold transition-colors group">
-                        <span class="uppercase">SCROLL TO EXPLORE</span>
+                    <a href="#about" data-cursor="SCROLL" class="flex flex-col items-center gap-1 text-[10px] font-mono tracking-widest text-neutral-700 hover:text-black font-bold transition-colors group">
+                        <span class="uppercase">EXPLORE CHAPTERS</span>
                         <div class="w-5 h-9 rounded-full border-2 border-black flex items-start justify-center p-1 transition-colors">
                             <div class="w-1 h-2 bg-black rounded-full animate-bounce"></div>
                         </div>
@@ -377,19 +368,21 @@
                 </div>
             </section>
 
+
             <!-- ========================================================================= -->
-            <!-- SECTION 1: ABOUT (CHAPTER 01 // ARCHITECT PROFILE)                        -->
+            <!-- CHAPTER 01: THE ORIGIN // PROFESSIONAL PROFILE (ABOUT)                    -->
             <!-- ========================================================================= -->
             <section id="about" class="py-24 border-b-2 border-black relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
                     <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                         <div>
                             <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
                                 <span class="w-2.5 h-2.5 bg-black inline-block"></span>
-                                <span>CHAPTER 01 // PROFESSIONAL PROFILE</span>
+                                <span>CHAPTER 01 // THE ORIGIN</span>
                             </div>
-                            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black font-syne tracking-tight text-black leading-tight drop-shadow-[2px_2px_0px_#000] break-words">
-                                ABOUT <span class="text-black">AJAYKANTH</span> <span class="text-neutral-800">SARAVANAN</span>
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne uppercase tracking-tight text-black leading-tight drop-shadow-[2px_2px_0px_#000]">
+                                ABOUT AJAIKANTH SARAVANAN
                             </h2>
                             <div class="font-script text-2xl sm:text-3xl text-neutral-800 mt-1">
                                 Applied AI, Full-Stack Engineering & Go-To-Market Execution
@@ -399,12 +392,12 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                         
-                        <!-- Left: Character Profile Card with Exact Reference Theme -->
+                        <!-- Left: Character Profile Card -->
                         <div class="lg:col-span-5 manga-card flex flex-col justify-between p-6">
                             <div class="relative w-full aspect-square rounded-none overflow-hidden border-2 border-black bg-[#f4f0e6] mb-6 group shadow-[3px_3px_0px_#000]">
-                                <img src="assets/images/manga-character-profile.jpg" alt="Ajaykanth Profile" class="w-full h-full object-cover filter contrast-110 transition-transform duration-500 group-hover:scale-105">
+                                <img src="assets/images/manga-character-profile.jpg" alt="Ajaikanth Profile" class="w-full h-full object-cover filter contrast-110 transition-transform duration-500 group-hover:scale-105">
                                 <div class="absolute bottom-3 left-3 right-3 bg-white/95 border-2 border-black p-2 font-mono shadow-[2px_2px_0px_#000]">
-                                    <div class="text-black font-black font-syne text-sm">AJAYKANTH SARAVANAN</div>
+                                    <div class="text-black font-black font-syne text-sm">AJAIKANTH SARAVANAN</div>
                                     <div class="text-neutral-700 text-[10px] font-bold">AI & FULL-STACK DEVELOPER</div>
                                 </div>
                             </div>
@@ -429,12 +422,12 @@
                             </div>
                         </div>
 
-                        <!-- Right: Narrative & 4 Focus Pillars -->
+                        <!-- Right: Narrative Summary & 4 Engineering Pillars -->
                         <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
                             <div class="manga-card p-6 sm:p-8 space-y-4">
-                                <h3 class="text-xl sm:text-2xl font-black font-syne italic uppercase text-black flex items-center gap-2">
+                                <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-black flex items-center gap-2">
                                     <i data-lucide="sparkles" class="w-5 h-5 text-black"></i>
-                                    <span>PROFESSIONAL SUMMARY</span>
+                                    <span>PROFESSIONAL PROFILE</span>
                                 </h3>
                                 <p class="text-neutral-800 text-sm sm:text-base leading-relaxed">
                                     AI & Data Science undergraduate at <strong class="text-black font-bold">Sri Shanmugha College of Engineering and Technology (affiliated with Anna University, Chennai)</strong> and <strong class="text-black font-bold">National Winner, Smart India Hackathon 2025 (Space Technology domain)</strong>. Hands-on experience in applied AI, full-stack development, and product Go-To-Market execution as an intern at <strong class="text-black font-bold">SeeDataMD</strong>, plus independent delivery of two production client applications using React Native and Firebase with full client payment and bonus. Strong foundation in Java, Python, OOP, and Data Structures & Algorithms, backed by 100+ LeetCode problems solved and multiple NPTEL/HackerRank certifications.
@@ -469,18 +462,20 @@
                 </div>
             </section>
 
+
             <!-- ========================================================================= -->
-            <!-- SECTION 2: SKILLS & TECHNICAL ARSENAL (FROM RESUME ONLY)                  -->
+            <!-- CHAPTER 02: TECHNICAL ARSENAL // SKILLS (FROM RESUME ONLY)                -->
             <!-- ========================================================================= -->
             <section id="skills" class="py-24 border-b-2 border-black relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
                     <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
                         <div>
                             <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
                                 <span class="w-2.5 h-2.5 bg-black inline-block"></span>
-                                <span>CHAPTER 02 // TECHNICAL SKILLS</span>
+                                <span>CHAPTER 02 // TECHNICAL ARSENAL</span>
                             </div>
-                            <h2 class="text-4xl sm:text-6xl font-black font-syne italic uppercase tracking-tight text-black drop-shadow-[3px_3px_0px_#000]">
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne uppercase tracking-tight text-black drop-shadow-[2px_2px_0px_#000]">
                                 SKILLS & STACK
                             </h2>
                         </div>
@@ -494,10 +489,8 @@
                         </div>
                     </div>
 
-                    <!-- Skills Grid + Manga Character Banner -->
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                         
-                        <!-- Main Skill Cards Grid -->
                         <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6" id="skills-grid">
                             
                             <div class="manga-card p-6 space-y-4 skill-card" data-category="languages">
@@ -586,7 +579,6 @@
 
                         </div>
 
-                        <!-- Side Manga Character Arsenal Showcase -->
                         <div class="lg:col-span-4 manga-card p-6 flex flex-col justify-between items-center text-center">
                             <div class="w-full border-b-2 border-black pb-3 mb-4 flex items-center justify-between">
                                 <span class="font-syne font-black text-sm uppercase">TECHNICAL ARSENAL</span>
@@ -599,15 +591,9 @@
                             </div>
 
                             <div class="w-full text-left space-y-2 font-mono text-xs">
-                                <div class="font-syne font-bold text-black text-sm uppercase">CORE STACK</div>
-                                <div class="flex flex-wrap gap-1.5 pt-1">
-                                    <span class="manga-exact-tag text-[10px]">Java</span>
-                                    <span class="manga-exact-tag text-[10px]">Python</span>
-                                    <span class="manga-exact-tag text-[10px]">C</span>
-                                    <span class="manga-exact-tag text-[10px]">React Native</span>
-                                    <span class="manga-exact-tag text-[10px]">Firebase</span>
-                                    <span class="manga-exact-tag text-[10px]">Figma</span>
-                                    <span class="manga-exact-tag text-[10px]">DSA</span>
+                                <div class="font-syne font-bold text-black text-sm uppercase">CORE COMPETENCIES</div>
+                                <div class="text-neutral-700 leading-relaxed">
+                                    Object-Oriented Programming (OOP) • System Architecture • Data Structures & Algorithms • Geolocation APIs • Agile Sprint Execution
                                 </div>
                             </div>
                         </div>
@@ -616,96 +602,121 @@
                 </div>
             </section>
 
+
             <!-- ========================================================================= -->
-            <!-- SECTION 3: EXPERIENCE (FROM RESUME ONLY)                                   -->
+            <!-- CHAPTER 03: THE CHRONICLES // EXPERIENCE (SEEDATAMD & FREELANCE)          -->
             <!-- ========================================================================= -->
             <section id="experience" class="py-24 border-b-2 border-black relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
                     <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                         <div>
                             <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
                                 <span class="w-2.5 h-2.5 bg-black inline-block"></span>
                                 <span>CHAPTER 03 // INDUSTRY EXPERIENCE</span>
                             </div>
-                            <h2 class="text-4xl sm:text-6xl font-black font-syne italic uppercase tracking-tight text-black drop-shadow-[3px_3px_0px_#000]">
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne uppercase tracking-tight text-black drop-shadow-[2px_2px_0px_#000]">
                                 WORK EXPERIENCE
                             </h2>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                         
-                        <!-- Timeline Column -->
-                        <div class="lg:col-span-8 space-y-8">
+                        <div class="lg:col-span-8 space-y-6">
                             
-                            <!-- Experience 1: SeeDataMD -->
+                            <!-- Role 1: SeeDataMD -->
                             <div class="manga-card p-6 sm:p-8 space-y-4">
-                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b-2 border-black">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b-2 border-black gap-2">
                                     <div>
-                                        <span class="px-2 py-0.5 bg-black text-white font-mono text-[10px] font-bold uppercase">INTERNSHIP</span>
-                                        <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-black mt-1">AI, Data Science & Full-Stack Development Intern</h3>
-                                        <div class="font-mono text-xs text-neutral-700 font-bold">SeeDataMD Private Limited — Salem, Tamil Nadu, India</div>
+                                        <span class="manga-exact-tag mb-1">INTERNSHIP</span>
+                                        <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-black">
+                                            AI, Data Science & Full-Stack Intern
+                                        </h3>
+                                        <div class="font-mono text-xs font-bold text-neutral-700">
+                                            SeeDataMD • Medical Technology Analytics
+                                        </div>
                                     </div>
-                                    <span class="manga-exact-tag text-xs">SEPT 2025 – PRESENT</span>
+                                    <div class="text-right">
+                                        <span class="px-2.5 py-1 bg-black text-white font-mono text-xs font-bold shadow-[2px_2px_0px_#000]">
+                                            DEC 2025 - PRESENT
+                                        </span>
+                                    </div>
                                 </div>
-                                <ul class="list-disc list-inside space-y-2 text-neutral-800 text-sm leading-relaxed font-sans">
-                                    <li>Contribute to AI and Data Science product development, transitioning from core build phase to Go-To-Market (GTM) execution, with exposure to product positioning and customer requirement analysis.</li>
-                                    <li>Internship extended twice based on performance review, most recently into a <strong>6-month full-time offline term (August 2026 – February 2027)</strong>.</li>
-                                    <li>Strengthened cross-functional collaboration by bridging technology, product, and business execution.</li>
+
+                                <p class="text-neutral-800 text-sm leading-relaxed">
+                                    Completed a 1-month intensive virtual internship in AI, full-stack, and product Go-To-Market execution at SeeDataMD. Performance recognized by leadership and <strong class="text-black font-bold">extended to a 6-month offline internship</strong> with direct responsibilities in healthcare data workflows, software engineering, and applied AI systems.
+                                </p>
+
+                                <ul class="space-y-2 text-xs font-mono text-neutral-800">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-black font-bold">►</span>
+                                        <span>Gained hands-on experience in applied AI concepts and AI-integrated feature development.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-black font-bold">►</span>
+                                        <span>Contributed to full-stack development, software engineering, and product Go-To-Market execution.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-black font-bold">►</span>
+                                        <span>Managed cross-functional workflows using Notion, Content Management Systems (CMS), and Agile tools.</span>
+                                    </li>
                                 </ul>
-                                <div class="flex flex-wrap gap-2 pt-2">
-                                    <span class="manga-exact-tag text-[10px]">AI / Data Science</span>
-                                    <span class="manga-exact-tag text-[10px]">Full-Stack</span>
-                                    <span class="manga-exact-tag text-[10px]">GTM Execution</span>
-                                    <span class="manga-exact-tag text-[10px]">Product Positioning</span>
-                                </div>
                             </div>
 
-                            <!-- Experience 2: Freelance -->
+                            <!-- Role 2: Freelance Client Applications -->
                             <div class="manga-card p-6 sm:p-8 space-y-4">
-                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b-2 border-black">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b-2 border-black gap-2">
                                     <div>
-                                        <span class="px-2 py-0.5 bg-black text-white font-mono text-[10px] font-bold uppercase">INDEPENDENT CLIENTS</span>
-                                        <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-black mt-1">Freelance Software Developer</h3>
-                                        <div class="font-mono text-xs text-neutral-700 font-bold">Independent Client Projects</div>
+                                        <span class="manga-exact-tag mb-1">FREELANCE CLIENT WORK</span>
+                                        <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-black">
+                                            Mobile Application Developer
+                                        </h3>
+                                        <div class="font-mono text-xs font-bold text-neutral-700">
+                                            Independent Client Contracts
+                                        </div>
                                     </div>
-                                    <span class="manga-exact-tag text-xs">2026</span>
+                                    <div class="text-right">
+                                        <span class="px-2.5 py-1 bg-white border border-black text-black font-mono text-xs font-bold shadow-[2px_2px_0px_#000]">
+                                            2024 - 2025
+                                        </span>
+                                    </div>
                                 </div>
-                                <ul class="list-disc list-inside space-y-2 text-neutral-800 text-sm leading-relaxed font-sans">
-                                    <li><strong>MedRoute App:</strong> Delivered MedRoute, a full-stack Field Force Management mobile app (React Native, Firebase) for a diagnostic healthcare client, building Admin/Employee panels and real-time doctor-visit tracking; completed with full project payment and a client-awarded performance bonus.</li>
-                                    <li><strong>Gym Attendance Management App:</strong> Independently built a gym attendance management app after one month of solo R&D, engineering a smart attendance calculation system integrated with Notion and a CMS, plus AI-integrated features for a mobile-friendly workflow.</li>
+
+                                <p class="text-neutral-800 text-sm leading-relaxed">
+                                    Delivered two complete independent client mobile applications using React Native and Firebase. Spearheaded architecture, UI design, backend integration, and end-to-end delivery with full client payment and performance bonuses.
+                                </p>
+
+                                <ul class="space-y-2 text-xs font-mono text-neutral-800">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-black font-bold">►</span>
+                                        <span>Built and deployed the <strong class="text-black">Gym Attendance App</strong> with automated daily check-ins and member tracking.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-black font-bold">►</span>
+                                        <span>Engineered <strong class="text-black">MedRoute</strong> with dynamic shortest time path routing and real-time GPS traffic updates.</span>
+                                    </li>
                                 </ul>
-                                <div class="flex flex-wrap gap-2 pt-2">
-                                    <span class="manga-exact-tag text-[10px]">React Native</span>
-                                    <span class="manga-exact-tag text-[10px]">Firebase</span>
-                                    <span class="manga-exact-tag text-[10px]">Notion API</span>
-                                    <span class="manga-exact-tag text-[10px]">CMS Integration</span>
-                                </div>
                             </div>
 
                         </div>
 
-                        <!-- Side Manga Desk Coding Artwork -->
+                        <!-- Right: Work Experience Desk Illustration -->
                         <div class="lg:col-span-4 manga-card p-6 flex flex-col justify-between items-center text-center">
                             <div class="w-full border-b-2 border-black pb-3 mb-4 flex items-center justify-between">
-                                <span class="font-syne font-black text-sm uppercase">DEV WORKSTATION</span>
-                                <span class="manga-exact-tag text-[9px]">ACTIVE</span>
+                                <span class="font-syne font-black text-sm uppercase">DEVELOPER AT WORK</span>
+                                <span class="manga-exact-tag text-[9px]">OFFLINE 6-MO</span>
                             </div>
 
-                            <div class="relative w-full aspect-[3/4] overflow-hidden border-2 border-black bg-[#f4f0e6] mb-4 shadow-[3px_3px_0px_#000]">
-                                <img src="assets/images/manga-experience-desk.jpg" alt="Ajaikanth at System Coding with Headphones" class="w-full h-full object-contain filter contrast-110">
+                            <div class="relative w-full aspect-[4/5] overflow-hidden border-2 border-black bg-[#f4f0e6] mb-4 shadow-[3px_3px_0px_#000]">
+                                <img src="assets/images/manga-experience-desk.jpg" alt="Ajaikanth Sitting in Front of Computer with Headphones" class="w-full h-full object-cover filter contrast-110">
                                 <div class="absolute inset-0 manga-dot-grid opacity-20 pointer-events-none"></div>
                             </div>
 
-                            <div class="w-full text-left space-y-2 font-mono text-xs">
-                                <div class="font-syne font-bold text-black text-sm uppercase">TRACK RECORD</div>
-                                <div class="flex justify-between py-1 border-b border-neutral-300">
-                                    <span class="text-neutral-600">CLIENT APPS</span>
-                                    <span class="font-bold">2 Delivered (100% Paid)</span>
-                                </div>
-                                <div class="flex justify-between py-1 border-b border-neutral-300">
-                                    <span class="text-neutral-600">PERFORMANCE BONUS</span>
-                                    <span class="font-bold text-emerald-800">Awarded</span>
+                            <div class="w-full text-left space-y-1 font-mono text-xs">
+                                <div class="font-syne font-bold text-black text-sm uppercase">STATUS: ACTIVE SPRINT</div>
+                                <div class="text-neutral-700 text-[11px]">
+                                    Developing high-performance full-stack applications & AI workflows.
                                 </div>
                             </div>
                         </div>
@@ -714,147 +725,165 @@
                 </div>
             </section>
 
+
             <!-- ========================================================================= -->
-            <!-- SECTION 4: PROJECTS (FROM RESUME ONLY)                                     -->
+            <!-- CHAPTER 04: THE ARCHIVES // CASE FILES & PROJECTS                         -->
             <!-- ========================================================================= -->
             <section id="projects" class="py-24 border-b-2 border-black relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                    
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                         <div>
                             <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
                                 <span class="w-2.5 h-2.5 bg-black inline-block"></span>
-                                <span>CHAPTER 04 // PROJECT SHOWCASE</span>
+                                <span>CHAPTER 04 // THE ARCHIVES</span>
                             </div>
-                            <h2 class="text-4xl sm:text-6xl font-black font-syne italic uppercase tracking-tight text-black drop-shadow-[3px_3px_0px_#000]">
-                                FEATURED PROJECTS
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne uppercase tracking-tight text-black drop-shadow-[2px_2px_0px_#000]">
+                                CASE FILES // PROJECTS
                             </h2>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         
-                        <!-- Project 1: MedRoute -->
+                        <!-- Case 001: MedRoute -->
                         <div class="manga-card p-6 flex flex-col justify-between space-y-4">
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <span class="px-2 py-0.5 bg-black text-white font-mono text-[9px] font-bold">PROJ 01</span>
-                                    <span class="font-mono text-[10px] text-neutral-600 font-bold">MOBILE // HEALTHCARE</span>
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b-2 border-black">
+                                    <span class="font-mono text-xs font-black text-black">CASE FILE // 001</span>
+                                    <span class="manga-exact-tag text-[9px]">JAVA / MAPS</span>
                                 </div>
-                                <h3 class="text-xl font-black font-syne uppercase text-black">MedRoute Mobile App</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Full-stack Field Force Management mobile app for a diagnostic healthcare client, building Admin/Employee panels and real-time doctor-visit tracking.
+                                <h3 class="text-xl font-black font-syne uppercase text-black mt-3">MedRoute</h3>
+                                <p class="text-xs text-neutral-700 font-sans mt-2 leading-relaxed">
+                                    Mobile app to calculate optimal ambulance routes using shortest time paths and live traffic data. Integrated GPS location tracking for emergency units.
                                 </p>
-                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                <div class="flex flex-wrap gap-1.5 pt-4">
+                                    <span class="manga-exact-tag text-[9px]">Java</span>
+                                    <span class="manga-exact-tag text-[9px]">Firebase</span>
+                                    <span class="manga-exact-tag text-[9px]">Google Maps API</span>
+                                </div>
+                            </div>
+                            <div class="pt-4 border-t border-neutral-300 flex items-center justify-between">
+                                <button data-project="medroute" data-cursor="CASE" class="project-modal-trigger manga-btn-primary text-xs py-1.5 px-3">
+                                    <span>OPEN CASE →</span>
+                                </button>
+                                <a href="https://github.com/Ajaikanth123" target="_blank" data-cursor="CODE" class="font-mono text-xs font-bold text-neutral-800 hover:text-black flex items-center gap-1">
+                                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                                    <span>GITHUB</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Case 002: MediMartX -->
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b-2 border-black">
+                                    <span class="font-mono text-xs font-black text-black">CASE FILE // 002</span>
+                                    <span class="manga-exact-tag text-[9px]">HEALTHCARE ECOM</span>
+                                </div>
+                                <h3 class="text-xl font-black font-syne uppercase text-black mt-3">MediMartX</h3>
+                                <p class="text-xs text-neutral-700 font-sans mt-2 leading-relaxed">
+                                    Cross-platform medicine ordering application with prescription upload support, live order tracking, category filtering, and real-time inventory management.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-4">
                                     <span class="manga-exact-tag text-[9px]">React Native</span>
                                     <span class="manga-exact-tag text-[9px]">Firebase</span>
-                                    <span class="manga-exact-tag text-[9px]">Realtime DB</span>
+                                    <span class="manga-exact-tag text-[9px]">Expo</span>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between pt-3 border-t-2 border-black font-mono text-xs">
-                                <button class="project-modal-trigger text-black font-bold hover:underline flex items-center gap-1" data-project="medroute">
-                                    <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            <div class="pt-4 border-t border-neutral-300 flex items-center justify-between">
+                                <button data-project="medimartx" data-cursor="CASE" class="project-modal-trigger manga-btn-primary text-xs py-1.5 px-3">
+                                    <span>OPEN CASE →</span>
                                 </button>
-                                <a href="https://github.com/Ajaikanth123" target="_blank" class="text-neutral-700 hover:text-black"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                <a href="https://github.com/Ajaikanth123" target="_blank" data-cursor="CODE" class="font-mono text-xs font-bold text-neutral-800 hover:text-black flex items-center gap-1">
+                                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                                    <span>GITHUB</span>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Project 2: MediMartX -->
+                        <!-- Case 003: Cookify -->
                         <div class="manga-card p-6 flex flex-col justify-between space-y-4">
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <span class="px-2 py-0.5 bg-black text-white font-mono text-[9px] font-bold">PROJ 02</span>
-                                    <span class="font-mono text-[10px] text-neutral-600 font-bold">JAVA // HEALTHCARE</span>
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b-2 border-black">
+                                    <span class="font-mono text-xs font-black text-black">CASE FILE // 003</span>
+                                    <span class="manga-exact-tag text-[9px]">RECIPE DISCOVERY</span>
                                 </div>
-                                <h3 class="text-xl font-black font-syne uppercase text-black">MediMartX (Java)</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Java-based healthcare application improving medical and pharmacy accessibility with structured inventory and patient workflows.
+                                <h3 class="text-xl font-black font-syne uppercase text-black mt-3">Cookify</h3>
+                                <p class="text-xs text-neutral-700 font-sans mt-2 leading-relaxed">
+                                    Mobile app enabling users to search, filter, and follow culinary recipes with ingredient breakdowns, preparation guides, and bookmarking.
                                 </p>
-                                <div class="flex flex-wrap gap-1.5 pt-1">
-                                    <span class="manga-exact-tag text-[9px]">Java</span>
-                                    <span class="manga-exact-tag text-[9px]">OOP</span>
-                                    <span class="manga-exact-tag text-[9px]">Pharmacy System</span>
+                                <div class="flex flex-wrap gap-1.5 pt-4">
+                                    <span class="manga-exact-tag text-[9px]">React Native</span>
+                                    <span class="manga-exact-tag text-[9px]">REST APIs</span>
+                                    <span class="manga-exact-tag text-[9px]">AsyncStorage</span>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between pt-3 border-t-2 border-black font-mono text-xs">
-                                <button class="project-modal-trigger text-black font-bold hover:underline flex items-center gap-1" data-project="medimartx">
-                                    <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            <div class="pt-4 border-t border-neutral-300 flex items-center justify-between">
+                                <button data-project="cookify" data-cursor="CASE" class="project-modal-trigger manga-btn-primary text-xs py-1.5 px-3">
+                                    <span>OPEN CASE →</span>
                                 </button>
-                                <a href="https://github.com/Ajaikanth123" target="_blank" class="text-neutral-700 hover:text-black"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                <a href="https://github.com/Ajaikanth123" target="_blank" data-cursor="CODE" class="font-mono text-xs font-bold text-neutral-800 hover:text-black flex items-center gap-1">
+                                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                                    <span>GITHUB</span>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Project 3: Cookify -->
+                        <!-- Case 004: Gym Attendance App -->
                         <div class="manga-card p-6 flex flex-col justify-between space-y-4">
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <span class="px-2 py-0.5 bg-black text-white font-mono text-[9px] font-bold">PROJ 03</span>
-                                    <span class="font-mono text-[10px] text-neutral-600 font-bold">JAVA // RECIPE & FOOD</span>
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b-2 border-black">
+                                    <span class="font-mono text-xs font-black text-black">CASE FILE // 004</span>
+                                    <span class="manga-exact-tag text-[9px]">CLIENT APP</span>
                                 </div>
-                                <h3 class="text-xl font-black font-syne uppercase text-black">Cookify (Java)</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Java-based digital recipe and food management system with structured recipe indexing, ingredient calculation, and culinary workflows.
+                                <h3 class="text-xl font-black font-syne uppercase text-black mt-3">Gym Attendance App</h3>
+                                <p class="text-xs text-neutral-700 font-sans mt-2 leading-relaxed">
+                                    Freelance production solution for daily member check-ins, automated attendance logs, membership renewal alerts, and real-time cloud sync.
                                 </p>
-                                <div class="flex flex-wrap gap-1.5 pt-1">
-                                    <span class="manga-exact-tag text-[9px]">Java</span>
-                                    <span class="manga-exact-tag text-[9px]">Data Structures</span>
-                                    <span class="manga-exact-tag text-[9px]">Workflows</span>
+                                <div class="flex flex-wrap gap-1.5 pt-4">
+                                    <span class="manga-exact-tag text-[9px]">React Native</span>
+                                    <span class="manga-exact-tag text-[9px]">Firebase</span>
+                                    <span class="manga-exact-tag text-[9px]">Cloud Sync</span>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between pt-3 border-t-2 border-black font-mono text-xs">
-                                <button class="project-modal-trigger text-black font-bold hover:underline flex items-center gap-1" data-project="cookify">
-                                    <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            <div class="pt-4 border-t border-neutral-300 flex items-center justify-between">
+                                <button data-project="gym" data-cursor="CASE" class="project-modal-trigger manga-btn-primary text-xs py-1.5 px-3">
+                                    <span>OPEN CASE →</span>
                                 </button>
-                                <a href="https://github.com/Ajaikanth123" target="_blank" class="text-neutral-700 hover:text-black"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                <a href="https://github.com/Ajaikanth123" target="_blank" data-cursor="CODE" class="font-mono text-xs font-bold text-neutral-800 hover:text-black flex items-center gap-1">
+                                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                                    <span>GITHUB</span>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Project 4: Gym Attendance Management -->
-                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <span class="px-2 py-0.5 bg-black text-white font-mono text-[9px] font-bold">PROJ 04</span>
-                                    <span class="font-mono text-[10px] text-neutral-600 font-bold">AI // NOTION & CMS</span>
+                        <!-- Case 005: Lunar Guardians SIH 2025 -->
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4 md:col-span-2 lg:col-span-2 bg-[#fdfcf9]">
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b-2 border-black">
+                                    <span class="font-mono text-xs font-black text-black">CASE FILE // 005 (NATIONAL WINNER)</span>
+                                    <span class="manga-exact-tag text-[9px] bg-black text-white">SIH 2025 1ST PRIZE</span>
                                 </div>
-                                <h3 class="text-xl font-black font-syne uppercase text-black">Gym Attendance App</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Independently built gym attendance management app featuring smart calculation algorithms integrated with Notion and CMS plus mobile AI features.
+                                <h3 class="text-2xl font-black font-syne uppercase text-black mt-3">Team Lunar Guardians (SIH 2025)</h3>
+                                <p class="text-sm text-neutral-800 font-sans mt-2 leading-relaxed">
+                                    National 1st Prize Winner in Smart India Hackathon (SIH) 2025 under the Space Technology domain. Selected as Pre-Incubatee at Aakam360 incubation center for pioneering aerospace & data innovation.
                                 </p>
-                                <div class="flex flex-wrap gap-1.5 pt-1">
-                                    <span class="manga-exact-tag text-[9px]">Notion API</span>
-                                    <span class="manga-exact-tag text-[9px]">CMS</span>
-                                    <span class="manga-exact-tag text-[9px]">AI Features</span>
+                                <div class="flex flex-wrap gap-2 pt-4">
+                                    <span class="manga-exact-tag text-[10px]">Python</span>
+                                    <span class="manga-exact-tag text-[10px]">Space Technology</span>
+                                    <span class="manga-exact-tag text-[10px]">AI / Data Science</span>
+                                    <span class="manga-exact-tag text-[10px]">Aakam360 Pre-Incubation</span>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between pt-3 border-t-2 border-black font-mono text-xs">
-                                <button class="project-modal-trigger text-black font-bold hover:underline flex items-center gap-1" data-project="gym">
-                                    <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            <div class="pt-4 border-t border-neutral-300 flex items-center justify-between">
+                                <button data-project="lunarguardians" data-cursor="CASE" class="project-modal-trigger manga-btn-primary text-xs py-2 px-4">
+                                    <span>OPEN CASE FILE →</span>
                                 </button>
-                                <a href="https://github.com/Ajaikanth123" target="_blank" class="text-neutral-700 hover:text-black"><i data-lucide="github" class="w-4 h-4"></i></a>
-                            </div>
-                        </div>
-
-                        <!-- Project 5: Lunar Guardians (SIH 2025) -->
-                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <span class="px-2 py-0.5 bg-black text-white font-mono text-[9px] font-bold">PROJ 05</span>
-                                    <span class="font-mono text-[10px] text-neutral-600 font-bold">SIH 2025 // SPACE TECH</span>
-                                </div>
-                                <h3 class="text-xl font-black font-syne uppercase text-black">Lunar Guardians (SIH 2025)</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Perception and risk-analysis framework for safety-critical space technology scenarios ("Safety Landing in PSR"). National Winner in SIH 2025.
-                                </p>
-                                <div class="flex flex-wrap gap-1.5 pt-1">
-                                    <span class="manga-exact-tag text-[9px]">Space Tech</span>
-                                    <span class="manga-exact-tag text-[9px]">Risk Analysis</span>
-                                    <span class="manga-exact-tag text-[9px]">Aakam360</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between pt-3 border-t-2 border-black font-mono text-xs">
-                                <button class="project-modal-trigger text-black font-bold hover:underline flex items-center gap-1" data-project="lunarguardians">
-                                    <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                                </button>
-                                <a href="https://github.com/Ajaikanth123" target="_blank" class="text-neutral-700 hover:text-black"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                <a href="#achievements" data-cursor="CLIMAX" class="font-mono text-xs font-bold text-neutral-800 hover:text-black flex items-center gap-1">
+                                    <span>VIEW CLIMAX STORY</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </a>
                             </div>
                         </div>
 
@@ -862,244 +891,338 @@
                 </div>
             </section>
 
+
             <!-- ========================================================================= -->
-            <!-- SECTION 5: ACHIEVEMENTS (FROM RESUME ONLY)                                 -->
+            <!-- CHAPTER 05: THE CLIMAX // SMART INDIA HACKATHON 2025 NATIONAL WINNER      -->
             <!-- ========================================================================= -->
-            <section id="achievements" class="py-24 border-b-2 border-black relative">
+            <section id="achievements" class="py-24 border-b-2 border-black relative bg-[#050505] text-white">
+                <div class="absolute inset-0 manga-dot-grid-dark opacity-30 pointer-events-none"></div>
+                <div class="absolute inset-0 manga-grid-overlay-dark opacity-20 pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2 font-bold">
+                                <span class="w-2.5 h-2.5 bg-white inline-block"></span>
+                                <span>CHAPTER 05 // THE CLIMAX & MILESTONES</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl md:text-6xl font-black font-syne uppercase tracking-tight text-white drop-shadow-[0_4px_20px_rgba(255,255,255,0.2)]">
+                                ACHIEVEMENT UNLOCKED
+                            </h2>
+                            <div class="font-script text-2xl sm:text-3xl text-neutral-300 mt-1">
+                                Smart India Hackathon 2025 National 1st Prize Winner
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Highlight SIH Banner -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#0c0c0c] border-2 border-white/30 p-6 sm:p-10 shadow-[8px_8px_0px_#ffffff] mb-12">
+                        
+                        <div class="lg:col-span-7 space-y-6">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-white text-black font-syne font-black text-xs uppercase tracking-widest shadow-[2px_2px_0px_rgba(255,255,255,0.4)]">
+                                <i data-lucide="trophy" class="w-4 h-4"></i>
+                                <span>NATIONAL 1ST PRIZE WINNER</span>
+                            </div>
+
+                            <h3 class="text-2xl sm:text-4xl font-black font-syne uppercase text-white leading-tight">
+                                SMART INDIA HACKATHON 2025
+                            </h3>
+
+                            <div class="font-mono text-sm text-neutral-300 space-y-1">
+                                <div><strong class="text-white">DOMAIN:</strong> Space Technology</div>
+                                <div><strong class="text-white">TEAM:</strong> Team Lunar Guardians</div>
+                                <div><strong class="text-white">INCUBATION:</strong> Selected as Pre-Incubatee at Aakam360 Incubation Center</div>
+                            </div>
+
+                            <p class="text-sm text-neutral-300 leading-relaxed font-sans">
+                                Won 1st Prize nationally in the prestigious Smart India Hackathon 2025 (Space Technology domain) with Team Lunar Guardians. The project was recognized by national jury panels for technical excellence and selected for formal pre-incubation at Aakam360.
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-3 py-1 border border-white/30 font-mono text-xs text-white">Space Tech</span>
+                                <span class="px-3 py-1 border border-white/30 font-mono text-xs text-white">National 1st Prize</span>
+                                <span class="px-3 py-1 border border-white/30 font-mono text-xs text-white">Aakam360 Incubation</span>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-5 flex justify-center">
+                            <div class="relative w-full max-w-sm aspect-square overflow-hidden border-2 border-white/40 bg-black shadow-[4px_4px_0px_#ffffff]">
+                                <img src="assets/images/manga-character-action.jpg" alt="Lunar Guardians Climax Pose" class="w-full h-full object-cover filter contrast-125 brightness-105">
+                                <div class="absolute inset-0 manga-dot-grid-dark opacity-30 pointer-events-none"></div>
+                                <div class="absolute bottom-3 left-3 right-3 bg-black/90 border border-white/40 p-2 font-mono text-xs text-center text-white">
+                                    TEAM LUNAR GUARDIANS // SIH '25
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Other Key Milestones Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <div class="p-6 bg-[#0c0c0c] border border-white/20 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono text-xs font-bold text-neutral-400">INFYNEX'26</span>
+                                <span class="px-2 py-0.5 bg-white/20 text-white font-mono text-[10px] font-bold">2ND PRIZE</span>
+                            </div>
+                            <h4 class="font-syne font-black text-lg text-white">Curse of Code & Paper Presentation</h4>
+                            <p class="text-xs text-neutral-300 leading-relaxed font-sans">
+                                Secured 2nd Prize in "Curse of Code" (Debugging & Problem Solving) and successfully presented an academic technical paper on AI & Data Science developments at INFYNEX'26.
+                            </p>
+                        </div>
+
+                        <div class="p-6 bg-[#0c0c0c] border border-white/20 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono text-xs font-bold text-neutral-400">CODING EXCELLENCE</span>
+                                <span class="px-2 py-0.5 bg-white/20 text-white font-mono text-[10px] font-bold">100+ SOLVED</span>
+                            </div>
+                            <h4 class="font-syne font-black text-lg text-white">100+ LeetCode DSA & World Record Attempt</h4>
+                            <p class="text-xs text-neutral-300 leading-relaxed font-sans">
+                                Solved 100+ Data Structures & Algorithms problems in Java on LeetCode. Participated in an official World Record Attempt for continuous competitive coding.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ========================================================================= -->
+            <!-- CHAPTER 06: VERIFIED CREDENTIALS // CERTIFICATIONS                        -->
+            <!-- ========================================================================= -->
+            <section id="certifications" class="py-24 border-b-2 border-black relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     
-                    <div class="mb-20">
-                        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-                            <div>
-                                <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
-                                    <span class="w-2.5 h-2.5 bg-black inline-block"></span>
-                                    <span>CHAPTER 05 // KEY ACHIEVEMENTS</span>
-                                </div>
-                                <h2 class="text-4xl sm:text-6xl font-black font-syne italic uppercase tracking-tight text-black drop-shadow-[3px_3px_0px_#000]">
-                                    HONORS & AWARDS
-                                </h2>
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
+                                <span class="w-2.5 h-2.5 bg-black inline-block"></span>
+                                <span>CHAPTER 06 // VERIFIED CREDENTIALS</span>
                             </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Achievement 1 -->
-                            <div class="manga-card p-6 space-y-3">
-                                <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-bold text-lg border-2 border-black shadow-[2px_2px_0px_#000]">🏆</div>
-                                <h3 class="font-syne font-bold text-black text-lg">National Winner, Smart India Hackathon (SIH) 2025</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Software category, Space Technology domain (Ministry of Education, Govt. of India). Team "Lunar Guardians" built a perception and risk-analysis framework for safety-critical space technology scenarios ("Safety Landing in PSR"). Selected as Pre-Incubatee with Aakam360 Venture Builder.
-                                </p>
-                                <div class="font-mono text-[10px] text-neutral-600 font-bold">MINISTRY OF EDUCATION, GOVT. OF INDIA • 2025</div>
-                            </div>
-
-                            <!-- Achievement 2 -->
-                            <div class="manga-card p-6 space-y-3">
-                                <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-bold text-lg border-2 border-black shadow-[2px_2px_0px_#000]">⚡</div>
-                                <h3 class="font-syne font-bold text-black text-lg">2nd Prize, "Curse of Code" & Paper Presentation</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Awarded 2nd Prize in the "Curse of Code" competitive coding contest, and Prize Winner for technical Paper Presentation at the INFYNEX'26 National Level Technical Symposium, Velammal Institute of Technology.
-                                </p>
-                                <div class="font-mono text-[10px] text-neutral-600 font-bold">VELAMMAL INSTITUTE OF TECHNOLOGY • 2026</div>
-                            </div>
-
-                            <!-- Achievement 3 -->
-                            <div class="manga-card p-6 space-y-3">
-                                <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-bold text-lg border-2 border-black shadow-[2px_2px_0px_#000]">📜</div>
-                                <h3 class="font-syne font-bold text-black text-lg">100+ LeetCode Solved & World Record Attempt</h3>
-                                <p class="text-neutral-700 text-xs leading-relaxed font-sans">
-                                    Solved 100+ problems on LeetCode (Java). Participant in Sri Shanmugha Educational Institutions' Official World Record Attempt (with IAF India) for Longest Series of Structured Facilitation Sessions (36 continuous hours).
-                                </p>
-                                <div class="font-mono text-[10px] text-neutral-600 font-bold">LEETCODE & WORLD RECORD ATTEMPT</div>
-                            </div>
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne uppercase tracking-tight text-black drop-shadow-[2px_2px_0px_#000]">
+                                CERTIFICATIONS
+                            </h2>
                         </div>
                     </div>
 
-                    <!-- Chapter 06: Certifications (From Resume Only) -->
-                    <div id="certifications">
-                        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-3">
                             <div>
-                                <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
-                                    <span class="w-2.5 h-2.5 bg-black inline-block"></span>
-                                    <span>CHAPTER 06 // ACCREDITATIONS</span>
-                                </div>
-                                <h2 class="text-4xl sm:text-6xl font-black font-syne italic uppercase tracking-tight text-black drop-shadow-[3px_3px_0px_#000]">
-                                    VERIFIED CERTS
-                                </h2>
+                                <span class="manga-exact-tag text-[9px] mb-2">NPTEL // IIT</span>
+                                <h3 class="font-syne font-bold text-black text-base">Programming in Java</h3>
+                                <p class="text-xs text-neutral-700 font-mono mt-1">NPTEL Elite Certification</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-300 font-mono text-xs font-bold text-black flex justify-between">
+                                <span>SCORE</span>
+                                <span class="text-emerald-700 font-black">85% (ELITE)</span>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div class="manga-card-sm p-5 space-y-2">
-                                <span class="manga-exact-tag text-[9px]">ELITE (85%)</span>
-                                <h4 class="font-syne font-bold text-black text-sm">Java Programming</h4>
-                                <div class="font-mono text-[11px] text-neutral-600">NPTEL, IIT Kharagpur (12-Week)</div>
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-3">
+                            <div>
+                                <span class="manga-exact-tag text-[9px] mb-2">NPTEL // IIT</span>
+                                <h3 class="font-syne font-bold text-black text-base">Programming in C</h3>
+                                <p class="text-xs text-neutral-700 font-mono mt-1">Problem Solving through C</p>
                             </div>
-                            <div class="manga-card-sm p-5 space-y-2">
-                                <span class="manga-exact-tag text-[9px]">ELITE (62%)</span>
-                                <h4 class="font-syne font-bold text-black text-sm">Problem Solving in C</h4>
-                                <div class="font-mono text-[11px] text-neutral-600">NPTEL</div>
-                            </div>
-                            <div class="manga-card-sm p-5 space-y-2">
-                                <span class="manga-exact-tag text-[9px]">VERIFIED</span>
-                                <h4 class="font-syne font-bold text-black text-sm">Java Programming</h4>
-                                <div class="font-mono text-[11px] text-neutral-600">Great Learning Academy</div>
-                            </div>
-                            <div class="manga-card-sm p-5 space-y-2">
-                                <span class="manga-exact-tag text-[9px]">VERIFIED</span>
-                                <h4 class="font-syne font-bold text-black text-sm">Java & Problem Solving</h4>
-                                <div class="font-mono text-[11px] text-neutral-600">HackerRank (Basic & Intermediate)</div>
+                            <div class="pt-3 border-t border-neutral-300 font-mono text-xs font-bold text-black flex justify-between">
+                                <span>SCORE</span>
+                                <span class="text-emerald-700 font-black">62% (ELITE)</span>
                             </div>
                         </div>
+
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-3">
+                            <div>
+                                <span class="manga-exact-tag text-[9px] mb-2">GREAT LEARNING</span>
+                                <h3 class="font-syne font-bold text-black text-base">Java Programming</h3>
+                                <p class="text-xs text-neutral-700 font-mono mt-1">Core & OOP Concepts</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-300 font-mono text-xs font-bold text-black flex justify-between">
+                                <span>STATUS</span>
+                                <span class="text-black font-black">VERIFIED</span>
+                            </div>
+                        </div>
+
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-3">
+                            <div>
+                                <span class="manga-exact-tag text-[9px] mb-2">HACKERRANK</span>
+                                <h3 class="font-syne font-bold text-black text-base">Java & Problem Solving</h3>
+                                <p class="text-xs text-neutral-700 font-mono mt-1">Skill Certification</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-300 font-mono text-xs font-bold text-black flex justify-between">
+                                <span>STATUS</span>
+                                <span class="text-black font-black">VERIFIED</span>
+                            </div>
+                        </div>
+
                     </div>
-
                 </div>
             </section>
 
+
             <!-- ========================================================================= -->
-            <!-- SECTION 7: EDUCATION (FROM RESUME ONLY)                                   -->
+            <!-- CHAPTER 07: ACADEMIC FOUNDATION // EDUCATION                              -->
             <!-- ========================================================================= -->
             <section id="education" class="py-24 border-b-2 border-black relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
                     <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                         <div>
                             <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
                                 <span class="w-2.5 h-2.5 bg-black inline-block"></span>
-                                <span>CHAPTER 07 // ACADEMIC FOUNDATIONS</span>
+                                <span>CHAPTER 07 // ACADEMIC FOUNDATION</span>
                             </div>
-                            <h2 class="text-4xl sm:text-6xl font-black font-syne italic uppercase tracking-tight text-black drop-shadow-[3px_3px_0px_#000]">
-                                EDUCATION & DEGREE
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne uppercase tracking-tight text-black drop-shadow-[2px_2px_0px_#000]">
+                                EDUCATION
                             </h2>
                         </div>
                     </div>
 
-                    <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         
-                        <!-- College -->
-                        <div class="manga-card p-6 sm:p-8 space-y-3">
-                            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b-2 border-black">
-                                <div>
-                                    <span class="px-2 py-0.5 bg-black text-white font-mono text-[10px] font-bold uppercase">UNDERGRADUATE DEGREE</span>
-                                    <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-black mt-1">B.Tech – Artificial Intelligence & Data Science</h3>
-                                    <div class="font-mono text-xs text-neutral-700 font-bold">Sri Shanmugha College of Engineering and Technology (Affiliated to Anna University, Chennai)</div>
-                                </div>
-                                <div class="text-right">
-                                    <span class="manga-exact-tag text-xs font-bold">CGPA: 8.69</span>
-                                    <div class="font-mono text-[10px] text-neutral-600 font-bold mt-1">2024 – 2028 (Expected)</div>
-                                </div>
+                        <div class="manga-card p-6 sm:p-8 flex flex-col justify-between space-y-4">
+                            <div>
+                                <span class="manga-exact-tag text-[10px] mb-2">2023 - 2027</span>
+                                <h3 class="text-xl font-black font-syne uppercase text-black">B.Tech Artificial Intelligence & Data Science</h3>
+                                <p class="text-xs text-neutral-700 font-sans mt-2">
+                                    Sri Shanmugha College of Engineering and Technology (Affiliated with Anna University, Chennai)
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t-2 border-black flex justify-between items-center font-mono">
+                                <span class="text-xs font-bold text-neutral-600">CGPA</span>
+                                <span class="text-lg font-black text-black">8.69 / 10.0</span>
                             </div>
                         </div>
 
-                        <!-- Schooling Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            
-                            <div class="manga-card p-6 space-y-2">
-                                <span class="px-2 py-0.5 bg-black text-white font-mono text-[10px] font-bold uppercase">CLASS XII (HIGHER SECONDARY)</span>
-                                <h4 class="font-syne font-bold text-black text-base">Vidyaa Vikas Matric Higher Secondary School</h4>
-                                <div class="font-mono text-xs text-neutral-700 font-bold">SCORE: 85%</div>
+                        <div class="manga-card p-6 sm:p-8 flex flex-col justify-between space-y-4">
+                            <div>
+                                <span class="manga-exact-tag text-[10px] mb-2">2022 - 2023</span>
+                                <h3 class="text-xl font-black font-syne uppercase text-black">Higher Secondary (Class XII)</h3>
+                                <p class="text-xs text-neutral-700 font-sans mt-2">
+                                    Vidyaa Vikas Matric Higher Secondary School
+                                </p>
                             </div>
-
-                            <div class="manga-card p-6 space-y-2">
-                                <span class="px-2 py-0.5 bg-black text-white font-mono text-[10px] font-bold uppercase">CLASS X (SECONDARY)</span>
-                                <h4 class="font-syne font-bold text-black text-base">Sengundhar Matric Higher Secondary School</h4>
-                                <div class="font-mono text-xs text-neutral-700 font-bold">SCORE: 71%</div>
+                            <div class="pt-4 border-t-2 border-black flex justify-between items-center font-mono">
+                                <span class="text-xs font-bold text-neutral-600">PERCENTAGE</span>
+                                <span class="text-lg font-black text-black">85%</span>
                             </div>
+                        </div>
 
+                        <div class="manga-card p-6 sm:p-8 flex flex-col justify-between space-y-4">
+                            <div>
+                                <span class="manga-exact-tag text-[10px] mb-2">2020 - 2021</span>
+                                <h3 class="text-xl font-black font-syne uppercase text-black">Secondary School (Class X)</h3>
+                                <p class="text-xs text-neutral-700 font-sans mt-2">
+                                    Sengundhar Matric Higher Secondary School
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t-2 border-black flex justify-between items-center font-mono">
+                                <span class="text-xs font-bold text-neutral-600">PERCENTAGE</span>
+                                <span class="text-lg font-black text-black">71%</span>
+                            </div>
                         </div>
 
                     </div>
                 </div>
             </section>
 
+
             <!-- ========================================================================= -->
-            <!-- SECTION 8: CONTACT (FROM RESUME ONLY)                                     -->
+            <!-- CHAPTER 08: TRANSMISSION // CONTACT & CONNECT                             -->
             <!-- ========================================================================= -->
-            <section id="contact" class="py-24 relative overflow-hidden">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section id="contact" class="py-24 relative bg-[#050505] text-white">
+                <div class="absolute inset-0 manga-dot-grid-dark opacity-30 pointer-events-none"></div>
+                <div class="absolute inset-0 manga-grid-overlay-dark opacity-20 pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    
                     <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                         <div>
-                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-700 tracking-widest uppercase mb-2 font-bold">
-                                <span class="w-2.5 h-2.5 bg-black inline-block"></span>
-                                <span>FINAL CHAPTER // TRANSMIT SIGNAL</span>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2 font-bold">
+                                <span class="w-2.5 h-2.5 bg-white inline-block"></span>
+                                <span>CHAPTER 08 // DIRECT TRANSMISSION</span>
                             </div>
-                            <h2 class="text-4xl sm:text-6xl font-black font-syne italic uppercase tracking-tight text-black drop-shadow-[3px_3px_0px_#000]">
-                                GET IN TOUCH
+                            <h2 class="text-3xl sm:text-5xl md:text-6xl font-black font-syne uppercase tracking-tight text-white drop-shadow-[0_4px_20px_rgba(255,255,255,0.2)]">
+                                INITIATE CONTACT
                             </h2>
-                            <div class="font-script text-2xl sm:text-3xl text-neutral-800 mt-1">
-                                Let's collaborate on AI and Full-Stack Engineering projects
+                            <div class="font-script text-2xl sm:text-3xl text-neutral-300 mt-1">
+                                Open for AI, Full-Stack & Engineering Roles
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                         
-                        <!-- Contact Form -->
-                        <div class="lg:col-span-7 manga-card p-6 sm:p-8 space-y-6">
-                            <form id="contact-form" class="space-y-4">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div class="space-y-1">
-                                        <label class="font-mono text-xs text-neutral-700 font-bold uppercase">YOUR NAME *</label>
-                                        <input type="text" id="form-name" required placeholder="Name" class="manga-input w-full">
-                                    </div>
-                                    <div class="space-y-1">
-                                        <label class="font-mono text-xs text-neutral-700 font-bold uppercase">YOUR EMAIL *</label>
-                                        <input type="email" id="form-email" required placeholder="email@domain.com" class="manga-input w-full">
-                                    </div>
+                        <!-- Contact Info Card -->
+                        <div class="lg:col-span-5 bg-[#0c0c0c] border border-white/20 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                            <div class="space-y-4">
+                                <h3 class="font-syne font-black text-xl text-white uppercase">COMMUNICATION SIGNALS</h3>
+                                <p class="text-xs text-neutral-400 leading-relaxed font-sans">
+                                    Whether you have an applied AI project, a full-stack engineering role, or a hackathon collaboration in mind, feel free to transmit a direct signal.
+                                </p>
+                            </div>
+
+                            <div class="space-y-3 font-mono text-xs">
+                                <a href="mailto:ajaikanthsaravanan@gmail.com" data-cursor="EMAIL" class="flex items-center gap-3 p-3 bg-white/5 border border-white/10 hover:border-white/40 hover:bg-white/10 transition-all">
+                                    <i data-lucide="mail" class="w-4 h-4 text-white"></i>
+                                    <span class="text-white truncate font-bold">ajaikanthsaravanan@gmail.com</span>
+                                </a>
+
+                                <a href="tel:+919363306220" data-cursor="CALL" class="flex items-center gap-3 p-3 bg-white/5 border border-white/10 hover:border-white/40 hover:bg-white/10 transition-all">
+                                    <i data-lucide="phone" class="w-4 h-4 text-white"></i>
+                                    <span class="text-white font-bold">+91 93633 06220</span>
+                                </a>
+
+                                <div class="flex items-center gap-3 p-3 bg-white/5 border border-white/10">
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-white"></i>
+                                    <span class="text-neutral-300 font-bold">Sankari, Tamil Nadu, India</span>
                                 </div>
-                                <div class="space-y-1">
-                                    <label class="font-mono text-xs text-neutral-700 font-bold uppercase">TRANSMISSION MESSAGE *</label>
-                                    <textarea id="form-message" rows="4" required placeholder="Write your message here..." class="manga-input w-full resize-none"></textarea>
-                                </div>
-                                <button type="submit" id="form-submit-btn" class="w-full manga-btn-primary py-3.5 flex items-center justify-center gap-2 text-sm font-syne uppercase">
-                                    <i data-lucide="send" class="w-4 h-4"></i>
-                                    <span>TRANSMIT SIGNAL</span>
-                                </button>
-                            </form>
-                            <div id="form-status" class="hidden p-4 bg-[#f8f5ee] border-2 border-black text-black font-mono text-xs flex items-center gap-2 shadow-[3px_3px_0px_#000]">
-                                <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                                <span class="font-bold">Signal transmitted! Ajaikanth will respond promptly.</span>
+                            </div>
+
+                            <div class="flex gap-3 pt-4 border-t border-white/10">
+                                <a href="https://github.com/Ajaikanth123" target="_blank" data-cursor="GITHUB" class="flex-1 py-2 text-center border border-white/30 text-white font-mono text-xs font-bold hover:bg-white hover:text-black transition-all">
+                                    GITHUB
+                                </a>
+                                <a href="https://linkedin.com/in/ajaikanth-saravanan-bb2a1231a" target="_blank" data-cursor="LINKEDIN" class="flex-1 py-2 text-center border border-white/30 text-white font-mono text-xs font-bold hover:bg-white hover:text-black transition-all">
+                                    LINKEDIN
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Direct Channels (Actual Resume Contact Info) -->
-                        <div class="lg:col-span-5 space-y-6">
-                            
-                            <div class="manga-card p-6 space-y-4">
-                                <h3 class="font-syne font-bold text-black text-base uppercase">DIRECT CHANNELS</h3>
-                                <div class="space-y-3 font-mono text-xs">
-                                    <a href="mailto:ajaikanthsaravanan@gmail.com" class="flex items-center gap-3 p-3 bg-[#f8f5ee] border-2 border-black hover:bg-black hover:text-white text-black transition-all shadow-[2px_2px_0px_#000]">
-                                        <i data-lucide="mail" class="w-4 h-4"></i>
-                                        <span class="truncate font-bold">ajaikanthsaravanan@gmail.com</span>
-                                    </a>
-                                    <a href="tel:+919363306220" class="flex items-center gap-3 p-3 bg-[#f8f5ee] border-2 border-black hover:bg-black hover:text-white text-black transition-all shadow-[2px_2px_0px_#000]">
-                                        <i data-lucide="phone" class="w-4 h-4"></i>
-                                        <span class="truncate font-bold">+91 93633 06220</span>
-                                    </a>
-                                    <div class="flex items-center gap-3 p-3 bg-[#f8f5ee] border-2 border-black text-black shadow-[2px_2px_0px_#000]">
-                                        <i data-lucide="map-pin" class="w-4 h-4"></i>
-                                        <span class="truncate font-bold">Sankari, Tamil Nadu, India</span>
+                        <!-- Contact Transmission Form -->
+                        <div class="lg:col-span-7 bg-[#0c0c0c] border border-white/20 p-6 sm:p-8">
+                            <form id="contact-form" class="space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-bold mb-1">YOUR IDENTITY / NAME</label>
+                                        <input type="text" required class="w-full bg-white/5 border border-white/20 p-3 text-white font-mono text-xs outline-none focus:border-white transition-colors" placeholder="e.g. Satoshi Nakamoto">
                                     </div>
-                                    <a href="https://linkedin.com/in/ajaikanth-saravanan-bb2a1231a" target="_blank" class="flex items-center gap-3 p-3 bg-[#f8f5ee] border-2 border-black hover:bg-black hover:text-white text-black transition-all shadow-[2px_2px_0px_#000]">
-                                        <i data-lucide="linkedin" class="w-4 h-4"></i>
-                                        <span class="truncate font-bold">linkedin.com/in/ajaikanth-saravanan-bb2a1231a</span>
-                                    </a>
-                                    <a href="https://github.com/Ajaikanth123" target="_blank" class="flex items-center gap-3 p-3 bg-[#f8f5ee] border-2 border-black hover:bg-black hover:text-white text-black transition-all shadow-[2px_2px_0px_#000]">
-                                        <i data-lucide="github" class="w-4 h-4"></i>
-                                        <span class="truncate font-bold">github.com/Ajaikanth123</span>
-                                    </a>
+                                    <div>
+                                        <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-bold mb-1">TRANSMISSION FREQUENCY / EMAIL</label>
+                                        <input type="email" required class="w-full bg-white/5 border border-white/20 p-3 text-white font-mono text-xs outline-none focus:border-white transition-colors" placeholder="satoshi@domain.com">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Manga Character Speech Box -->
-                            <div class="manga-card p-4 flex items-center gap-4 bg-white">
-                                <div class="w-16 h-16 shrink-0 border-2 border-black overflow-hidden bg-[#f4f0e6] shadow-[2px_2px_0px_#000]">
-                                    <img src="assets/images/manga-character-floating.jpg" alt="Ajaikanth Floating" class="w-full h-full object-cover">
+                                <div>
+                                    <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-bold mb-1">SUBJECT / TOPIC</label>
+                                    <input type="text" required class="w-full bg-white/5 border border-white/20 p-3 text-white font-mono text-xs outline-none focus:border-white transition-colors" placeholder="Engineering Role / Project Collaboration">
                                 </div>
-                                <div class="font-sans text-xs text-neutral-800 leading-snug">
-                                    <div class="font-syne font-black text-black uppercase text-sm">AJAIKANTH SARAVANAN</div>
-                                    <p class="font-script text-base text-neutral-700">"Feel free to reach out for AI, mobile apps, or full-stack engineering opportunities!"</p>
-                                </div>
-                            </div>
 
+                                <div>
+                                    <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-bold mb-1">SIGNAL PAYLOAD / MESSAGE</label>
+                                    <textarea rows="4" required class="w-full bg-white/5 border border-white/20 p-3 text-white font-mono text-xs outline-none focus:border-white transition-colors" placeholder="Your message details here..."></textarea>
+                                </div>
+
+                                <div id="form-status" class="hidden p-3 bg-emerald-950/60 border border-emerald-500 font-mono text-xs text-emerald-400">
+                                    ✓ Signal transmitted successfully to Ajaikanth.
+                                </div>
+
+                                <button id="form-submit-btn" type="submit" data-cursor="TRANSMIT" class="w-full py-3.5 bg-white text-black font-syne font-black text-xs uppercase tracking-widest hover:bg-neutral-200 transition-all border border-white">
+                                    TRANSMIT SIGNAL →
+                                </button>
+                            </form>
                         </div>
 
                     </div>
@@ -1108,105 +1231,171 @@
 
         </main>
 
-        <footer class="border-t-2 border-black bg-white py-12 relative z-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-black text-white font-black font-syne text-sm flex items-center justify-center border border-black shadow-[2px_2px_0px_#000]">A</div>
-                    <div>
-                        <div class="font-syne font-black text-sm text-black">AJAIKANTH SARAVANAN</div>
-                        <div class="font-mono text-[10px] text-neutral-600 font-bold">AI & DATA SCIENCE UNDERGRADUATE • SIH 2025 NATIONAL WINNER</div>
-                    </div>
+
+        <!-- Footer -->
+        <footer class="bg-black text-white border-t border-neutral-800 py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs text-neutral-400">
+                <div class="flex items-center gap-2">
+                    <span class="font-syne font-black text-sm text-white">AJAIKANTH SARAVANAN</span>
+                    <span>•</span>
+                    <span>THE DEVELOPER CHRONICLES</span>
                 </div>
-                <div class="font-mono text-[11px] text-neutral-700 font-bold">
-                    CRAFTED WITH AUTHENTIC BLACK & WHITE MANGA AESTHETICS
+                <div>
+                    BUILT WITH MANGA AESTHETICS & 2.5D INTERACTIVE ENGINE
+                </div>
+                <div>
+                    © 2026 ALL RIGHTS RESERVED
                 </div>
             </div>
         </footer>
 
-        <!-- Floating Scroll-To-Top Button -->
-        <div id="scroll-top-fab" class="fixed bottom-6 right-6 z-40 opacity-0 pointer-events-none translate-y-4 transition-all duration-300">
-            <button id="scroll-top-btn" title="Scroll to Top" class="relative w-12 h-12 bg-white border-2 border-black text-black flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_#000] group">
-                <svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 36 36">
-                    <path class="text-neutral-300" stroke-width="2.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path id="scroll-progress-circle" class="text-black transition-all duration-100" stroke-dasharray="0, 100" stroke-width="2.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <i data-lucide="arrow-up" class="w-5 h-5 group-hover:-translate-y-0.5 transition-transform"></i>
-            </button>
-        </div>
-
     </div>
 
-    <!-- Modals -->
-    <div id="resume-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="manga-card max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden bg-[#f4f0e6] border-2 border-black shadow-[8px_8px_0px_#000]">
-            <div class="p-4 sm:p-6 border-b-2 border-black flex items-center justify-between bg-white">
-                <div>
-                    <h3 class="font-syne font-black text-xl text-black uppercase">AJAIKANTH SARAVANAN // RESUME</h3>
-                    <p class="font-mono text-xs text-neutral-700 font-bold">Sankari, Tamil Nadu, India • +91 93633 06220 • ajaikanthsaravanan@gmail.com</p>
-                </div>
-                <button id="close-resume-modal" class="w-8 h-8 border-2 border-black bg-white text-black hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-[2px_2px_0px_#000]">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-            <div class="p-6 overflow-y-auto space-y-4 font-sans text-sm text-neutral-800 bg-[#f4f0e6]">
-                <div class="p-4 bg-white border-2 border-black shadow-[2px_2px_0px_#000] space-y-2 font-mono text-xs">
-                    <div class="font-bold text-black uppercase text-sm">Professional Summary</div>
-                    <p class="text-neutral-700 leading-relaxed font-sans text-xs">
-                        AI & Data Science undergraduate at Sri Shanmugha College of Engineering and Technology (Anna University, Chennai) and National Winner, Smart India Hackathon 2025 (Space Technology). Hands-on experience in AI, full-stack development, and product Go-To-Market execution as an intern at SeeDataMD, plus independent delivery of two client applications (React Native, Firebase) completed with full client payment. Strong foundation in Java, Python, OOP, and Data Structures & Algorithms, backed by 100+ LeetCode problems solved and multiple NPTEL/HackerRank certifications.
-                    </p>
-                </div>
 
-                <div class="p-4 bg-white border-2 border-black shadow-[2px_2px_0px_#000] space-y-2 font-mono text-xs">
-                    <div class="font-bold text-black uppercase text-sm">Key Experience</div>
-                    <ul class="list-disc list-inside text-neutral-700 space-y-1 font-sans text-xs">
-                        <li><strong>SeeDataMD Private Limited:</strong> AI, Data Science & Full-Stack Development Intern (Sept 2025 – Present). Internship extended into a 6-month full-time offline term.</li>
-                        <li><strong>Freelance Software Developer:</strong> Delivered MedRoute (React Native, Firebase) with performance bonus and Gym Attendance Management app with Notion/CMS integration.</li>
-                    </ul>
-                </div>
-
-                <div class="p-4 bg-white border-2 border-black shadow-[2px_2px_0px_#000] space-y-2 font-mono text-xs">
-                    <div class="font-bold text-black uppercase text-sm">Achievements & Certifications</div>
-                    <ul class="list-disc list-inside text-neutral-700 space-y-1 font-sans text-xs">
-                        <li>National Winner, Smart India Hackathon (SIH) 2025 (Space Technology) • Pre-Incubatee @ Aakam360</li>
-                        <li>2nd Prize, Curse of Code & Winner, Paper Presentation — INFYNEX'26</li>
-                        <li>100+ LeetCode problems solved in Java • World Record Attempt Participant</li>
-                        <li>Java Programming (Elite, 85%) — NPTEL, IIT Kharagpur</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="p-4 bg-white border-t-2 border-black flex items-center justify-between">
-                <button id="download-resume-btn" class="manga-btn-primary px-4 py-2 text-xs font-syne flex items-center gap-1.5">
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                    <span>PRINT / SAVE PDF</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
+    <!-- ========================================================================= -->
+    <!-- 3. PROJECT DETAIL CASE FILE MODAL                                         -->
+    <!-- ========================================================================= -->
     <div id="project-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="manga-card max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden bg-[#f4f0e6] border-2 border-black shadow-[8px_8px_0px_#000]">
-            <div class="p-4 sm:p-6 border-b-2 border-black flex items-center justify-between bg-white">
+        <div class="manga-card max-w-2xl w-full p-6 sm:p-8 bg-white max-h-[90vh] overflow-y-auto space-y-4 shadow-[8px_8px_0px_#000]">
+            <div class="flex items-center justify-between pb-3 border-b-2 border-black">
                 <div>
-                    <h3 id="modal-project-title" class="font-syne font-black text-xl text-black uppercase">PROJECT TITLE</h3>
-                    <p id="modal-project-category" class="font-mono text-xs text-neutral-700 font-bold">CATEGORY // ARCHITECTURE</p>
+                    <span id="modal-case-num" class="font-mono text-xs font-black text-neutral-600">CASE FILE // 001</span>
+                    <h3 id="modal-project-title" class="text-xl sm:text-2xl font-black font-syne uppercase text-black">PROJECT TITLE</h3>
+                    <div id="modal-project-category" class="font-mono text-[10px] font-bold text-neutral-600">CATEGORY</div>
                 </div>
-                <button id="close-project-modal" class="w-8 h-8 border-2 border-black bg-white text-black hover:bg-black hover:text-white flex items-center justify-center transition-colors shadow-[2px_2px_0px_#000]">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
+                <button id="close-project-modal" data-cursor="CLOSE" class="w-8 h-8 bg-black text-white font-mono text-sm flex items-center justify-center hover:bg-neutral-800 transition-all">✕</button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4 font-sans text-sm text-neutral-800 bg-[#f4f0e6]" id="modal-project-body"></div>
-            <div class="p-4 bg-white border-t-2 border-black flex items-center justify-between">
-                <a id="modal-project-github" href="https://github.com/Ajaikanth123" target="_blank" class="manga-btn-secondary px-4 py-2 text-xs font-syne flex items-center gap-1.5">
-                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
-                    <span>GITHUB REPO</span>
+
+            <div id="modal-project-body" class="space-y-4 text-xs font-sans text-neutral-800 leading-relaxed">
+                <!-- Injected Dynamically -->
+            </div>
+
+            <div class="pt-4 border-t-2 border-black flex items-center justify-between">
+                <a id="modal-project-github" href="#" target="_blank" data-cursor="CODE" class="manga-btn-primary text-xs py-2 px-4 flex items-center gap-2">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>VIEW SOURCE REPOSITORY</span>
                 </a>
+                <span class="font-mono text-[10px] text-neutral-600 font-bold">VERIFIED ARCHIVE</span>
             </div>
         </div>
     </div>
 
+
+    <!-- ========================================================================= -->
+    <!-- 4. RESUME VIEWER MODAL                                                    -->
+    <!-- ========================================================================= -->
+    <div id="resume-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="manga-card max-w-3xl w-full p-6 sm:p-8 bg-white max-h-[92vh] overflow-y-auto space-y-6 shadow-[8px_8px_0px_#000]">
+            
+            <div class="flex items-center justify-between pb-3 border-b-2 border-black">
+                <div>
+                    <span class="font-mono text-xs font-black text-neutral-600">OFFICIAL CREDENTIALS</span>
+                    <h3 class="text-2xl font-black font-syne uppercase text-black">AJAIKANTH SARAVANAN</h3>
+                    <div class="font-mono text-[10px] font-bold text-neutral-600">B.TECH AI & DATA SCIENCE • ANNA UNIVERSITY</div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="download-resume-btn" data-cursor="PRINT" class="manga-btn-secondary text-xs py-1.5 px-3">
+                        <i data-lucide="printer" class="w-3.5 h-3.5 mr-1 inline"></i>
+                        <span>PRINT / PDF</span>
+                    </button>
+                    <button id="close-resume-modal" data-cursor="CLOSE" class="w-8 h-8 bg-black text-white font-mono text-sm flex items-center justify-center hover:bg-neutral-800 transition-all">✕</button>
+                </div>
+            </div>
+
+            <!-- Resume Content Breakdown -->
+            <div class="space-y-6 text-xs font-mono">
+                
+                <!-- Contact Summary -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-[#fdfcf9] border border-black text-[11px]">
+                    <div><strong>EMAIL:</strong> ajaikanthsaravanan@gmail.com</div>
+                    <div><strong>PHONE:</strong> +91 93633 06220</div>
+                    <div><strong>LOCATION:</strong> Sankari, Tamil Nadu</div>
+                    <div><strong>CGPA:</strong> 8.69 / 10.0</div>
+                </div>
+
+                <!-- Experience -->
+                <div>
+                    <h4 class="font-syne font-bold text-black text-sm uppercase pb-1 border-b border-black mb-2">EXPERIENCE</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between font-bold text-black">
+                                <span>SeeDataMD — AI, Data Science & Full-Stack Intern</span>
+                                <span>Dec 2025 – Present</span>
+                            </div>
+                            <p class="text-neutral-700 font-sans text-xs mt-1">
+                                Completed virtual internship in AI, full-stack & Go-To-Market execution; extended to 6-month offline internship. Applied AI feature development, CMS management, and cross-functional agile sprints.
+                            </p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between font-bold text-black">
+                                <span>Freelance Mobile Application Developer</span>
+                                <span>2024 – 2025</span>
+                            </div>
+                            <p class="text-neutral-700 font-sans text-xs mt-1">
+                                Built and delivered two independent client mobile applications (MedRoute & Gym Attendance App) using React Native and Firebase with full client payment and bonus.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements -->
+                <div>
+                    <h4 class="font-syne font-bold text-black text-sm uppercase pb-1 border-b border-black mb-2">KEY ACHIEVEMENTS</h4>
+                    <ul class="space-y-1 text-neutral-800 font-sans text-xs list-disc pl-4">
+                        <li><strong>Smart India Hackathon (SIH) 2025 National Winner:</strong> 1st Prize in Space Technology domain (Team Lunar Guardians); Selected as Pre-Incubatee @ Aakam360.</li>
+                        <li><strong>INFYNEX'26:</strong> 2nd Prize in Curse of Code (Debugging/Problem Solving) & Technical Paper Presentation.</li>
+                        <li><strong>LeetCode & World Record:</strong> 100+ LeetCode DSA Java problems solved; participated in World Record continuous coding attempt.</li>
+                    </ul>
+                </div>
+
+                <!-- Education -->
+                <div>
+                    <h4 class="font-syne font-bold text-black text-sm uppercase pb-1 border-b border-black mb-2">EDUCATION</h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span>B.Tech AI & Data Science — Sri Shanmugha (Anna Univ)</span>
+                            <span class="font-bold">8.69 CGPA (2023–2027)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Class XII — Vidyaa Vikas Matric Hr Sec School</span>
+                            <span class="font-bold">85% (2023)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Class X — Sengundhar Matric Hr Sec School</span>
+                            <span class="font-bold">71% (2021)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div>
+                    <h4 class="font-syne font-bold text-black text-sm uppercase pb-1 border-b border-black mb-2">CERTIFICATIONS</h4>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="manga-exact-tag text-[10px]">NPTEL Java (Elite 85%)</span>
+                        <span class="manga-exact-tag text-[10px]">NPTEL C (Elite 62%)</span>
+                        <span class="manga-exact-tag text-[10px]">Great Learning Java</span>
+                        <span class="manga-exact-tag text-[10px]">HackerRank Problem Solving</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Floating Scroll-To-Top Button with Circular Progress -->
+    <div id="scroll-top-fab" class="fixed bottom-6 right-6 z-40 opacity-0 pointer-events-none translate-y-4 transition-all duration-300">
+        <button id="scroll-top-btn" data-cursor="TOP" title="Return to Top" class="relative w-12 h-12 bg-white border-2 border-black rounded-none flex items-center justify-center text-black shadow-[3px_3px_0px_#000] hover:bg-black hover:text-white transition-colors">
+            <svg class="absolute inset-0 w-full h-full -rotate-90 p-1 pointer-events-none" viewBox="0 0 36 36">
+                <path class="text-neutral-200" stroke-width="2.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path id="scroll-progress-circle" class="text-black" stroke-dasharray="0, 100" stroke-width="2.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            </svg>
+            <i data-lucide="arrow-up" class="w-4 h-4 relative z-10"></i>
+        </button>
+    </div>
+
+    <!-- Interactive Controller Script -->
     <script src="script.js"></script>
-    <script>
-        lucide.createIcons();
-    </script>
 </body>
 </html>
