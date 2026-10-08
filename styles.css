@@ -1,0 +1,520 @@
+/* ========================================================================= */
+/* AJAIKANTH SARAVANAN - MANGA AI & DATA SCIENCE PORTFOLIO STYLESHEET        */
+/* ========================================================================= */
+
+:root {
+    --bg-black: #000000;
+    --bg-surface: #0a0a0a;
+    --bg-card: #121212;
+    --border-light: rgba(255, 255, 255, 0.15);
+    --border-bold: #ffffff;
+    --text-primary: #ffffff;
+    --text-secondary: #a3a3a3;
+    --text-muted: #525252;
+    --accent-glow: rgba(255, 255, 255, 0.4);
+    --font-syne: 'Syne', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Space Grotesk', -apple-system, sans-serif;
+}
+
+/* Reset & Base Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #000000;
+}
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+
+/* Manga Screentone Texture (Halftone Pattern) */
+.manga-screentone-bg {
+    background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+    background-size: 8px 8px;
+}
+
+.manga-grid-overlay {
+    background-size: 40px 40px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Manga Typography Classes */
+.font-syne { font-family: var(--font-syne); }
+.font-mono { font-family: var(--font-mono); }
+.font-sans { font-family: var(--font-sans); }
+
+.manga-text-outline {
+    -webkit-text-stroke: 1.5px #ffffff;
+    color: transparent;
+    transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+}
+.manga-text-outline:hover {
+    color: #ffffff;
+}
+
+/* Manga Corner Frame Brackets */
+.manga-frame-corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 10;
+}
+.manga-frame-corner.top-left {
+    top: 16px;
+    left: 16px;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+}
+.manga-frame-corner.top-right {
+    top: 16px;
+    right: 16px;
+    border-top: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+}
+.manga-frame-corner.bottom-left {
+    bottom: 16px;
+    left: 16px;
+    border-bottom: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+}
+.manga-frame-corner.bottom-right {
+    bottom: 16px;
+    right: 16px;
+    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+}
+
+/* ========================================================================= */
+/* CINEMATIC ENTRANCE STYLES & ANIMATIONS                                    */
+/* ========================================================================= */
+
+.character-float {
+    animation: animeFloat 4s ease-in-out infinite;
+}
+
+@keyframes animeFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(0.5deg);
+    }
+}
+
+.ring-glow-pulse {
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.5), inset 0 0 25px rgba(255, 255, 255, 0.3);
+    animation: ringPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes ringPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.08);
+        opacity: 1;
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), inset 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+}
+
+.animate-spin-slow {
+    animation: spinSlow 18s linear infinite;
+}
+.animate-reverse-spin {
+    animation: spinReverse 12s linear infinite;
+}
+
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes spinReverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+/* Scanline Effect */
+.scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    opacity: 0.6;
+    animation: scanlineMove 3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanlineMove {
+    0% { top: 0%; opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* Tap Ring Ripple */
+.tap-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    animation: tapRipple 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+@keyframes tapRipple {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+
+/* Zoom In Motion Blur State (Triggered on Click) */
+.zooming-active {
+    transform: scale(9) !important;
+    filter: blur(12px) contrast(150%) !important;
+    opacity: 0 !important;
+    transition: transform 1.2s cubic-bezier(0.87, 0, 0.13, 1), 
+                filter 1.2s cubic-bezier(0.87, 0, 0.13, 1), 
+                opacity 0.9s cubic-bezier(0.87, 0, 0.13, 1) !important;
+}
+
+/* Manga Speedline Burst */
+.manga-speedline-burst {
+    position: absolute;
+    inset: -50%;
+    background: repeating-conic-gradient(
+        from 0deg,
+        rgba(255, 255, 255, 0.15) 0deg 2deg,
+        transparent 2deg 8deg,
+        rgba(255, 255, 255, 0.25) 8deg 9deg,
+        transparent 9deg 16deg
+    );
+    animation: speedlineRotate 0.8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes speedlineRotate {
+    0% { transform: scale(1.2) rotate(0deg); }
+    50% { transform: scale(1.35) rotate(180deg); }
+    100% { transform: scale(1.2) rotate(360deg); }
+}
+
+/* Glitch Text Effect */
+.glitch-text {
+    position: relative;
+    display: inline-block;
+}
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.glitch-text::before {
+    left: 2px;
+    text-shadow: -2px 0 #ffffff;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitchAnim 2s infinite linear alternate-reverse;
+}
+.glitch-text::after {
+    left: -2px;
+    text-shadow: -2px 0 #ffffff;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitchAnim2 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitchAnim {
+    0% { clip: rect(10px, 9999px, 44px, 0); }
+    20% { clip: rect(60px, 9999px, 80px, 0); }
+    40% { clip: rect(20px, 9999px, 50px, 0); }
+    60% { clip: rect(80px, 9999px, 100px, 0); }
+    80% { clip: rect(40px, 9999px, 70px, 0); }
+    100% { clip: rect(70px, 9999px, 90px, 0); }
+}
+
+@keyframes glitchAnim2 {
+    0% { clip: rect(40px, 9999px, 70px, 0); }
+    20% { clip: rect(10px, 9999px, 30px, 0); }
+    40% { clip: rect(70px, 9999px, 90px, 0); }
+    60% { clip: rect(30px, 9999px, 60px, 0); }
+    80% { clip: rect(90px, 9999px, 120px, 0); }
+    100% { clip: rect(15px, 9999px, 45px, 0); }
+}
+
+/* ========================================================================= */
+/* MANGA CARDS, BADGES, BUTTONS & FORMS                                      */
+/* ========================================================================= */
+
+.manga-card {
+    background: #0d0d0d;
+    border: 1.5px solid #262626;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.manga-card:hover {
+    border-color: #ffffff;
+    box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.manga-card-sm {
+    background: #111111;
+    border: 1px solid #262626;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.manga-card-sm:hover {
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Manga Badge (Requested: AI • Full Stack • Java • Python • Open Source) */
+.manga-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    background: #141414;
+    border: 1px solid #333333;
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: #e5e5e5;
+    letter-spacing: 0.05em;
+    transition: all 0.25s ease;
+}
+.manga-badge:hover {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.manga-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #1c1c1c;
+    border: 1px solid #2e2e2e;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: #a3a3a3;
+}
+
+/* Manga Primary Button */
+.manga-btn-primary {
+    background: #ffffff;
+    color: #000000;
+    font-family: var(--font-syne);
+    font-weight: 800;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1.5px solid #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+}
+.manga-btn-primary:hover {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Manga Secondary Button */
+.manga-btn-secondary {
+    background: #0a0a0a;
+    color: #ffffff;
+    font-family: var(--font-syne);
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 1.5px solid #2e2e2e;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    transition: all 0.25s ease;
+}
+.manga-btn-secondary:hover {
+    border-color: #ffffff;
+    background: #1a1a1a;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+
+/* Manga Input Fields */
+.manga-input {
+    background: #0a0a0a;
+    border: 1px solid #262626;
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.manga-input:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+/* Skill Bars */
+.skill-bar {
+    width: 100%;
+    height: 4px;
+    background: #262626;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+.skill-progress {
+    height: 100%;
+    background: #ffffff;
+    border-radius: 9999px;
+    transition: width 1s ease-in-out;
+}
+
+/* Skill & Project Filter Tabs */
+.skill-tab-btn, .project-filter-btn {
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: #737373;
+    background: #111111;
+    border: 1px solid #262626;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+.skill-tab-btn:hover, .project-filter-btn:hover {
+    color: #ffffff;
+    border-color: #525252;
+}
+.skill-tab-btn.active, .project-filter-btn.active {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    font-weight: 700;
+}
+
+/* Hero Manga Backdrop Light Rays */
+.hero-manga-backdrop {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    animation: auraPulse 6s ease-in-out infinite;
+}
+
+@keyframes auraPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+/* Custom Anime Cursor */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s ease-out;
+}
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transition: width 0.2s, height 0.2s, border-color 0.2s;
+}
+.custom-cursor.hovering .cursor-ring {
+    width: 48px;
+    height: 48px;
+    border-color: #ffffff;
+    border-style: dashed;
+    animation: spinSlow 4s linear infinite;
+}
+
+/* Floating SFX Kanji Text Animation */
+.manga-sfx-float {
+    position: absolute;
+    font-family: var(--font-syne);
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 2px 2px 0 #000;
+    pointer-events: none;
+    z-index: 9999;
+    animation: sfxFly 1.2s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes sfxFly {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.5) rotate(-10deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -80px) scale(1.4) rotate(8deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -140px) scale(1.8) rotate(-5deg);
+    }
+}
+
+/* Mobile Responsiveness Polish */
+@media (max-width: 640px) {
+    .manga-frame-corner { display: none; }
+}

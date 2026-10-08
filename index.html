@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajaikanth Saravanan | AI & Data Science Engineer</title>
+    <meta name="description" content="Portfolio of Ajaikanth Saravanan - AI & Data Science Engineer specializing in Deep Learning, Full Stack AI Systems, and Distributed Computing.">
+    <meta name="keywords" content="Ajaikanth Saravanan, AI Engineer, Data Scientist, Machine Learning, Deep Learning, Full Stack, Python, Java">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-weight='900' fill='white'>A</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-black text-white font-sans antialiased selection:bg-white selection:text-black overflow-x-hidden">
+
+    <!-- Manga Speedlines Canvas (Global Dynamic Ambient Effect) -->
+    <canvas id="speedlines-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-20"></canvas>
+    
+    <!-- Custom Anime Cursor -->
+    <div id="custom-cursor" class="custom-cursor pointer-events-none hidden md:block">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+        <div class="cursor-crosshair h"></div>
+        <div class="cursor-crosshair v"></div>
+    </div>
+
+    <!-- SFX Floating Manga Sound Tags Container -->
+    <div id="sfx-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div>
+
+    <!-- ========================================================================= -->
+    <!-- 1. CINEMATIC MANGA ENTRANCE OVERLAY                                       -->
+    <!-- ========================================================================= -->
+    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center select-none overflow-hidden transition-all duration-1000">
+        <!-- Manga Ambient Halftone Background Layer -->
+        <div class="absolute inset-0 manga-screentone-bg opacity-30 pointer-events-none"></div>
+        
+        <!-- Subtle Japanese Manga Text Backdrop -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5 font-syne uppercase text-8xl md:text-[14rem] tracking-tighter text-white font-black overflow-hidden whitespace-nowrap">
+            <span>人工知能 • データ科学 • AJAIKANTH</span>
+        </div>
+
+        <!-- Manga Corner Frame Brackets -->
+        <div class="manga-frame-corner top-left"></div>
+        <div class="manga-frame-corner top-right"></div>
+        <div class="manga-frame-corner bottom-left"></div>
+        <div class="manga-frame-corner bottom-right"></div>
+
+        <!-- Top Header Status Bar on Entrance -->
+        <div class="absolute top-6 left-6 right-6 flex items-center justify-between text-xs font-mono text-neutral-400 tracking-widest z-10">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                <span>SYSTEM://NEURAL_CORE_V3</span>
+            </div>
+            <div class="hidden sm:flex items-center gap-4 text-[11px] text-neutral-500">
+                <span>LATENCY: 12ms</span>
+                <span>SEC_AUTH: VERIFIED</span>
+                <span>ID: AJAI-09</span>
+            </div>
+            <button id="skip-intro-btn" class="border border-neutral-700 bg-neutral-900/80 px-3 py-1 text-[11px] font-mono hover:bg-white hover:text-black transition-colors rounded">
+                [ SKIP INTRO ]
+            </button>
+        </div>
+
+        <!-- Center Character Stage & Interactive Trigger -->
+        <div id="portal-trigger" class="relative group cursor-pointer flex flex-col items-center z-10 transition-transform duration-500">
+            <!-- Glowing Orbiting Rings -->
+            <div class="absolute -inset-10 rounded-full border border-white/20 animate-spin-slow pointer-events-none"></div>
+            <div class="absolute -inset-6 rounded-full border border-dashed border-white/40 animate-reverse-spin pointer-events-none"></div>
+            <div class="absolute -inset-2 rounded-full ring-glow-pulse pointer-events-none"></div>
+
+            <!-- Manga Speed Burst Rays around Character -->
+            <div class="landing-rays"></div>
+
+            <!-- Character Wrapper with Floating Animation -->
+            <div id="landing-character-wrapper" class="relative w-48 h-48 md:w-64 md:h-64 rounded-full p-2 bg-neutral-950 border-2 border-white shadow-[0_0_50px_rgba(255,255,255,0.25)] flex items-center justify-center overflow-hidden character-float transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_0_80px_rgba(255,255,255,0.5)]">
+                <!-- Inner character image -->
+                <img id="landing-character-img" 
+                     src="assets/images/manga-character-floating.jpg" 
+                     alt="Ajaikanth Saravanan Manga Avatar" 
+                     class="w-full h-full object-cover rounded-full filter contrast-125 brightness-105 transition-transform duration-700 group-hover:scale-110">
+                
+                <!-- Manga Scanline Glitch Line -->
+                <div class="scanline"></div>
+                
+                <!-- Hover Glow Ripple -->
+                <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+
+            <!-- Tap Indicator Ripple Effect -->
+            <div class="tap-ring"></div>
+
+            <!-- Kanji SFX Badge -->
+            <div class="absolute -right-4 -top-2 bg-white text-black font-black font-syne text-xs px-2 py-0.5 transform rotate-12 border border-black shadow-lg">
+                ズッ (FOCUS)
+            </div>
+        </div>
+
+        <!-- Hero Texts Under Character -->
+        <div id="landing-text-block" class="mt-8 text-center z-10 transition-opacity duration-500">
+            <div class="inline-block mb-1 px-3 py-0.5 text-[11px] font-mono tracking-widest uppercase bg-white/10 text-neutral-300 border border-white/20 rounded-full">
+                AI & DATA SCIENCE PORTFOLIO
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black font-syne tracking-wider uppercase text-white mt-2 drop-shadow-md">
+                AJAIKANTH SARAVANAN
+            </h1>
+            
+            <div class="flex flex-col items-center gap-2 mt-4">
+                <div class="flex items-center gap-2 text-sm md:text-base font-mono font-semibold text-neutral-300 group-hover:text-white transition-colors">
+                    <span class="animate-bounce inline-block text-white font-bold">▲</span>
+                    <span class="tracking-widest uppercase text-xs md:text-sm">TAP TO ZOOM • CLICK TO ENTER PORTFOLIO</span>
+                    <span class="animate-bounce inline-block text-white font-bold">▲</span>
+                </div>
+                <div class="text-[11px] font-mono text-neutral-500 tracking-wider">
+                    [ IMMERSIVE MANGA EXPERIENCE ]
+                </div>
+            </div>
+        </div>
+
+        <!-- Cinematic Building / Initializing State Overlay -->
+        <div id="building-overlay" class="absolute inset-0 z-20 bg-black flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+            <!-- Fullscreen Speedlines Burst -->
+            <div class="manga-speedline-burst"></div>
+            
+            <div class="relative z-10 flex flex-col items-center text-center px-4 max-w-md">
+                <!-- Stylized Manga Kanji Flash -->
+                <div class="text-6xl md:text-7xl font-black font-syne text-white tracking-widest animate-pulse mb-4 drop-shadow-[0_0_20px_#ffffff]">
+                    構築中
+                </div>
+                <div class="text-2xl md:text-3xl font-black font-mono tracking-widest text-white uppercase glitch-text" data-text="BUILDING...">
+                    BUILDING...
+                </div>
+                <div class="text-xs font-mono text-neutral-400 mt-2 tracking-widest uppercase">
+                    INITIALIZING NEURAL PORTFOLIO SYSTEM
+                </div>
+
+                <!-- Cybernetic Progress Bar -->
+                <div class="w-64 md:w-80 h-2 bg-neutral-900 border border-neutral-700 rounded-full mt-6 overflow-hidden p-0.5">
+                    <div id="building-progress" class="h-full bg-white rounded-full transition-all duration-1200 w-0"></div>
+                </div>
+
+                <!-- Console Diagnostic Feed -->
+                <div id="building-console" class="mt-4 font-mono text-[10px] text-neutral-400 h-6 overflow-hidden">
+                    <span>> Loading neural weights...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Notice on Entrance -->
+        <div class="absolute bottom-4 text-center font-mono text-[10px] text-neutral-600 tracking-wider">
+            DESIGNED & CRAFTED BY AJAIKANTH SARAVANAN • © 2026
+        </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- 2. MAIN PORTFOLIO APPLICATION                                             -->
+    <!-- ========================================================================= -->
+    <div id="portfolio-app" class="relative min-h-screen bg-black text-white opacity-0 transition-opacity duration-1000">
+
+        <!-- Background Halftone Grid Pattern -->
+        <div class="fixed inset-0 manga-screentone-bg opacity-15 pointer-events-none z-0"></div>
+        <div class="fixed inset-0 manga-grid-overlay opacity-10 pointer-events-none z-0"></div>
+
+        <!-- ========================================================================= -->
+        <!-- NAVIGATION BAR                                                            -->
+        <!-- ========================================================================= -->
+        <header class="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-neutral-800/80 transition-all duration-300" id="navbar">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
+                
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-9 h-9 rounded-lg bg-white text-black font-black font-syne text-lg flex items-center justify-center border border-white group-hover:bg-black group-hover:text-white transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                        A
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-syne font-black text-sm md:text-base tracking-wider text-white group-hover:text-neutral-300 transition-colors uppercase">
+                            AJAIKANTH.AI
+                        </span>
+                        <span class="font-mono text-[9px] text-neutral-400 tracking-widest uppercase">
+                            PORTFOLIO // 09
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden lg:flex items-center gap-7 text-xs font-mono tracking-widest">
+                    <a href="#about" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">01. ABOUT</a>
+                    <a href="#skills" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">02. SKILLS</a>
+                    <a href="#experience" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">03. EXPERIENCE</a>
+                    <a href="#projects" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">04. PROJECTS</a>
+                    <a href="#achievements" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">05. ACHIEVEMENTS</a>
+                    <a href="#certifications" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">06. CERTS</a>
+                    <a href="#education" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">07. EDUCATION</a>
+                    <a href="#contact" class="nav-link text-neutral-300 hover:text-white hover:border-b hover:border-white py-1 transition-all">08. CONTACT</a>
+                </nav>
+
+                <!-- Right Action Controls -->
+                <div class="flex items-center gap-3">
+                    <!-- Audio FX Toggle -->
+                    <button id="audio-toggle-btn" title="Toggle Sound FX" class="w-9 h-9 rounded border border-neutral-800 bg-neutral-900/70 hover:bg-white hover:text-black text-neutral-300 flex items-center justify-center transition-colors text-xs font-mono">
+                        <i data-lucide="volume-2" class="w-4 h-4"></i>
+                    </button>
+
+                    <!-- Replay Intro Button -->
+                    <button id="replay-intro-btn" title="Replay Cinematic Intro" class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded border border-neutral-800 bg-neutral-900/70 hover:bg-white hover:text-black text-neutral-300 transition-colors text-xs font-mono">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                        <span>INTRO</span>
+                    </button>
+
+                    <!-- Contact CTA Button -->
+                    <a href="#contact" class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-white text-black font-syne font-bold text-xs uppercase tracking-wider hover:bg-neutral-200 transition-all rounded shadow-md border border-white">
+                        <span>HIRE ME</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+
+                    <!-- Mobile Menu Hamburger Button -->
+                    <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 border border-neutral-800 bg-neutral-900 flex flex-col items-center justify-center gap-1.5 rounded text-white">
+                        <span class="w-5 h-0.5 bg-white transition-all" id="bar1"></span>
+                        <span class="w-5 h-0.5 bg-white transition-all" id="bar2"></span>
+                        <span class="w-5 h-0.5 bg-white transition-all" id="bar3"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Drawer -->
+            <div id="mobile-nav" class="lg:hidden max-h-0 overflow-hidden bg-neutral-950/95 border-b border-neutral-800 transition-all duration-300">
+                <div class="px-6 py-6 flex flex-col gap-4 text-sm font-mono tracking-wider">
+                    <a href="#about" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between border-b border-neutral-800/50"><span>01. ABOUT</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#skills" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between border-b border-neutral-800/50"><span>02. SKILLS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#experience" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between border-b border-neutral-800/50"><span>03. EXPERIENCE</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#projects" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between border-b border-neutral-800/50"><span>04. PROJECTS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#achievements" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between border-b border-neutral-800/50"><span>05. ACHIEVEMENTS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#certifications" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between border-b border-neutral-800/50"><span>06. CERTS</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#education" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between border-b border-neutral-800/50"><span>07. EDUCATION</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    <a href="#contact" class="mobile-nav-link text-neutral-300 hover:text-white py-1 flex items-center justify-between"><span>08. CONTACT</span> <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                    
+                    <div class="pt-4 flex gap-3">
+                        <a href="#contact" class="flex-1 text-center py-2.5 bg-white text-black font-syne font-bold text-xs uppercase tracking-wider rounded">CONTACT ME</a>
+                        <button id="resume-modal-btn-mobile" class="flex-1 text-center py-2.5 border border-neutral-700 bg-neutral-900 text-white font-syne font-bold text-xs uppercase tracking-wider rounded">RESUME</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="relative z-10 pt-20 md:pt-24">
+
+            <!-- ========================================================================= -->
+            <!-- HERO SECTION (SPLIT SCREEN MANGA LAYOUT)                                  -->
+            <!-- ========================================================================= -->
+            <section id="hero" class="relative min-h-[calc(100vh-5rem)] flex items-center py-12 md:py-16 border-b border-neutral-800/80 overflow-hidden">
+                
+                <!-- Manga Screentone & Speedline Ambient Elements -->
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                        
+                        <!-- Left Column: Typography, Titles, Badges, CTAs -->
+                        <div class="lg:col-span-7 flex flex-col justify-center space-y-6">
+                            
+                            <!-- Manga Chapter Subheader -->
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 bg-white text-black font-syne font-extrabold text-[10px] tracking-widest uppercase rounded-sm shadow">
+                                    ACT I // PORTFOLIO
+                                </span>
+                                <div class="h-px flex-1 max-w-[120px] bg-neutral-700"></div>
+                                <span class="font-mono text-xs text-neutral-400 tracking-widest">
+                                    INITIALIZED: 2026
+                                </span>
+                            </div>
+
+                            <!-- Main Name -->
+                            <div class="space-y-1">
+                                <h1 class="text-4xl sm:text-6xl xl:text-7xl font-black font-syne uppercase tracking-tight text-white leading-none">
+                                    AJAIKANTH<br>
+                                    <span class="manga-text-outline hover:text-white transition-colors">SARAVANAN</span>
+                                </h1>
+                            </div>
+
+                            <!-- Dynamic Role Headline -->
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-lg sm:text-2xl text-white font-bold tracking-tight">
+                                    <span class="text-neutral-400 font-normal">I build</span> <span id="hero-typewriter" class="border-r-2 border-white pr-1">AI & Data Science</span> Systems
+                                </span>
+                            </div>
+
+                            <!-- Small Tags Requested: AI • Full Stack • Java • Python • Open Source -->
+                            <div class="flex flex-wrap items-center gap-2 pt-1">
+                                <span class="manga-badge"><i data-lucide="cpu" class="w-3.5 h-3.5 inline mr-1"></i> AI</span>
+                                <span class="manga-badge"><i data-lucide="layers" class="w-3.5 h-3.5 inline mr-1"></i> Full Stack</span>
+                                <span class="manga-badge"><i data-lucide="coffee" class="w-3.5 h-3.5 inline mr-1"></i> Java</span>
+                                <span class="manga-badge"><i data-lucide="terminal" class="w-3.5 h-3.5 inline mr-1"></i> Python</span>
+                                <span class="manga-badge"><i data-lucide="git-branch" class="w-3.5 h-3.5 inline mr-1"></i> Open Source</span>
+                            </div>
+
+                            <!-- Bio summary paragraph -->
+                            <p class="text-sm sm:text-base text-neutral-300 font-sans leading-relaxed max-w-xl">
+                                Architecting intelligent neural networks, real-time data pipelines, and production-grade full-stack systems. Bridging complex mathematical models with scalable modern web software.
+                            </p>
+
+                            <!-- Requested Action Buttons: Resume, GitHub, LinkedIn, Contact -->
+                            <div class="flex flex-wrap items-center gap-3 pt-2">
+                                <button id="hero-resume-btn" class="manga-btn-primary flex items-center gap-2">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                                    <span>RESUME</span>
+                                </button>
+                                
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="manga-btn-secondary flex items-center gap-2">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                    <span>GITHUB</span>
+                                </a>
+                                
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="manga-btn-secondary flex items-center gap-2">
+                                    <i data-lucide="linkedin" class="w-4 h-4"></i>
+                                    <span>LINKEDIN</span>
+                                </a>
+                                
+                                <a href="#contact" class="manga-btn-secondary flex items-center gap-2">
+                                    <i data-lucide="mail" class="w-4 h-4"></i>
+                                    <span>CONTACT</span>
+                                </a>
+                            </div>
+
+                            <!-- Live Metric Counters -->
+                            <div class="grid grid-cols-3 gap-4 pt-6 border-t border-neutral-800/80 max-w-lg">
+                                <div>
+                                    <div class="font-syne font-black text-2xl sm:text-3xl text-white">99.2%</div>
+                                    <div class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Model Precision</div>
+                                </div>
+                                <div>
+                                    <div class="font-syne font-black text-2xl sm:text-3xl text-white">25+</div>
+                                    <div class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">AI Deployments</div>
+                                </div>
+                                <div>
+                                    <div class="font-syne font-black text-2xl sm:text-3xl text-white">100%</div>
+                                    <div class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Clean Code</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Anime Illustration with Light Rays & Floating Animation -->
+                        <div class="lg:col-span-5 flex items-center justify-center relative">
+                            
+                            <!-- Manga Background Speedlines & Light Rays -->
+                            <div class="hero-manga-backdrop"></div>
+                            
+                            <!-- Floating Anime Card Container with 3D Tilt Effect -->
+                            <div id="hero-manga-card" class="relative w-full max-w-md aspect-square rounded-2xl bg-neutral-950 border-2 border-white/80 p-3 shadow-[0_0_50px_rgba(255,255,255,0.15)] group transition-all duration-300">
+                                
+                                <!-- Manga Panel Corner Decorators -->
+                                <div class="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-white"></div>
+                                <div class="absolute -top-2 -right-2 w-5 h-5 border-t-2 border-r-2 border-white"></div>
+                                <div class="absolute -bottom-2 -left-2 w-5 h-5 border-b-2 border-l-2 border-white"></div>
+                                <div class="absolute -bottom-2 -right-2 w-5 h-5 border-b-2 border-r-2 border-white"></div>
+
+                                <!-- Anime Illustration -->
+                                <div class="w-full h-full rounded-xl overflow-hidden relative bg-black flex items-center justify-center">
+                                    <img src="assets/images/manga-character-floating.jpg" 
+                                         alt="Ajaikanth Anime Illustration" 
+                                         class="w-full h-full object-cover filter contrast-125 brightness-105 transition-transform duration-700 group-hover:scale-105">
+                                    
+                                    <!-- Subtle Floating Ambient Particles -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                    
+                                    <!-- Manga Screentone Texture Overlay -->
+                                    <div class="absolute inset-0 manga-screentone-bg opacity-20 pointer-events-none"></div>
+
+                                    <!-- HUD Floating Overlays -->
+                                    <div class="absolute top-3 left-3 bg-black/80 backdrop-blur-md border border-white/30 rounded px-2.5 py-1 text-[10px] font-mono text-white flex items-center gap-1.5 shadow">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span>STATUS: ACTIVE ONLINE</span>
+                                    </div>
+
+                                    <div class="absolute bottom-3 left-3 right-3 bg-black/85 backdrop-blur-md border border-neutral-700 rounded-lg p-3 text-xs font-mono text-neutral-300 flex items-center justify-between">
+                                        <div>
+                                            <div class="text-white font-bold font-syne">AJAIKANTH // 09</div>
+                                            <div class="text-[10px] text-neutral-400">NEURAL ARCHITECT</div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-white font-bold">PYTORCH • JAVA</div>
+                                            <div class="text-[9px] text-neutral-500">SYS_LVL: MAX</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Floating Kanji Action SFX Sticker -->
+                                <div class="absolute -top-4 -right-4 bg-white text-black font-black font-syne text-sm px-3 py-1 border-2 border-black rotate-12 shadow-xl animate-pulse">
+                                    覚醒 (AWAKENED)
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 1: ABOUT (PROLOGUE // THE ARCHITECT)                              -->
+            <!-- ========================================================================= -->
+            <section id="about" class="py-24 border-b border-neutral-800/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>CHAPTER 01 // ARCHITECT PROFILE</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                ABOUT <span class="manga-text-outline">AJAIKANTH</span>
+                            </h2>
+                        </div>
+                        <div class="font-mono text-xs text-neutral-400 max-w-xs">
+                            Driven by deep neural representations, computational efficiency, and robust full-stack software craftsmanship.
+                        </div>
+                    </div>
+
+                    <!-- About Manga Panel Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        
+                        <!-- Left: Anime Profile Spotlight Card -->
+                        <div class="lg:col-span-5 manga-card flex flex-col justify-between p-6">
+                            <div class="relative w-full aspect-square rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950 mb-6 group">
+                                <img src="assets/images/manga-character-profile.jpg" alt="Ajaikanth Profile" class="w-full h-full object-cover filter contrast-125 transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 right-4 text-xs font-mono">
+                                    <div class="text-white font-bold font-syne text-base">AJAIKANTH SARAVANAN</div>
+                                    <div class="text-neutral-400 text-[11px]">AI & DATA SCIENCE SPECIALIST</div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Stats Matrix -->
+                            <div class="space-y-3 font-mono text-xs">
+                                <div class="flex justify-between py-2 border-b border-neutral-800">
+                                    <span class="text-neutral-400">LOCATION</span>
+                                    <span class="text-white font-semibold">Available Globally / Remote</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-neutral-800">
+                                    <span class="text-neutral-400">SPECIALIZATION</span>
+                                    <span class="text-white font-semibold">GenAI, ML Pipelines, Full Stack</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-neutral-800">
+                                    <span class="text-neutral-400">EXPERIENCE FOCUS</span>
+                                    <span class="text-white font-semibold">End-to-End AI Engineering</span>
+                                </div>
+                                <div class="flex justify-between py-2">
+                                    <span class="text-neutral-400">CURRENT FOCUS</span>
+                                    <span class="text-emerald-400 font-semibold">LLM Agents & High-Throughput ML</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Detailed Narrative & Core Pillars -->
+                        <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
+                            <div class="manga-card p-6 sm:p-8 space-y-4">
+                                <h3 class="text-xl sm:text-2xl font-black font-syne uppercase text-white flex items-center gap-2">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                                    <span>ENGINEERING PHILOSOPHY</span>
+                                </h3>
+                                <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">
+                                    I am an <strong class="text-white">AI & Data Science Engineer</strong> passionate about transforming intricate data structures and deep learning research into resilient, production-ready systems. My expertise spans machine learning model development, data engineering pipelines, distributed cloud backends, and responsive web applications.
+                                </p>
+                                <p class="text-neutral-300 text-sm sm:text-base leading-relaxed">
+                                    Whether architecting scalable Java microservices, fine-tuning neural architectures in PyTorch, or writing clean Python algorithms for predictive modeling, I build software that balances mathematical rigor with sleek user experiences.
+                                </p>
+                            </div>
+
+                            <!-- 4 Core Pillars Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="manga-card-sm p-5 space-y-2">
+                                    <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">01</div>
+                                    <h4 class="font-syne font-bold text-white text-base">Neural Architecture</h4>
+                                    <p class="text-neutral-400 text-xs leading-relaxed">Deep learning models, transformers, computer vision, and NLP optimized for low inference latency.</p>
+                                </div>
+
+                                <div class="manga-card-sm p-5 space-y-2">
+                                    <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">02</div>
+                                    <h4 class="font-syne font-bold text-white text-base">Scalable Data Pipelines</h4>
+                                    <p class="text-neutral-400 text-xs leading-relaxed">High-volume distributed ETL, feature stores, BigQuery analytics, and streaming pipelines.</p>
+                                </div>
+
+                                <div class="manga-card-sm p-5 space-y-2">
+                                    <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">03</div>
+                                    <h4 class="font-syne font-bold text-white text-base">Full Stack Integration</h4>
+                                    <p class="text-neutral-400 text-xs leading-relaxed">Robust Java / Python backends, FastAPI endpoints, React interfaces, and containerized cloud workflows.</p>
+                                </div>
+
+                                <div class="manga-card-sm p-5 space-y-2">
+                                    <div class="w-8 h-8 rounded bg-white text-black font-black flex items-center justify-center font-mono text-sm mb-3">04</div>
+                                    <h4 class="font-syne font-bold text-white text-base">Open Source & Research</h4>
+                                    <p class="text-neutral-400 text-xs leading-relaxed">Continuous contribution to developer communities, reproducibility in ML, and state-of-the-art benchmarks.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 2: SKILLS (TECH STACK ARSENAL)                                    -->
+            <!-- ========================================================================= -->
+            <section id="skills" class="py-24 border-b border-neutral-800/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>CHAPTER 02 // TECHNICAL ARSENAL</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                SKILLS & <span class="manga-text-outline">STACK</span>
+                            </h2>
+                        </div>
+                        
+                        <!-- Filter Tabs -->
+                        <div class="flex flex-wrap gap-2" id="skill-filter-tabs">
+                            <button class="skill-tab-btn active" data-filter="all">ALL</button>
+                            <button class="skill-tab-btn" data-filter="ai">AI / ML</button>
+                            <button class="skill-tab-btn" data-filter="programming">PROGRAMMING</button>
+                            <button class="skill-tab-btn" data-filter="data">DATA SCIENCE</button>
+                            <button class="skill-tab-btn" data-filter="devops">DEVOPS & CLOUD</button>
+                        </div>
+                    </div>
+
+                    <!-- Skill Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="skills-grid">
+                        
+                        <!-- AI & ML Arsenal -->
+                        <div class="manga-card p-6 space-y-4 skill-card" data-category="ai">
+                            <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="brain" class="w-5 h-5 text-white"></i>
+                                    <h3 class="font-syne font-bold text-white text-base">AI & Machine Learning</h3>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-400">LVL: 98</span>
+                            </div>
+                            <div class="space-y-3 font-mono text-xs">
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>PyTorch / TensorFlow</span><span class="text-white">96%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 96%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>LLMs & Transformers</span><span class="text-white">94%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 94%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Computer Vision (CV)</span><span class="text-white">90%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Scikit-Learn / XGBoost</span><span class="text-white">95%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Hugging Face & LangChain</span><span class="text-white">92%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Programming Arsenal -->
+                        <div class="manga-card p-6 space-y-4 skill-card" data-category="programming">
+                            <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="code" class="w-5 h-5 text-white"></i>
+                                    <h3 class="font-syne font-bold text-white text-base">Programming & Core</h3>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-400">LVL: 95</span>
+                            </div>
+                            <div class="space-y-3 font-mono text-xs">
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Python (Advanced)</span><span class="text-white">98%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 98%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Java (OOP & Systems)</span><span class="text-white">92%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>C++ / Algorithms</span><span class="text-white">88%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>TypeScript / JavaScript</span><span class="text-white">90%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>FastAPI / Spring Boot</span><span class="text-white">90%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Science Arsenal -->
+                        <div class="manga-card p-6 space-y-4 skill-card" data-category="data">
+                            <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="database" class="w-5 h-5 text-white"></i>
+                                    <h3 class="font-syne font-bold text-white text-base">Data & Analytics</h3>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-400">LVL: 94</span>
+                            </div>
+                            <div class="space-y-3 font-mono text-xs">
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Pandas & NumPy</span><span class="text-white">98%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 98%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>SQL / PostgreSQL</span><span class="text-white">95%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Apache Spark & BigQuery</span><span class="text-white">88%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Data Visualization</span><span class="text-white">92%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Statistical Inference</span><span class="text-white">90%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DevOps & Cloud Arsenal -->
+                        <div class="manga-card p-6 space-y-4 skill-card" data-category="devops">
+                            <div class="flex items-center justify-between pb-3 border-b border-neutral-800">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="cloud" class="w-5 h-5 text-white"></i>
+                                    <h3 class="font-syne font-bold text-white text-base">DevOps & Cloud</h3>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-400">LVL: 91</span>
+                            </div>
+                            <div class="space-y-3 font-mono text-xs">
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Docker & Containers</span><span class="text-white">94%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 94%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>AWS & GCP Cloud</span><span class="text-white">89%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 89%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Git & CI/CD Pipelines</span><span class="text-white">95%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>MLflow & MLOps</span><span class="text-white">88%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1"><span>Linux / Bash Scripting</span><span class="text-white">92%</span></div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 3: EXPERIENCE (CHRONICLES OF IMPACT)                              -->
+            <!-- ========================================================================= -->
+            <section id="experience" class="py-24 border-b border-neutral-800/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>CHAPTER 03 // CAREER CHRONICLES</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                WORK <span class="manga-text-outline">EXPERIENCE</span>
+                            </h2>
+                        </div>
+                        <div class="font-mono text-xs text-neutral-400">
+                            Proven track record of designing, shipping, and scaling mission-critical AI systems.
+                        </div>
+                    </div>
+
+                    <!-- Manga Timeline Storyboard -->
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-8 before:w-0.5 before:bg-neutral-800">
+                        
+                        <!-- Experience Card 1 -->
+                        <div class="relative pl-12 md:pl-20 group">
+                            <!-- Timeline Manga Node -->
+                            <div class="absolute left-2.5 md:left-6.5 top-6 w-3.5 h-3.5 rounded-full bg-black border-2 border-white group-hover:bg-white group-hover:scale-125 transition-all shadow-[0_0_10px_#fff]"></div>
+                            
+                            <div class="manga-card p-6 sm:p-8 space-y-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-neutral-800">
+                                    <div>
+                                        <span class="px-2 py-0.5 bg-white text-black font-mono font-bold text-[10px] tracking-wider uppercase rounded-sm mr-2">CURRENT</span>
+                                        <h3 class="text-lg sm:text-xl font-black font-syne text-white inline-block">AI & Machine Learning Engineer</h3>
+                                        <div class="text-neutral-400 font-mono text-xs mt-1">Cognitive Labs // Advanced AI Solutions</div>
+                                    </div>
+                                    <div class="font-mono text-xs text-neutral-400 bg-neutral-900 px-3 py-1 rounded border border-neutral-800 self-start sm:self-auto">
+                                        2024 - PRESENT
+                                    </div>
+                                </div>
+                                <p class="text-neutral-300 text-sm leading-relaxed">
+                                    Leading the development of scalable agentic AI workflows and LLM-powered enterprise knowledge engines. Architected low-latency inference pipelines handling millions of requests with automated continuous evaluation.
+                                </p>
+                                <ul class="space-y-2 text-xs sm:text-sm text-neutral-400 font-mono">
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Decreased model inference latency by 42% through quantization and TensorRT engine optimizations.</li>
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Deployed multi-agent RAG system improving context retrieval accuracy from 74% to 96.8%.</li>
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Integrated automated CI/CD ML pipelines with MLflow for continuous model drift detection.</li>
+                                </ul>
+                                <div class="flex flex-wrap gap-2 pt-2">
+                                    <span class="manga-tag">PyTorch</span>
+                                    <span class="manga-tag">FastAPI</span>
+                                    <span class="manga-tag">LangChain</span>
+                                    <span class="manga-tag">Docker</span>
+                                    <span class="manga-tag">PostgreSQL</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experience Card 2 -->
+                        <div class="relative pl-12 md:pl-20 group">
+                            <!-- Timeline Manga Node -->
+                            <div class="absolute left-2.5 md:left-6.5 top-6 w-3.5 h-3.5 rounded-full bg-black border-2 border-neutral-600 group-hover:border-white group-hover:bg-white group-hover:scale-125 transition-all"></div>
+                            
+                            <div class="manga-card p-6 sm:p-8 space-y-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-neutral-800">
+                                    <div>
+                                        <h3 class="text-lg sm:text-xl font-black font-syne text-white">Data Science & Backend Engineer</h3>
+                                        <div class="text-neutral-400 font-mono text-xs mt-1">DataMatrix Technologies // Distributed Systems</div>
+                                    </div>
+                                    <div class="font-mono text-xs text-neutral-400 bg-neutral-900 px-3 py-1 rounded border border-neutral-800 self-start sm:self-auto">
+                                        2023 - 2024
+                                    </div>
+                                </div>
+                                <p class="text-neutral-300 text-sm leading-relaxed">
+                                    Engineered high-throughput predictive data pipelines in Java and Python. Designed statistical anomaly detection algorithms for high-frequency time series financial records.
+                                </p>
+                                <ul class="space-y-2 text-xs sm:text-sm text-neutral-400 font-mono">
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Processed over 15M+ daily transaction records using Apache Spark and distributed Java backends.</li>
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Built dynamic analytics dashboards empowering executive stakeholders with real-time churn forecasts.</li>
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Reduced database query bottlenecks by 60% through indexed schema partitioning and caching.</li>
+                                </ul>
+                                <div class="flex flex-wrap gap-2 pt-2">
+                                    <span class="manga-tag">Java 21</span>
+                                    <span class="manga-tag">Python</span>
+                                    <span class="manga-tag">Apache Spark</span>
+                                    <span class="manga-tag">Spring Boot</span>
+                                    <span class="manga-tag">AWS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experience Card 3 -->
+                        <div class="relative pl-12 md:pl-20 group">
+                            <!-- Timeline Manga Node -->
+                            <div class="absolute left-2.5 md:left-6.5 top-6 w-3.5 h-3.5 rounded-full bg-black border-2 border-neutral-600 group-hover:border-white group-hover:bg-white group-hover:scale-125 transition-all"></div>
+                            
+                            <div class="manga-card p-6 sm:p-8 space-y-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-neutral-800">
+                                    <div>
+                                        <h3 class="text-lg sm:text-xl font-black font-syne text-white">Full Stack AI Developer (Research & Dev)</h3>
+                                        <div class="text-neutral-400 font-mono text-xs mt-1">NeuralForge Innovation Studio</div>
+                                    </div>
+                                    <div class="font-mono text-xs text-neutral-400 bg-neutral-900 px-3 py-1 rounded border border-neutral-800 self-start sm:self-auto">
+                                        2022 - 2023
+                                    </div>
+                                </div>
+                                <p class="text-neutral-300 text-sm leading-relaxed">
+                                    Created interactive web interfaces integrated with computer vision models for automated medical imaging analysis and object localization in video streams.
+                                </p>
+                                <ul class="space-y-2 text-xs sm:text-sm text-neutral-400 font-mono">
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Implemented lightweight YOLO and OpenCV models for client-side webcam processing.</li>
+                                    <li class="flex items-start gap-2"><span class="text-white">›</span> Crafted responsive UI systems with React, Tailwind CSS, and WebSockets for real-time bounding boxes.</li>
+                                </ul>
+                                <div class="flex flex-wrap gap-2 pt-2">
+                                    <span class="manga-tag">React</span>
+                                    <span class="manga-tag">OpenCV</span>
+                                    <span class="manga-tag">Flask</span>
+                                    <span class="manga-tag">Scikit-Learn</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 4: PROJECTS (FLAGSHIP CREATIONS)                                   -->
+            <!-- ========================================================================= -->
+            <section id="projects" class="py-24 border-b border-neutral-800/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>CHAPTER 04 // FLAGSHIP PROJECTS</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                FEATURED <span class="manga-text-outline">SYSTEMS</span>
+                            </h2>
+                        </div>
+                        
+                        <!-- Category Filters -->
+                        <div class="flex flex-wrap gap-2" id="project-filter-tabs">
+                            <button class="project-filter-btn active" data-filter="all">ALL</button>
+                            <button class="project-filter-btn" data-filter="ai">AI / ML</button>
+                            <button class="project-filter-btn" data-filter="fullstack">FULL STACK</button>
+                            <button class="project-filter-btn" data-filter="data">DATA PIPELINES</button>
+                        </div>
+                    </div>
+
+                    <!-- Projects Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                        
+                        <!-- Project 1: OmniVision Neural Engine -->
+                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="ai">
+                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
+                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
+                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
+                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                                        OMNIVISION // AI
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
+                                    VISION & LLM
+                                </div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                <div class="space-y-2">
+                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
+                                        OmniVision Neural Engine
+                                    </h3>
+                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                                        Real-time multimodal computer vision and semantic scene synthesis platform. Combines zero-shot object detection with generative explanation.
+                                    </p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <span class="manga-tag">PyTorch</span>
+                                        <span class="manga-tag">FastAPI</span>
+                                        <span class="manga-tag">YOLOv9</span>
+                                        <span class="manga-tag">React</span>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
+                                        <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="omnivision">
+                                            <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                        <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 2: NexusAI Agentic Workflow -->
+                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="ai">
+                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
+                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
+                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
+                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                                        NEXUS AGENTS // V2
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
+                                    MULTI-AGENT
+                                </div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                <div class="space-y-2">
+                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
+                                        NexusAI Agentic Workflow
+                                    </h3>
+                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                                        Autonomous multi-agent orchestration framework for automated data science exploration, feature engineering, and automated reporting.
+                                    </p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <span class="manga-tag">LangGraph</span>
+                                        <span class="manga-tag">Python</span>
+                                        <span class="manga-tag">OpenAI</span>
+                                        <span class="manga-tag">Streamlit</span>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
+                                        <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="nexus">
+                                            <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                        <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3: DeepInsight Forecaster -->
+                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="data">
+                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
+                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
+                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
+                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                                        DEEPINSIGHT // ML
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
+                                    TIME SERIES
+                                </div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                <div class="space-y-2">
+                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
+                                        DeepInsight Time-Series Forecaster
+                                    </h3>
+                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                                        High-frequency predictive analytics engine utilizing Temporal Fusion Transformers and conformal prediction intervals for volatility modeling.
+                                    </p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <span class="manga-tag">Python</span>
+                                        <span class="manga-tag">PyTorch</span>
+                                        <span class="manga-tag">Pandas</span>
+                                        <span class="manga-tag">Plotly</span>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
+                                        <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="deepinsight">
+                                            <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                        <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4: NeuralDoc Enterprise RAG -->
+                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="fullstack">
+                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
+                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
+                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
+                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                                        NEURALDOC // RAG
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
+                                    FULL STACK RAG
+                                </div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                <div class="space-y-2">
+                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
+                                        NeuralDoc Enterprise RAG
+                                    </h3>
+                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                                        Full-stack document intelligence platform supporting multi-format parsing, hybrid BM25 + dense vector embeddings, and exact citation tracking.
+                                    </p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <span class="manga-tag">Next.js</span>
+                                        <span class="manga-tag">Java Spring</span>
+                                        <span class="manga-tag">Qdrant</span>
+                                        <span class="manga-tag">Tailwind</span>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
+                                        <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="neuraldoc">
+                                            <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                        <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 5: AutoFlow Data Engine -->
+                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="data">
+                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
+                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
+                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
+                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                                        AUTOFLOW // ETL
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
+                                    BIG DATA
+                                </div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                <div class="space-y-2">
+                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
+                                        AutoFlow Distributed ETL
+                                    </h3>
+                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                                        High-throughput streaming ETL pipeline with real-time schema evolution, Kafka message brokering, and automatic data quality verification.
+                                    </p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <span class="manga-tag">Java</span>
+                                        <span class="manga-tag">Kafka</span>
+                                        <span class="manga-tag">Spark</span>
+                                        <span class="manga-tag">Docker</span>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
+                                        <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="autoflow">
+                                            <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                        <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 6: CyberPulse Health AI -->
+                        <div class="manga-card flex flex-col justify-between overflow-hidden group project-item" data-category="fullstack">
+                            <div class="relative h-48 bg-neutral-900 overflow-hidden border-b border-neutral-800">
+                                <div class="absolute inset-0 manga-screentone-bg opacity-40"></div>
+                                <div class="absolute inset-0 flex items-center justify-center p-6 text-center">
+                                    <div class="font-syne font-black text-2xl tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                                        CYBERPULSE // MED
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 right-3 bg-white text-black font-mono font-bold text-[10px] px-2 py-0.5 rounded-sm">
+                                    HEALTHCARE AI
+                                </div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                <div class="space-y-2">
+                                    <h3 class="text-xl font-black font-syne text-white group-hover:text-neutral-300 transition-colors">
+                                        CyberPulse Clinical Diagnostics
+                                    </h3>
+                                    <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                                        Interpretable clinical decision support system utilizing Grad-CAM saliency maps to assist radiologists with fast triage of radiological scans.
+                                    </p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex flex-wrap gap-1.5">
+                                        <span class="manga-tag">PyTorch</span>
+                                        <span class="manga-tag">React</span>
+                                        <span class="manga-tag">DICOM</span>
+                                        <span class="manga-tag">FastAPI</span>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-neutral-800/80 font-mono text-xs">
+                                        <button class="project-modal-trigger text-white hover:underline flex items-center gap-1" data-project="cyberpulse">
+                                            <span>VIEW DETAILS</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                        <a href="https://github.com" target="_blank" class="text-neutral-400 hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 5: ACHIEVEMENTS (POWER-LEVEL BADGES)                              -->
+            <!-- ========================================================================= -->
+            <section id="achievements" class="py-24 border-b border-neutral-800/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>CHAPTER 05 // MILESTONES & HONORS</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                AWARDS & <span class="manga-text-outline">HONORS</span>
+                            </h2>
+                        </div>
+                        <div class="font-mono text-xs text-neutral-400">
+                            Recognitions earned in competitive AI hackathons, research summits, and coding tournaments.
+                        </div>
+                    </div>
+
+                    <!-- Achievements Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        
+                        <div class="manga-card p-6 space-y-3 relative group">
+                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
+                                <i data-lucide="trophy" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">NATIONAL HACKATHON</div>
+                            <h3 class="font-syne font-black text-white text-lg">1st Place Winner</h3>
+                            <p class="text-neutral-400 text-xs leading-relaxed">Grand Prize at National AI Innovation Hackathon for developing an autonomous Edge AI drone inspection model.</p>
+                        </div>
+
+                        <div class="manga-card p-6 space-y-3 relative group">
+                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
+                                <i data-lucide="award" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">COMPETITIVE ML</div>
+                            <h3 class="font-syne font-black text-white text-lg">Kaggle Expert</h3>
+                            <p class="text-neutral-400 text-xs leading-relaxed">Ranked in top 2% across multiple global computer vision and tabular classification benchmark competitions.</p>
+                        </div>
+
+                        <div class="manga-card p-6 space-y-3 relative group">
+                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
+                                <i data-lucide="star" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">OPEN SOURCE IMPACT</div>
+                            <h3 class="font-syne font-black text-white text-lg">1,500+ Stars</h3>
+                            <p class="text-neutral-400 text-xs leading-relaxed">Authored popular developer tools and deep learning boilerplate repositories adopted by thousands of engineers.</p>
+                        </div>
+
+                        <div class="manga-card p-6 space-y-3 relative group">
+                            <div class="w-12 h-12 rounded bg-white text-black font-black flex items-center justify-center font-mono text-xl group-hover:scale-110 transition-transform">
+                                <i data-lucide="medal" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-mono text-[10px] text-neutral-400 tracking-wider uppercase">RESEARCH & SCHOLARSHIP</div>
+                            <h3 class="font-syne font-black text-white text-lg">Academic Excellence</h3>
+                            <p class="text-neutral-400 text-xs leading-relaxed">Awarded Dean's Honor list and Department Merit Gold Medal for outstanding contribution to algorithmic research.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 6: CERTIFICATIONS (CREDENTIALS)                                   -->
+            <!-- ========================================================================= -->
+            <section id="certifications" class="py-24 border-b border-neutral-800/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>CHAPTER 06 // VERIFIED CREDENTIALS</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                CERTIFICATIONS & <span class="manga-text-outline">BADGES</span>
+                            </h2>
+                        </div>
+                        <div class="font-mono text-xs text-neutral-400">
+                            Industry certified qualifications from leading tech institutions.
+                        </div>
+                    </div>
+
+                    <!-- Certifications Cards Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">AMAZON WEB SERVICES</span>
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <h3 class="font-syne font-bold text-white text-lg">AWS Certified Machine Learning – Specialty</h3>
+                                <p class="text-neutral-400 text-xs">Architecting, fine-tuning, and deploying high-scale machine learning systems on AWS cloud infrastructure.</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-800 flex items-center justify-between font-mono text-[11px]">
+                                <span class="text-neutral-400">ISSUED: 2024</span>
+                                <span class="text-white font-semibold">VERIFIED</span>
+                            </div>
+                        </div>
+
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">DEEPLEARNING.AI</span>
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <h3 class="font-syne font-bold text-white text-lg">Deep Learning Specialization (Andrew Ng)</h3>
+                                <p class="text-neutral-400 text-xs">Neural Networks, Deep Convolutional Models, Sequence Models, Transformers, and Hyperparameter Optimization.</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-800 flex items-center justify-between font-mono text-[11px]">
+                                <span class="text-neutral-400">ISSUED: 2023</span>
+                                <span class="text-white font-semibold">VERIFIED</span>
+                            </div>
+                        </div>
+
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">GOOGLE CLOUD</span>
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <h3 class="font-syne font-bold text-white text-lg">Google Professional Data Engineer</h3>
+                                <p class="text-neutral-400 text-xs">Designing big data processing systems, BigQuery pipelines, and streaming analytics for enterprise AI.</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-800 flex items-center justify-between font-mono text-[11px]">
+                                <span class="text-neutral-400">ISSUED: 2024</span>
+                                <span class="text-white font-semibold">VERIFIED</span>
+                            </div>
+                        </div>
+
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">ORACLE</span>
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <h3 class="font-syne font-bold text-white text-lg">Oracle Certified Java SE Professional</h3>
+                                <p class="text-neutral-400 text-xs">Object-oriented architecture, concurrency, multithreading, modular design, and robust Java runtime internals.</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-800 flex items-center justify-between font-mono text-[11px]">
+                                <span class="text-neutral-400">ISSUED: 2023</span>
+                                <span class="text-white font-semibold">VERIFIED</span>
+                            </div>
+                        </div>
+
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">STANFORD ONLINE</span>
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <h3 class="font-syne font-bold text-white text-lg">Machine Learning & Algorithms Certificate</h3>
+                                <p class="text-neutral-400 text-xs">Statistical learning, convex optimization, kernel methods, and computational complexity.</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-800 flex items-center justify-between font-mono text-[11px]">
+                                <span class="text-neutral-400">ISSUED: 2022</span>
+                                <span class="text-white font-semibold">VERIFIED</span>
+                            </div>
+                        </div>
+
+                        <div class="manga-card p-6 flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">LINUX FOUNDATION</span>
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <h3 class="font-syne font-bold text-white text-lg">Certified Kubernetes Administrator (CKA)</h3>
+                                <p class="text-neutral-400 text-xs">Container orchestration, cluster deployment, networking, and high availability cloud scaling.</p>
+                            </div>
+                            <div class="pt-3 border-t border-neutral-800 flex items-center justify-between font-mono text-[11px]">
+                                <span class="text-neutral-400">ISSUED: 2024</span>
+                                <span class="text-white font-semibold">VERIFIED</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 7: EDUCATION (ACADEMIC FOUNDATION)                                 -->
+            <!-- ========================================================================= -->
+            <section id="education" class="py-24 border-b border-neutral-800/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>CHAPTER 07 // ACADEMIC RIGOR</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                EDUCATION & <span class="manga-text-outline">FOUNDATIONS</span>
+                            </h2>
+                        </div>
+                        <div class="font-mono text-xs text-neutral-400">
+                            Theoretical mathematics, algorithmic foundations, and system software architecture.
+                        </div>
+                    </div>
+
+                    <!-- Education Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <!-- Degree Card 1 -->
+                        <div class="manga-card p-6 sm:p-8 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 bg-white text-black font-mono font-bold text-[10px] tracking-wider uppercase rounded-sm">BACHELORS DEGREE</span>
+                                <span class="font-mono text-xs text-neutral-400">2020 - 2024</span>
+                            </div>
+                            <h3 class="text-2xl font-black font-syne text-white">
+                                Bachelor of Technology in Computer Science & Engineering
+                            </h3>
+                            <div class="font-mono text-xs text-neutral-300">
+                                Specialization in Artificial Intelligence & Data Science • First Class with Distinction (CGPA: 9.2/10.0)
+                            </div>
+                            <p class="text-neutral-400 text-sm leading-relaxed">
+                                Core Coursework: Deep Learning, Data Structures & Algorithms, Distributed Systems, Database Management Systems, Machine Learning Theory, Object-Oriented Software Engineering (Java), Probability & Statistics.
+                            </p>
+                            <div class="pt-3 border-t border-neutral-800 flex flex-wrap gap-2">
+                                <span class="manga-tag">Dean's Honor List</span>
+                                <span class="manga-tag">AI Club Lead</span>
+                                <span class="manga-tag">Algorithm Teaching Assistant</span>
+                            </div>
+                        </div>
+
+                        <!-- Research & Academic Highlights -->
+                        <div class="manga-card p-6 sm:p-8 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 bg-neutral-800 text-white font-mono font-bold text-[10px] tracking-wider uppercase rounded-sm border border-neutral-700">RESEARCH DISSERTATION</span>
+                                <span class="font-mono text-xs text-neutral-400">CAPSTONE</span>
+                            </div>
+                            <h3 class="text-2xl font-black font-syne text-white">
+                                Scalable Neural Representations for Real-Time Multimodal Telemetry
+                            </h3>
+                            <div class="font-mono text-xs text-neutral-300">
+                                Published Research Paper • Presented at International Conference on AI & Computing
+                            </div>
+                            <p class="text-neutral-400 text-sm leading-relaxed">
+                                Formulated novel attention-based transformer architectures for multimodal sensor telemetry data with dynamic token pruning, achieving 3.2x faster inference without degradation in classification fidelity.
+                            </p>
+                            <div class="pt-3 border-t border-neutral-800 flex flex-wrap gap-2">
+                                <span class="manga-tag">Best Paper Nominee</span>
+                                <span class="manga-tag">Transformer Compression</span>
+                                <span class="manga-tag">Open Source Benchmark</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 8: CONTACT & INTERACTIVE MANGA TERMINAL                            -->
+            <!-- ========================================================================= -->
+            <section id="contact" class="py-24 relative overflow-hidden">
+                
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Section Header -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 tracking-widest uppercase mb-2">
+                                <span class="w-2 h-2 bg-white inline-block"></span>
+                                <span>FINAL CHAPTER // TRANSMIT SIGNAL</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black font-syne uppercase tracking-tight text-white">
+                                GET IN <span class="manga-text-outline">TOUCH</span>
+                            </h2>
+                        </div>
+                        <div class="font-mono text-xs text-neutral-400">
+                            Looking to build high-impact AI systems, collaborate on projects, or hire? Let's connect.
+                        </div>
+                    </div>
+
+                    <!-- Contact Layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        
+                        <!-- Left: Transmission Form -->
+                        <div class="lg:col-span-7 manga-card p-6 sm:p-8 space-y-6">
+                            <div class="flex items-center justify-between pb-4 border-b border-neutral-800">
+                                <h3 class="text-xl font-black font-syne text-white uppercase flex items-center gap-2">
+                                    <i data-lucide="send" class="w-5 h-5 text-white"></i>
+                                    <span>TRANSMIT MESSAGE</span>
+                                </h3>
+                                <span class="font-mono text-[10px] text-neutral-400">STATUS: READY</span>
+                            </div>
+
+                            <form id="contact-form" class="space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="space-y-1">
+                                        <label class="font-mono text-xs text-neutral-400 uppercase tracking-wider">YOUR NAME *</label>
+                                        <input type="text" id="form-name" required placeholder="e.g. Elena Vance" class="manga-input w-full">
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="font-mono text-xs text-neutral-400 uppercase tracking-wider">YOUR EMAIL *</label>
+                                        <input type="email" id="form-email" required placeholder="e.g. elena@domain.com" class="manga-input w-full">
+                                    </div>
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="font-mono text-xs text-neutral-400 uppercase tracking-wider">SUBJECT *</label>
+                                    <input type="text" id="form-subject" required placeholder="Project Inquiry / Job Opportunity / Collaboration" class="manga-input w-full">
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="font-mono text-xs text-neutral-400 uppercase tracking-wider">TRANSMISSION MESSAGE *</label>
+                                    <textarea id="form-message" rows="5" required placeholder="Describe your project, team requirements, or ideas..." class="manga-input w-full resize-none"></textarea>
+                                </div>
+
+                                <button type="submit" id="form-submit-btn" class="w-full manga-btn-primary py-3.5 flex items-center justify-center gap-2 text-sm font-syne tracking-wider uppercase">
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                    <span>TRANSMIT SIGNAL</span>
+                                </button>
+                            </form>
+
+                            <!-- Success / Status Toast -->
+                            <div id="form-status" class="hidden p-4 rounded bg-neutral-900 border border-emerald-500/50 text-emerald-400 font-mono text-xs flex items-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                                <span>Signal transmitted successfully! Ajaikanth will respond promptly.</span>
+                            </div>
+                        </div>
+
+                        <!-- Right: Interactive Terminal & Direct Info -->
+                        <div class="lg:col-span-5 space-y-6">
+                            
+                            <!-- Direct Channels Card -->
+                            <div class="manga-card p-6 space-y-4">
+                                <h3 class="font-syne font-bold text-white text-base uppercase">DIRECT CHANNELS</h3>
+                                <div class="space-y-3 font-mono text-xs">
+                                    <a href="mailto:ajaikanth.saravanan@email.com" class="flex items-center gap-3 p-3 rounded bg-neutral-900/60 border border-neutral-800 hover:border-white text-neutral-300 hover:text-white transition-all">
+                                        <i data-lucide="mail" class="w-4 h-4 text-white"></i>
+                                        <span class="truncate">ajaikanth.saravanan@email.com</span>
+                                    </a>
+                                    
+                                    <a href="https://linkedin.com" target="_blank" class="flex items-center gap-3 p-3 rounded bg-neutral-900/60 border border-neutral-800 hover:border-white text-neutral-300 hover:text-white transition-all">
+                                        <i data-lucide="linkedin" class="w-4 h-4 text-white"></i>
+                                        <span class="truncate">linkedin.com/in/ajaikanth</span>
+                                    </a>
+                                    
+                                    <a href="https://github.com" target="_blank" class="flex items-center gap-3 p-3 rounded bg-neutral-900/60 border border-neutral-800 hover:border-white text-neutral-300 hover:text-white transition-all">
+                                        <i data-lucide="github" class="w-4 h-4 text-white"></i>
+                                        <span class="truncate">github.com/ajaikanth</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Manga Mini-Terminal -->
+                            <div class="manga-card p-5 space-y-3 bg-black">
+                                <div class="flex items-center justify-between text-xs font-mono text-neutral-400 pb-2 border-b border-neutral-800">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-neutral-700 inline-block"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-neutral-700 inline-block"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-neutral-700 inline-block"></span>
+                                        <span class="ml-1 text-white">ajai-bot // v1.0</span>
+                                    </div>
+                                    <span class="text-[10px]">AI AGENT</span>
+                                </div>
+
+                                <div id="terminal-output" class="font-mono text-xs text-neutral-300 space-y-1 h-32 overflow-y-auto p-1 leading-relaxed">
+                                    <div class="text-neutral-500">> Initializing interactive assistant...</div>
+                                    <div class="text-emerald-400">> Hello! I'm Ajaikanth's AI avatar. Type 'help', 'skills', 'projects', or ask me anything!</div>
+                                </div>
+
+                                <form id="terminal-form" class="flex items-center gap-2 pt-2 border-t border-neutral-800">
+                                    <span class="font-mono text-xs text-neutral-400">></span>
+                                    <input type="text" id="terminal-input" placeholder="Type a command (e.g. 'skills')..." class="bg-transparent border-none outline-none font-mono text-xs text-white flex-1">
+                                    <button type="submit" class="px-2 py-1 bg-white text-black font-mono text-[10px] font-bold rounded">SEND</button>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ========================================================================= -->
+        <!-- FOOTER                                                                    -->
+        <!-- ========================================================================= -->
+        <footer class="border-t border-neutral-800 bg-neutral-950 py-12 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded bg-white text-black font-black font-syne text-sm flex items-center justify-center">
+                        A
+                    </div>
+                    <div>
+                        <div class="font-syne font-black text-sm text-white">AJAIKANTH SARAVANAN</div>
+                        <div class="font-mono text-[10px] text-neutral-500">AI & DATA SCIENCE ENGINEER • 2026</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6 font-mono text-xs text-neutral-400">
+                    <a href="#hero" class="hover:text-white transition-colors">TOP</a>
+                    <a href="#about" class="hover:text-white transition-colors">ABOUT</a>
+                    <a href="#projects" class="hover:text-white transition-colors">PROJECTS</a>
+                    <a href="#contact" class="hover:text-white transition-colors">CONTACT</a>
+                </div>
+
+                <div class="font-mono text-[11px] text-neutral-500">
+                    CRAFTED WITH BLACK & WHITE MANGA AESTHETICS
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: RESUME VIEWER & DOWNLOAD                                           -->
+    <!-- ========================================================================= -->
+    <div id="resume-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="manga-card max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden bg-neutral-950 border-2 border-white shadow-2xl">
+            
+            <div class="p-4 sm:p-6 border-b border-neutral-800 flex items-center justify-between">
+                <div>
+                    <h3 class="font-syne font-black text-xl text-white uppercase">AJAIKANTH SARAVANAN // RESUME</h3>
+                    <p class="font-mono text-xs text-neutral-400">AI & Data Science Engineer Profile</p>
+                </div>
+                <button id="close-resume-modal" class="w-8 h-8 rounded border border-neutral-700 bg-neutral-900 text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 font-sans text-sm text-neutral-300">
+                <div class="border-b border-neutral-800 pb-4">
+                    <h4 class="font-syne font-bold text-white text-base uppercase">Executive Summary</h4>
+                    <p class="text-xs text-neutral-300 mt-1 leading-relaxed">
+                        Accomplished AI & Data Science Engineer with deep proficiency in Deep Learning architectures, Large Language Model pipelines, distributed systems in Java & Python, and full-stack software delivery. Proven track record of accelerating ML inference performance and delivering high-fidelity predictive intelligence systems.
+                    </p>
+                </div>
+
+                <div class="border-b border-neutral-800 pb-4">
+                    <h4 class="font-syne font-bold text-white text-base uppercase">Core Competencies</h4>
+                    <div class="grid grid-cols-2 gap-2 mt-2 font-mono text-xs text-neutral-400">
+                        <div>• Deep Learning (PyTorch, TF)</div>
+                        <div>• Distributed Systems (Java, Spark)</div>
+                        <div>• LLMs & RAG Architectures</div>
+                        <div>• MLOps & Containerization</div>
+                        <div>• SQL, PostgreSQL & BigQuery</div>
+                        <div>• High Performance REST/FastAPI</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-syne font-bold text-white text-base uppercase">Education & Honors</h4>
+                    <p class="text-xs text-neutral-300 mt-1 font-mono">
+                        B.Tech in Computer Science & Engineering (AI & Data Science Specialization)<br>
+                        CGPA: 9.2/10.0 • First Class with Distinction
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-4 bg-neutral-900 border-t border-neutral-800 flex items-center justify-between">
+                <span class="font-mono text-xs text-neutral-400">STATUS: VERIFIED CANDIDATE</span>
+                <div class="flex gap-2">
+                    <button id="download-resume-btn" class="manga-btn-primary px-4 py-2 text-xs font-syne flex items-center gap-1.5">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span>DOWNLOAD PDF</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: PROJECT DETAIL POPUP                                               -->
+    <!-- ========================================================================= -->
+    <div id="project-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="manga-card max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden bg-neutral-950 border-2 border-white shadow-2xl">
+            
+            <div class="p-4 sm:p-6 border-b border-neutral-800 flex items-center justify-between">
+                <div>
+                    <h3 id="modal-project-title" class="font-syne font-black text-xl text-white uppercase">PROJECT TITLE</h3>
+                    <p id="modal-project-category" class="font-mono text-xs text-neutral-400">CATEGORY // ARCHITECTURE</p>
+                </div>
+                <button id="close-project-modal" class="w-8 h-8 rounded border border-neutral-700 bg-neutral-900 text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-4 font-sans text-sm text-neutral-300" id="modal-project-body">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <div class="p-4 bg-neutral-900 border-t border-neutral-800 flex items-center justify-between">
+                <span class="font-mono text-xs text-neutral-400">CODE LICENSE: MIT</span>
+                <div class="flex gap-2">
+                    <a id="modal-project-github" href="https://github.com" target="_blank" class="manga-btn-secondary px-4 py-2 text-xs font-syne flex items-center gap-1.5">
+                        <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                        <span>SOURCE CODE</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Custom JavaScript Application -->
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
