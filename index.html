@@ -87,59 +87,97 @@
             </button>
         </div>
 
-        <!-- Center Character Stage & Interactive Trigger -->
-        <div id="portal-trigger" class="relative group cursor-pointer flex flex-col items-center z-10 transition-transform duration-500">
-            <!-- Glowing Orbiting Rings -->
-            <div class="absolute -inset-10 rounded-full border border-white/20 animate-spin-slow pointer-events-none"></div>
-            <div class="absolute -inset-6 rounded-full border border-dashed border-white/40 animate-reverse-spin pointer-events-none"></div>
-            <div class="absolute -inset-2 rounded-full ring-glow-pulse pointer-events-none"></div>
-
-            <!-- Manga Speed Burst Rays around Character -->
-            <div class="landing-rays"></div>
-
-            <!-- Character Wrapper with Floating Animation -->
-            <div id="landing-character-wrapper" class="relative w-48 h-48 md:w-64 md:h-64 rounded-full p-2 bg-neutral-950 border-2 border-white shadow-[0_0_50px_rgba(255,255,255,0.25)] flex items-center justify-center overflow-hidden character-float transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_0_80px_rgba(255,255,255,0.5)]">
-                <!-- Inner character image -->
-                <img id="landing-character-img" 
-                     src="assets/images/manga-character-floating.jpg" 
-                     alt="Ajaikanth Saravanan Manga Avatar" 
-                     class="w-full h-full object-cover rounded-full filter contrast-125 brightness-105 transition-transform duration-700 group-hover:scale-110">
-                
-                <!-- Manga Scanline Glitch Line -->
-                <div class="scanline"></div>
-                
-                <!-- Hover Glow Ripple -->
-                <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </div>
-
-            <!-- Tap Indicator Ripple Effect -->
-            <div class="tap-ring"></div>
-
-            <!-- Kanji SFX Badge -->
-            <div class="absolute -right-4 -top-2 bg-white text-black font-black font-syne text-xs px-2 py-0.5 transform rotate-12 border border-black shadow-lg">
-                ズッ (FOCUS)
-            </div>
-        </div>
-
-        <!-- Hero Texts Under Character -->
-        <div id="landing-text-block" class="mt-8 text-center z-10 transition-opacity duration-500">
-            <div class="inline-block mb-1 px-3 py-0.5 text-[11px] font-mono tracking-widest uppercase bg-white/10 text-neutral-300 border border-white/20 rounded-full">
-                AI & DATA SCIENCE PORTFOLIO
-            </div>
-            <h1 class="text-3xl md:text-5xl font-black font-syne tracking-wider uppercase text-white mt-2 drop-shadow-md">
-                AJAIKANTH SARAVANAN
-            </h1>
+        <!-- Center Stage: Dynamic Zoomable Character Container -->
+        <div id="entrance-stage" class="relative flex flex-col items-center justify-center z-10 transition-all duration-700 state-tiny">
             
-            <div class="flex flex-col items-center gap-2 mt-4">
-                <div class="flex items-center gap-2 text-sm md:text-base font-mono font-semibold text-neutral-300 group-hover:text-white transition-colors">
-                    <span class="animate-bounce inline-block text-white font-bold">▲</span>
-                    <span class="tracking-widest uppercase text-xs md:text-sm">TAP TO ZOOM • CLICK TO ENTER PORTFOLIO</span>
-                    <span class="animate-bounce inline-block text-white font-bold">▲</span>
+            <!-- Character Trigger -->
+            <div id="portal-trigger" class="relative group cursor-pointer flex flex-col items-center transition-all duration-700">
+                <!-- Glowing Orbiting Rings -->
+                <div id="ring-outer" class="absolute -inset-8 md:-inset-10 rounded-full border border-white/20 animate-spin-slow pointer-events-none transition-all duration-700"></div>
+                <div id="ring-dashed" class="absolute -inset-4 md:-inset-6 rounded-full border border-dashed border-white/40 animate-reverse-spin pointer-events-none transition-all duration-700"></div>
+                <div id="ring-glow" class="absolute -inset-1 md:-inset-2 rounded-full ring-glow-pulse pointer-events-none transition-all duration-700"></div>
+
+                <!-- Manga Speed Burst Rays around Character (Active during zoom) -->
+                <div id="landing-rays" class="landing-rays opacity-0 transition-opacity duration-500"></div>
+
+                <!-- Character Wrapper with Dynamic Size Transition -->
+                <div id="landing-character-wrapper" class="relative rounded-full p-1.5 md:p-2 bg-neutral-950 border-2 border-white shadow-[0_0_30px_rgba(255,255,255,0.25)] flex items-center justify-center overflow-hidden character-float transition-all duration-700 group-hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36">
+                    <!-- Inner character image -->
+                    <img id="landing-character-img" 
+                         src="assets/images/manga-character-floating.jpg" 
+                         alt="Ajaikanth Saravanan Manga Avatar" 
+                         class="w-full h-full object-cover rounded-full filter contrast-125 brightness-105 transition-transform duration-700">
+                    
+                    <!-- Manga Scanline Glitch Line -->
+                    <div class="scanline"></div>
+                    
+                    <!-- Hover Glow Ripple -->
+                    <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="text-[11px] font-mono text-neutral-500 tracking-wider">
-                    [ IMMERSIVE MANGA EXPERIENCE ]
+
+                <!-- Tap Indicator Ripple Effect -->
+                <div class="tap-ring"></div>
+
+                <!-- Kanji SFX Badge -->
+                <div id="kanji-badge" class="absolute -right-3 -top-2 bg-white text-black font-black font-syne text-[10px] md:text-xs px-2 py-0.5 transform rotate-12 border border-black shadow-lg transition-all duration-500">
+                    ズッ (FOCUS)
                 </div>
             </div>
+
+            <!-- Stage 1 Texts: Visible when Tiny (Pre-Zoom) -->
+            <div id="stage-tiny-info" class="mt-6 text-center transition-all duration-500 flex flex-col items-center">
+                <div class="inline-block px-3 py-0.5 text-[10px] md:text-[11px] font-mono tracking-widest uppercase bg-white/10 text-neutral-300 border border-white/20 rounded-full mb-1.5">
+                    AI & DATA SCIENCE PORTFOLIO
+                </div>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-black font-syne tracking-wider uppercase text-white drop-shadow-md">
+                    AJAIKANTH SARAVANAN
+                </h1>
+                
+                <!-- Scrolling / Zoom Button -->
+                <div class="mt-4 flex flex-col items-center gap-2">
+                    <button id="zoom-in-btn" class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-syne font-bold text-xs uppercase tracking-wider hover:bg-neutral-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.4)] group">
+                        <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                        <span>SCROLL / CLICK TO ZOOM</span>
+                        <i data-lucide="arrow-down" class="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform"></i>
+                    </button>
+                    <div class="text-[10px] font-mono text-neutral-500 tracking-widest uppercase flex items-center gap-1.5 mt-1">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-neutral-400 animate-pulse"></span>
+                        <span>SCROLL DOWN WHEEL TO ZOOM IN</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 2 Texts & Action: Visible when Zoomed In -->
+            <div id="stage-zoomed-info" class="mt-6 text-center transition-all duration-500 hidden flex-col items-center">
+                <div class="inline-block px-3 py-0.5 text-[10px] md:text-[11px] font-mono tracking-widest uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-full mb-1.5">
+                    ● SYSTEM ARMED // TARGET LOCKED
+                </div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-black font-syne tracking-wider uppercase text-white drop-shadow-lg">
+                    AJAIKANTH SARAVANAN
+                </h1>
+                <p class="font-mono text-xs sm:text-sm text-neutral-300 tracking-wide mt-1">
+                    AI & DATA SCIENCE ENGINEER
+                </p>
+
+                <!-- Prominent "CLICK TO START" CTA Button -->
+                <div class="mt-5 flex flex-col sm:flex-row items-center gap-3">
+                    <button id="start-portfolio-btn" class="flex items-center gap-2 px-8 py-3.5 rounded-lg bg-white text-black font-syne font-black text-sm uppercase tracking-widest hover:bg-neutral-200 hover:scale-105 transition-all shadow-[0_0_35px_rgba(255,255,255,0.6)] border-2 border-white animate-pulse">
+                        <i data-lucide="play" class="w-4 h-4 fill-black"></i>
+                        <span>CLICK TO START PORTFOLIO</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+
+                    <button id="zoom-out-btn" class="flex items-center gap-1.5 px-4 py-3 rounded-lg border border-neutral-700 bg-neutral-900/80 text-neutral-300 hover:text-white hover:border-white font-mono text-xs transition-colors">
+                        <i data-lucide="zoom-out" class="w-3.5 h-3.5"></i>
+                        <span>ZOOM OUT</span>
+                    </button>
+                </div>
+                
+                <div class="text-[10px] font-mono text-neutral-500 tracking-wider mt-3">
+                    [ CLICK THE BUTTON OR CHARACTER TO LAUNCH ]
+                </div>
+            </div>
+
         </div>
 
         <!-- Cinematic Building / Initializing State Overlay -->
@@ -417,6 +455,16 @@
                         </div>
 
                     </div>
+                </div>
+
+                <!-- Hero Bottom Scroll Down Indicator Button -->
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-20">
+                    <a href="#about" class="flex flex-col items-center gap-1 text-[10px] font-mono tracking-widest text-neutral-400 hover:text-white transition-colors group">
+                        <span class="uppercase">SCROLL TO EXPLORE</span>
+                        <div class="w-6 h-10 rounded-full border-2 border-neutral-700 group-hover:border-white flex items-start justify-center p-1 transition-colors">
+                            <div class="w-1 h-2 bg-white rounded-full animate-bounce"></div>
+                        </div>
+                    </a>
                 </div>
             </section>
 
@@ -1498,6 +1546,17 @@
                 </div>
             </div>
         </footer>
+
+        <!-- Floating Manga Scroll-To-Top Action Button -->
+        <div id="scroll-top-fab" class="fixed bottom-6 right-6 z-40 opacity-0 pointer-events-none translate-y-4 transition-all duration-300">
+            <button id="scroll-top-btn" title="Scroll to Top" class="relative w-12 h-12 rounded-full bg-neutral-950 border-2 border-white text-white flex items-center justify-center hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,255,255,0.35)] group">
+                <svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 36 36">
+                    <path class="text-neutral-800" stroke-width="2.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path id="scroll-progress-circle" class="text-white transition-all duration-100" stroke-dasharray="0, 100" stroke-width="2.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <i data-lucide="arrow-up" class="w-5 h-5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </button>
+        </div>
 
     </div>
 

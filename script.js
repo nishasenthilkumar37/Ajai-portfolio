@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTerminalBot();
     initContactForm();
     initMobileNav();
+    initScrollTopButton();
 });
 
 // ========================================================================= //
@@ -105,13 +106,18 @@ function playCinematicZoomSound() {
 
 
 // ========================================================================= //
-// 2. CINEMATIC MANGA ENTRANCE & ZOOM TRANSITION                             //
+// 2. CINEMATIC MANGA ENTRANCE (2-STAGE ZOOM & SCROLL CONTROLLER)            //
 // ========================================================================= //
 function initCinematicEntrance() {
     const landing = document.getElementById('cinematic-landing');
+    const stage = document.getElementById('entrance-stage');
     const portal = document.getElementById('portal-trigger');
     const charWrapper = document.getElementById('landing-character-wrapper');
-    const textBlock = document.getElementById('landing-text-block');
+    const stageTiny = document.getElementById('stage-tiny-info');
+    const stageZoomed = document.getElementById('stage-zoomed-info');
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
+    const startBtn = document.getElementById('start-portfolio-btn');
     const buildingOverlay = document.getElementById('building-overlay');
     const buildingProgress = document.getElementById('building-progress');
     const buildingConsole = document.getElementById('building-console');
@@ -119,18 +125,55 @@ function initCinematicEntrance() {
     const skipBtn = document.getElementById('skip-intro-btn');
     const replayBtn = document.getElementById('replay-intro-btn');
 
+    let isZoomed = false;
     let isEntering = false;
 
-    function executeEntranceSequence() {
+    // Stage 1 -> Stage 2: Zoom In
+    function zoomIn() {
+        if (isZoomed || isEntering) return;
+        isZoomed = true;
+        
+        playTone(660, 'sine', 0.15, 0.05);
+        setTimeout(() => playTone(880, 'triangle', 0.2, 0.05), 100);
+
+        stage.classList.remove('state-tiny');
+        stage.classList.add('state-zoomed');
+
+        stageTiny.classList.add('hidden');
+        stageZoomed.classList.remove('hidden');
+        stageZoomed.classList.add('flex');
+
+        lucide.createIcons();
+    }
+
+    // Stage 2 -> Stage 1: Zoom Out
+    function zoomOut() {
+        if (!isZoomed || isEntering) return;
+        isZoomed = false;
+
+        playTone(440, 'sine', 0.1, 0.04);
+
+        stage.classList.remove('state-zoomed');
+        stage.classList.add('state-tiny');
+
+        stageZoomed.classList.add('hidden');
+        stageZoomed.classList.remove('flex');
+        stageTiny.classList.remove('hidden');
+
+        lucide.createIcons();
+    }
+
+    // Stage 2 -> Launch: Click to Start & Full Cinematic Burst
+    function launchPortfolio() {
         if (isEntering) return;
         isEntering = true;
 
         playCinematicZoomSound();
 
-        // 1. Zoom Character & Fade Initial Texts
+        // 1. Zoom Character Beyond Screen & Fade Info
         charWrapper.classList.add('zooming-active');
-        textBlock.style.opacity = '0';
-        textBlock.style.transform = 'translateY(20px)';
+        stageZoomed.style.opacity = '0';
+        stageZoomed.style.transform = 'translateY(20px)';
 
         // 2. Show "BUILDING..." Overlay
         setTimeout(() => {
@@ -159,7 +202,7 @@ function initCinematicEntrance() {
                 } else {
                     clearInterval(logTimer);
                 }
-            }, 300);
+            }, 280);
 
         }, 350);
 
@@ -178,20 +221,60 @@ function initCinematicEntrance() {
                 charWrapper.classList.remove('zooming-active');
                 buildingOverlay.style.opacity = '0';
                 buildingProgress.style.width = '0%';
-                textBlock.style.opacity = '1';
-                textBlock.style.transform = 'none';
+                stageZoomed.style.opacity = '1';
+                stageZoomed.style.transform = 'none';
+                zoomOut();
                 isEntering = false;
             }, 1000);
 
-        }, 1900);
+        }, 1850);
     }
 
-    // Trigger on Character Click/Tap
+    // Event Triggers
+    if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
+    if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
+    if (startBtn) startBtn.addEventListener('click', launchPortfolio);
+
+    // Clicking Character: if tiny -> zoom in; if zoomed -> launch!
     if (portal) {
-        portal.addEventListener('click', executeEntranceSequence);
+        portal.addEventListener('click', () => {
+            if (!isZoomed) {
+                zoomIn();
+            } else {
+                launchPortfolio();
+            }
+        });
     }
 
-    // Skip Intro
+    // Mouse Wheel Scroll on Entrance Screen
+    if (landing) {
+        landing.addEventListener('wheel', (e) => {
+            if (landing.style.pointerEvents === 'none') return;
+            if (e.deltaY > 15 && !isZoomed) {
+                zoomIn();
+            } else if (e.deltaY < -15 && isZoomed) {
+                zoomOut();
+            }
+        }, { passive: true });
+
+        // Touch Swipe on Mobile
+        let touchStartY = 0;
+        landing.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        landing.addEventListener('touchend', (e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            if (diff > 30 && !isZoomed) {
+                zoomIn(); // Swiped up/scrolled down
+            } else if (diff < -30 && isZoomed) {
+                zoomOut(); // Swiped down/scrolled up
+            }
+        }, { passive: true });
+    }
+
+    // Skip Intro Button
     if (skipBtn) {
         skipBtn.addEventListener('click', () => {
             landing.style.opacity = '0';
@@ -202,7 +285,7 @@ function initCinematicEntrance() {
         });
     }
 
-    // Replay Intro button in Navbar
+    // Replay Intro Button in Navbar
     if (replayBtn) {
         replayBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'instant' });
@@ -210,6 +293,7 @@ function initCinematicEntrance() {
             landing.style.opacity = '1';
             landing.style.pointerEvents = 'auto';
             document.body.style.overflow = 'hidden';
+            zoomOut();
         });
     }
 }
@@ -719,3 +803,42 @@ function initMobileNav() {
         });
     });
 }
+
+
+// ========================================================================= //
+// 13. FLOATING SCROLL-TO-TOP & PROGRESS CONTROLLER                          //
+// ========================================================================= //
+function initScrollTopButton() {
+    const fab = document.getElementById('scroll-top-fab');
+    const btn = document.getElementById('scroll-top-btn');
+    const circle = document.getElementById('scroll-progress-circle');
+
+    if (!fab || !btn) return;
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        if (totalHeight > 0 && circle) {
+            const progress = Math.min(100, Math.max(0, (scrollTop / totalHeight) * 100));
+            circle.setAttribute('stroke-dasharray', `${progress.toFixed(1)}, 100`);
+        }
+
+        if (scrollTop > 350) {
+            fab.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            fab.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        } else {
+            fab.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            fab.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+        }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+        playTone(660, 'triangle', 0.12, 0.04);
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+

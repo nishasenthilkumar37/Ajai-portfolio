@@ -113,6 +113,44 @@ body {
 /* CINEMATIC ENTRANCE STYLES & ANIMATIONS                                    */
 /* ========================================================================= */
 
+/* Stage States: Tiny (Initial) vs Zoomed In */
+#entrance-stage.state-tiny #landing-character-wrapper {
+    width: 100px;
+    height: 100px;
+}
+@media (min-width: 768px) {
+    #entrance-stage.state-tiny #landing-character-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+#entrance-stage.state-zoomed #landing-character-wrapper {
+    width: 220px;
+    height: 220px;
+    box-shadow: 0 0 70px rgba(255, 255, 255, 0.4);
+}
+@media (min-width: 768px) {
+    #entrance-stage.state-zoomed #landing-character-wrapper {
+        width: 300px;
+        height: 300px;
+        box-shadow: 0 0 90px rgba(255, 255, 255, 0.5);
+    }
+}
+
+#entrance-stage.state-zoomed #landing-rays {
+    opacity: 0.8;
+}
+
+.landing-rays {
+    position: absolute;
+    inset: -60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+    pointer-events: none;
+    animation: auraPulse 4s ease-in-out infinite;
+}
+
 .character-float {
     animation: animeFloat 4s ease-in-out infinite;
 }
@@ -122,7 +160,7 @@ body {
         transform: translateY(0px) rotate(0deg);
     }
     50% {
-        transform: translateY(-12px) rotate(0.5deg);
+        transform: translateY(-10px) rotate(0.5deg);
     }
 }
 
@@ -201,10 +239,10 @@ body {
     }
 }
 
-/* Zoom In Motion Blur State (Triggered on Click) */
+/* Zoom In Motion Blur State (Triggered on Click to Start) */
 .zooming-active {
     transform: scale(9) !important;
-    filter: blur(12px) contrast(150%) !important;
+    filter: blur(14px) contrast(150%) !important;
     opacity: 0 !important;
     transition: transform 1.2s cubic-bezier(0.87, 0, 0.13, 1), 
                 filter 1.2s cubic-bezier(0.87, 0, 0.13, 1), 
