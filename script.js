@@ -11,35 +11,41 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroTilt();
     initFilterTabs();
     initModals();
-    initTerminalBot();
     initContactForm();
     initMobileNav();
     initScrollTopButton();
 });
 
 // ========================================================================= //
-// 1. SOUND EFFECTS SYNTHESIZER (WEB AUDIO API - ZERO EXTERNAL ASSETS)       //
+// 1. SOUND EFFECTS SYNTHESIZER (WEB AUDIO API)                              //
 // ========================================================================= //
 let audioCtx = null;
 let soundEnabled = true;
 
 function initAudioSystem() {
     const audioBtn = document.getElementById('audio-toggle-btn');
+    const audioLandingBtn = document.getElementById('audio-toggle-landing');
+    const audioStatusText = document.getElementById('audio-status-text');
     
-    // Toggle sound
-    if (audioBtn) {
-        audioBtn.addEventListener('click', () => {
-            soundEnabled = !soundEnabled;
-            audioBtn.innerHTML = soundEnabled 
-                ? '<i data-lucide="volume-2" class="w-4 h-4"></i>' 
-                : '<i data-lucide="volume-x" class="w-4 h-4 text-neutral-500"></i>';
-            lucide.createIcons();
-            if (soundEnabled) playTone(880, 'sine', 0.1, 0.05);
-        });
+    function toggleAudio() {
+        soundEnabled = !soundEnabled;
+        const icon = soundEnabled ? 'volume-2' : 'volume-x';
+        
+        if (audioBtn) {
+            audioBtn.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 ${soundEnabled ? 'text-black' : 'text-neutral-400'}"></i>`;
+        }
+        if (audioLandingBtn) {
+            audioLandingBtn.innerHTML = `<i data-lucide="${icon}" class="w-3.5 h-3.5"></i> <span id="audio-status-text">${soundEnabled ? 'AUDIO ON' : 'AUDIO OFF'}</span>`;
+        }
+        lucide.createIcons();
+        if (soundEnabled) playTone(880, 'sine', 0.1, 0.05);
     }
 
+    if (audioBtn) audioBtn.addEventListener('click', toggleAudio);
+    if (audioLandingBtn) audioLandingBtn.addEventListener('click', toggleAudio);
+
     // Attach click SFX to buttons & links
-    document.querySelectorAll('button, a, .manga-badge, .project-modal-trigger').forEach(el => {
+    document.querySelectorAll('button, a, .manga-exact-tag, .manga-card, .project-modal-trigger').forEach(el => {
         el.addEventListener('mouseenter', () => {
             if (soundEnabled) playTone(540, 'triangle', 0.04, 0.02);
         });
@@ -75,7 +81,7 @@ function playTone(freq, type = 'sine', duration = 0.1, vol = 0.05) {
         osc.start();
         osc.stop(ctx.currentTime + duration);
     } catch (e) {
-        // Audio policy ignore
+        // Ignore audio policy errors before interaction
     }
 }
 
@@ -106,15 +112,11 @@ function playCinematicZoomSound() {
 
 
 // ========================================================================= //
-// 2. MANGA SPREAD BOOK & INTERACTIVE GREETING CONTROLLER                    //
+// 2. CINEMATIC MANGA ENTRANCE CONTROLLER                                    //
 // ========================================================================= //
 function initCinematicEntrance() {
     const landing = document.getElementById('cinematic-landing');
-    const bookTrack = document.getElementById('manga-spreads-track');
-    const scrollbar = document.getElementById('book-scrollbar');
-    const prevBtn = document.getElementById('book-prev-btn');
-    const nextBtn = document.getElementById('book-next-btn');
-    const pageIndicator = document.getElementById('book-page-indicator');
+    const bookContainer = document.getElementById('manga-book-container');
     const startBtn = document.getElementById('book-start-btn');
     const skipBtn = document.getElementById('skip-intro-btn');
     const replayBtn = document.getElementById('replay-intro-btn');
@@ -122,99 +124,8 @@ function initCinematicEntrance() {
     const buildingProgress = document.getElementById('building-progress');
     const buildingConsole = document.getElementById('building-console');
     const portfolioApp = document.getElementById('portfolio-app');
-    const greetingBubble = document.getElementById('character-greeting-bubble');
-    const greetingText = document.getElementById('greeting-text');
 
-    let currentSpread = 1;
-    const totalSpreads = 4;
     let isLaunching = false;
-
-    // Greeting Quotes Generator
-    const greetings = [
-        "\"Hey there! I'm Ajaikanth. Welcome to my developer chronicles! Tap me to talk or click below to enter!\"",
-        "\"Looking for an AI & Data Science Engineer? Drag the scrollbar below to flip through my chapters!\"",
-        "\"I build neural networks in PyTorch, distributed backends in Java, and production GenAI systems!\"",
-        "\"Ready to explore my full interactive portfolio? Click the START button below to enter!\""
-    ];
-    let greetingIdx = 0;
-
-    function greetUser() {
-        playTone(720, 'sine', 0.1, 0.05);
-        setTimeout(() => playTone(960, 'sine', 0.15, 0.05), 80);
-        
-        greetingIdx = (greetingIdx + 1) % greetings.length;
-        if (greetingText) {
-            greetingText.style.opacity = '0';
-            setTimeout(() => {
-                greetingText.textContent = greetings[greetingIdx];
-                greetingText.style.opacity = '1';
-            }, 150);
-        }
-    }
-
-    if (greetingBubble) {
-        greetingBubble.addEventListener('click', greetUser);
-    }
-
-    // Horizontal Spread Navigation
-    function goToSpread(index) {
-        if (!bookTrack) return;
-        currentSpread = Math.max(1, Math.min(totalSpreads, index));
-        
-        const spreadWidth = bookTrack.clientWidth;
-        bookTrack.scrollTo({
-            left: (currentSpread - 1) * spreadWidth,
-            behavior: 'smooth'
-        });
-
-        if (scrollbar) scrollbar.value = currentSpread;
-        if (pageIndicator) pageIndicator.textContent = `SPREAD ${currentSpread} / ${totalSpreads}`;
-        playTone(520, 'triangle', 0.08, 0.03);
-    }
-
-    if (scrollbar) {
-        scrollbar.addEventListener('input', (e) => {
-            goToSpread(parseInt(e.target.value));
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (currentSpread > 1) goToSpread(currentSpread - 1);
-        });
-    }
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (currentSpread < totalSpreads) goToSpread(currentSpread + 1);
-        });
-    }
-
-    // Track scroll synchronization
-    if (bookTrack) {
-        bookTrack.addEventListener('scroll', () => {
-            const spreadWidth = bookTrack.clientWidth;
-            if (spreadWidth > 0) {
-                const newIndex = Math.round(bookTrack.scrollLeft / spreadWidth) + 1;
-                if (newIndex !== currentSpread && newIndex >= 1 && newIndex <= totalSpreads) {
-                    currentSpread = newIndex;
-                    if (scrollbar) scrollbar.value = currentSpread;
-                    if (pageIndicator) pageIndicator.textContent = `SPREAD ${currentSpread} / ${totalSpreads}`;
-                }
-            }
-        }, { passive: true });
-
-        // Mouse wheel horizontal navigation
-        bookTrack.addEventListener('wheel', (e) => {
-            if (Math.abs(e.deltaY) > 20) {
-                if (e.deltaY > 0 && currentSpread < totalSpreads) {
-                    goToSpread(currentSpread + 1);
-                } else if (e.deltaY < 0 && currentSpread > 1) {
-                    goToSpread(currentSpread - 1);
-                }
-            }
-        }, { passive: true });
-    }
 
     // Launch Transition into Full Site
     function launchFullPortfolio() {
@@ -249,9 +160,9 @@ function initCinematicEntrance() {
                 } else {
                     clearInterval(logTimer);
                 }
-            }, 260);
+            }, 250);
 
-        }, 200);
+        }, 150);
 
         // 2. Reveal Homepage
         setTimeout(() => {
@@ -271,11 +182,22 @@ function initCinematicEntrance() {
                 isLaunching = false;
             }, 1000);
 
-        }, 1600);
+        }, 1500);
     }
 
-    if (startBtn) startBtn.addEventListener('click', launchFullPortfolio);
-    if (skipBtn) skipBtn.addEventListener('click', launchFullPortfolio);
+    if (startBtn) startBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        launchFullPortfolio();
+    });
+
+    if (skipBtn) skipBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        launchFullPortfolio();
+    });
+
+    if (bookContainer) {
+        bookContainer.addEventListener('click', launchFullPortfolio);
+    }
 
     // Replay Book Cover from Navbar
     if (replayBtn) {
@@ -287,14 +209,13 @@ function initCinematicEntrance() {
                 landing.style.pointerEvents = 'auto';
             }
             document.body.style.overflow = 'hidden';
-            goToSpread(1);
         });
     }
 }
 
 
 // ========================================================================= //
-// 3. AMBIENT MANGA SPEEDLINES & PARTICLES CANVAS                            //
+// 3. AMBIENT MANGA SPEEDLINES CANVAS                                        //
 // ========================================================================= //
 function initSpeedlinesCanvas() {
     const canvas = document.getElementById('speedlines-canvas');
@@ -310,7 +231,7 @@ function initSpeedlinesCanvas() {
     });
 
     const lines = [];
-    const numLines = 35;
+    const numLines = 30;
 
     for (let i = 0; i < numLines; i++) {
         lines.push({
@@ -318,7 +239,7 @@ function initSpeedlinesCanvas() {
             y: Math.random() * height,
             length: Math.random() * 80 + 30,
             speed: Math.random() * 2 + 1,
-            opacity: Math.random() * 0.3 + 0.05,
+            opacity: Math.random() * 0.25 + 0.05,
             width: Math.random() * 1.5 + 0.5
         });
     }
@@ -326,7 +247,7 @@ function initSpeedlinesCanvas() {
     function animate() {
         ctx.clearRect(0, 0, width, height);
 
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#000000';
         lines.forEach(line => {
             ctx.beginPath();
             ctx.lineWidth = line.width;
@@ -414,7 +335,7 @@ function initCustomCursor() {
         cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
     });
 
-    document.querySelectorAll('a, button, input, textarea, .manga-badge, .manga-card, #portal-trigger').forEach(el => {
+    document.querySelectorAll('a, button, input, textarea, .manga-exact-tag, .manga-card').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
@@ -433,8 +354,8 @@ function initHeroTilt() {
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
 
-        const tiltX = (y / (rect.height / 2)) * -10;
-        const tiltY = (x / (rect.width / 2)) * 10;
+        const tiltX = (y / (rect.height / 2)) * -8;
+        const tiltY = (x / (rect.width / 2)) * 8;
 
         card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
     });
@@ -467,7 +388,7 @@ function createMangaSFX(x, y) {
     sfx.textContent = sfxList[Math.floor(Math.random() * sfxList.length)];
     sfx.style.left = `${x}px`;
     sfx.style.top = `${y}px`;
-    sfx.style.fontSize = `${Math.floor(Math.random() * 8 + 14)}px`;
+    sfx.style.fontSize = `${Math.floor(Math.random() * 6 + 13)}px`;
 
     container.appendChild(sfx);
 
@@ -478,10 +399,9 @@ function createMangaSFX(x, y) {
 
 
 // ========================================================================= //
-// 8. FILTER TABS (SKILLS & PROJECTS)                                        //
+// 8. FILTER TABS (SKILLS)                                                   //
 // ========================================================================= //
 function initFilterTabs() {
-    // Skill Tabs
     const skillBtns = document.querySelectorAll('.skill-tab-btn');
     const skillCards = document.querySelectorAll('.skill-card');
 
@@ -502,28 +422,6 @@ function initFilterTabs() {
             });
         });
     });
-
-    // Project Tabs
-    const projectBtns = document.querySelectorAll('.project-filter-btn');
-    const projectItems = document.querySelectorAll('.project-item');
-
-    projectBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            projectBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filter = btn.getAttribute('data-filter');
-            projectItems.forEach(item => {
-                if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                    item.style.display = 'flex';
-                    setTimeout(() => item.style.opacity = '1', 50);
-                } else {
-                    item.style.opacity = '0';
-                    setTimeout(() => item.style.display = 'none', 200);
-                }
-            });
-        });
-    });
 }
 
 
@@ -536,7 +434,7 @@ const projectData = {
         category: "COMPUTER VISION & MULTIMODAL AI",
         description: "A production-grade multimodal perception platform designed for zero-shot real-time object tracking, spatial relationship graph parsing, and automated natural language scene synthesis.",
         architecture: "PyTorch, CUDA, FastAPI, YOLOv9, Vision-Language Transformers (CLIP + Qwen-VL), WebSockets.",
-        metrics: "Sub-28ms frame inference, 94.6% mean Average Precision (mAP), deployed across GPU clusters with ONNX Runtime acceleration.",
+        metrics: "Sub-25ms frame inference, 94.6% mean Average Precision (mAP), deployed across GPU clusters with ONNX Runtime acceleration.",
         github: "https://github.com"
     },
     nexus: {
@@ -550,33 +448,33 @@ const projectData = {
     deepinsight: {
         title: "DeepInsight Time-Series Forecaster",
         category: "HIGH-FREQUENCY PREDICTIVE ANALYTICS",
-        description: "Advanced deep probabilistic forecasting system combining Temporal Fusion Transformers (TFT) with conformal prediction intervals for risk-aware financial market and demand projections.",
+        description: "Advanced deep probabilistic forecasting system combining Temporal Fusion Transformers (TFT) with conformal prediction intervals for risk-aware telemetry and demand projections.",
         architecture: "Python, PyTorch Forecasting, Pandas, NumPy, Optuna, Plotly, FastParquet.",
         metrics: "Achieved 98.4% directional accuracy on benchmark telemetry datasets with strict calibrated confidence bounds.",
         github: "https://github.com"
     },
-    neuraldoc: {
-        title: "NeuralDoc Enterprise RAG Intelligence",
-        category: "FULL STACK RETRIEVAL-AUGMENTED GENERATION",
-        description: "Enterprise knowledge retrieval platform capable of parsing unstructured PDFs, markdown, and tabular files with hybrid vector + lexical keyword ranking and hallucination mitigation guardrails.",
-        architecture: "Next.js 14, Java Spring Boot 3, Qdrant Vector Database, LangChain, Tailwind CSS, Docker.",
-        metrics: "Processes 500+ page technical manuals in under 4 seconds with exact paragraph and footnote citation anchors.",
+    quantumscale: {
+        title: "QuantumScale Distributed Backend",
+        category: "HIGH-THROUGHPUT JAVA ENTERPRISE",
+        description: "Ultra low-latency Java 21 distributed microservices infrastructure with non-blocking virtual threads and Kafka event streaming for real-time transactions.",
+        architecture: "Java 21, Spring Boot 3, Apache Kafka, Redis Cluster, PostgreSQL, Docker, AWS ECS.",
+        metrics: "Zero-data-loss pipeline processing 25,000 requests/sec with p99 response time under 12ms.",
         github: "https://github.com"
     },
-    autoflow: {
-        title: "AutoFlow Distributed ETL & Streaming",
-        category: "DISTRIBUTED DATA ENGINEERING",
-        description: "Scalable streaming ingestion engine built to ingest, validate, and partition millions of streaming events per hour with automated schema evolution and Kafka integration.",
-        architecture: "Java 21, Apache Kafka, Apache Spark, PostgreSQL, Docker, AWS S3.",
-        metrics: "Zero-data-loss pipeline handling up to 15,000 events/second with sub-second message serialization.",
+    aegis: {
+        title: "AegisSec Neural Shield",
+        category: "AI CYBERSECURITY & ADVERSARIAL DEFENSE",
+        description: "Real-time prompt injection and adversarial perturbation detection engine protecting production Large Language Model deployments.",
+        architecture: "PyTorch, Hugging Face Transformers, FastAPI, Redis, Docker, Prometheus.",
+        metrics: "99.1% detection rate on adversarial prompt benchmarks with under 15ms overhead per query.",
         github: "https://github.com"
     },
-    cyberpulse: {
-        title: "CyberPulse Clinical Diagnostics AI",
-        category: "HEALTHCARE & INTERPRETABLE DEEP LEARNING",
-        description: "Medical imaging triage assistant utilizing convolutional vision backbones augmented with Grad-CAM saliency heatmaps to provide explainable diagnostic assistance for radiologists.",
-        architecture: "PyTorch, TorchVision, React, FastAPI, DICOM standard parser, Albumentations.",
-        metrics: "Validated on benchmark chest X-ray and CT datasets with 97.2% sensitivity and visual heatmap interpretation.",
+    dataflow: {
+        title: "DataFlow Stream Engine",
+        category: "SCALABLE DATA PIPELINES",
+        description: "Unified streaming data pipeline framework built on Apache Spark & Iceberg for automated ETL, schema drift handling, and high-performance querying.",
+        architecture: "Apache Spark, PySpark, Apache Iceberg, PostgreSQL, Docker, Kubernetes.",
+        metrics: "Handles multi-gigabyte continuous event ingestion with automated compaction and sub-minute query latency.",
         github: "https://github.com"
     }
 };
@@ -603,12 +501,12 @@ function initModals() {
             modalBody.innerHTML = `
                 <div class="space-y-4">
                     <div>
-                        <h4 class="font-syne font-bold text-white text-sm uppercase">Overview</h4>
-                        <p class="text-xs text-neutral-300 mt-1 leading-relaxed">${data.description}</p>
+                        <h4 class="font-syne font-bold text-black text-sm uppercase">Overview</h4>
+                        <p class="text-xs text-neutral-800 mt-1 leading-relaxed">${data.description}</p>
                     </div>
-                    <div class="p-4 bg-neutral-900 rounded-lg border border-neutral-800 space-y-2">
-                        <div class="font-mono text-xs text-neutral-400"><strong>ARCHITECTURE:</strong> ${data.architecture}</div>
-                        <div class="font-mono text-xs text-emerald-400"><strong>KEY METRICS:</strong> ${data.metrics}</div>
+                    <div class="p-4 bg-white border-2 border-black space-y-2 shadow-[2px_2px_0px_#000]">
+                        <div class="font-mono text-xs text-neutral-800"><strong class="text-black">ARCHITECTURE:</strong> ${data.architecture}</div>
+                        <div class="font-mono text-xs text-emerald-800"><strong class="text-black">KEY METRICS:</strong> ${data.metrics}</div>
                     </div>
                 </div>
             `;
@@ -631,7 +529,6 @@ function initModals() {
     // Resume Modal Elements
     const resumeModal = document.getElementById('resume-modal');
     const heroResumeBtn = document.getElementById('hero-resume-btn');
-    const mobileResumeBtn = document.getElementById('resume-modal-btn-mobile');
     const closeResumeModal = document.getElementById('close-resume-modal');
     const downloadResumeBtn = document.getElementById('download-resume-btn');
 
@@ -643,7 +540,6 @@ function initModals() {
     }
 
     if (heroResumeBtn) heroResumeBtn.addEventListener('click', openResume);
-    if (mobileResumeBtn) mobileResumeBtn.addEventListener('click', openResume);
 
     if (closeResumeModal) {
         closeResumeModal.addEventListener('click', () => {
@@ -674,69 +570,7 @@ function initModals() {
 
 
 // ========================================================================= //
-// 10. INTERACTIVE MANGA AI TERMINAL ASSISTANT                               //
-// ========================================================================= //
-function initTerminalBot() {
-    const form = document.getElementById('terminal-form');
-    const input = document.getElementById('terminal-input');
-    const output = document.getElementById('terminal-output');
-
-    if (!form || !input || !output) return;
-
-    const botResponses = {
-        help: "Available commands: 'skills', 'projects', 'experience', 'education', 'contact', 'about', 'clear'",
-        skills: "Ajaikanth's Arsenal: PyTorch, TensorFlow, Python, Java, Apache Spark, LLMs, Computer Vision, FastAPI, Docker, BigQuery.",
-        projects: "Flagship systems: OmniVision (CV), NexusAI (Multi-Agent), DeepInsight (Time Series), NeuralDoc (Enterprise RAG), AutoFlow (ETL).",
-        experience: "AI & ML Engineer at Cognitive Labs (2024-Present), former Data Science Engineer at DataMatrix (2023-2024).",
-        education: "B.Tech in CS & Engineering (AI & Data Science Specialization) • First Class with Distinction (CGPA: 9.2).",
-        contact: "Direct email: ajaikanth.saravanan@email.com | GitHub: github.com/ajaikanth | LinkedIn: linkedin.com/in/ajaikanth",
-        about: "Ajaikanth is an AI & Data Science Engineer building high-scale neural systems and distributed software.",
-        clear: "__CLEAR__"
-    };
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const cmd = input.value.trim().toLowerCase();
-        if (!cmd) return;
-
-        input.value = '';
-
-        if (cmd === 'clear') {
-            output.innerHTML = '';
-            return;
-        }
-
-        // Add user line
-        const userLine = document.createElement('div');
-        userLine.className = 'text-white font-semibold';
-        userLine.textContent = `> ${cmd}`;
-        output.appendChild(userLine);
-
-        // Compute response
-        let reply = botResponses[cmd];
-        if (!reply) {
-            if (cmd.includes('hire') || cmd.includes('job') || cmd.includes('work')) {
-                reply = "Ajaikanth is open to high-impact AI/ML engineering roles! Send a transmission via the contact form.";
-            } else if (cmd.includes('python') || cmd.includes('java')) {
-                reply = "Proficient in Python (Deep Learning/Data) and Java (Scalable Microservices & Distributed Pipelines).";
-            } else {
-                reply = `Command '${cmd}' unrecognized. Type 'help' to see available commands or ask about skills/projects.`;
-            }
-        }
-
-        // Add bot line
-        const botLine = document.createElement('div');
-        botLine.className = 'text-emerald-400';
-        botLine.textContent = `ajai-bot: ${reply}`;
-        output.appendChild(botLine);
-
-        output.scrollTop = output.scrollHeight;
-    });
-}
-
-
-// ========================================================================= //
-// 11. CONTACT FORM HANDLER                                                  //
+// 10. CONTACT FORM HANDLER                                                  //
 // ========================================================================= //
 function initContactForm() {
     const form = document.getElementById('contact-form');
@@ -768,7 +602,7 @@ function initContactForm() {
 
 
 // ========================================================================= //
-// 12. MOBILE NAVIGATION DRAWER                                              //
+// 11. MOBILE NAVIGATION DRAWER                                              //
 // ========================================================================= //
 function initMobileNav() {
     const btn = document.getElementById('mobile-menu-btn');
@@ -800,7 +634,7 @@ function initMobileNav() {
 
 
 // ========================================================================= //
-// 13. FLOATING SCROLL-TO-TOP & PROGRESS CONTROLLER                          //
+// 12. FLOATING SCROLL-TO-TOP & PROGRESS CONTROLLER                          //
 // ========================================================================= //
 function initScrollTopButton() {
     const fab = document.getElementById('scroll-top-fab');
@@ -835,4 +669,3 @@ function initScrollTopButton() {
         });
     });
 }
-
