@@ -62,28 +62,29 @@
     <!-- ========================================================================= -->
     <!-- 1. EXACT MANGA DOUBLE-PAGE SPREAD OPENING (MATCHING REFERENCE IMAGE)      -->
     <!-- ========================================================================= -->
-    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex items-center justify-center p-3 sm:p-6 md:p-12 select-none overflow-hidden transition-all duration-1000 cursor-pointer">
+    <div id="cinematic-landing" class="fixed inset-0 z-[100] bg-black flex items-center justify-center p-0 md:p-4 lg:p-6 select-none overflow-hidden transition-all duration-1000 cursor-pointer">
         
-        <!-- The Manga Book Double-Page Spread (Exact Screenshot Match) -->
-        <div class="relative w-full max-w-5xl aspect-[16/10] bg-[#f4f0e6] text-black border-2 border-black shadow-[0_0_80px_rgba(255,255,255,0.15)] flex flex-col overflow-hidden z-10 transition-transform duration-700 hover:scale-[1.01]" id="manga-book-container">
+        <!-- The Manga Book Double-Page Spread (Full Page / Exact Screenshot Match) -->
+        <div class="relative w-full h-full md:max-w-6xl md:max-h-[94vh] md:aspect-[16/10] bg-[#f4f0e6] text-black border-0 md:border-2 border-black shadow-[0_0_90px_rgba(255,255,255,0.18)] flex flex-col overflow-hidden z-10 transition-transform duration-700" id="manga-book-container">
             
             <!-- Book Spine Central Divider Line -->
-            <div class="absolute top-0 bottom-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-black z-20 hidden md:block pointer-events-none"></div>
+            <div class="absolute top-0 bottom-0 left-1/2 w-[2px] -translate-x-1/2 bg-black z-20 hidden md:block pointer-events-none"></div>
 
             <!-- Double-Page Spread Content Grid -->
-            <div class="w-full h-full grid grid-cols-1 md:grid-cols-2 relative manga-dot-grid">
+            <div class="w-full h-full grid grid-cols-1 md:grid-cols-2 relative manga-dot-grid overflow-y-auto md:overflow-hidden">
                 
-                <!-- LEFT PAGE: AJAIKANTH, Subtitle, Tag Boxes, URL -->
-                <div class="p-6 sm:p-10 md:p-14 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black relative">
+                <!-- LEFT PAGE: AJAIKANTH SARAVANAN, Subtitle, Tag Boxes, URL -->
+                <div class="p-6 sm:p-8 md:p-12 lg:p-14 flex flex-col justify-between border-b md:border-b-0 md:border-r-2 border-black relative">
                     
                     <!-- Top Spacer -->
                     <div></div>
 
-                    <!-- Center Typography: AJAIKANTH + The Developer Chronicles + Tag Boxes -->
-                    <div class="my-auto py-2">
+                    <!-- Center Typography: AJAIKANTH SARAVANAN + The Developer Chronicles + Tag Boxes -->
+                    <div class="my-auto py-4">
                         <!-- Main Bold Italic Name with Deep 3D Shadow -->
-                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-syne italic uppercase tracking-tight text-black leading-tight drop-shadow-[4px_4px_0px_#000]">
-                            AJAIKANTH
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black font-syne italic uppercase tracking-tight text-black leading-[1.05] drop-shadow-[4px_4px_0px_#000] break-words">
+                            AJAIKANTH<br>
+                            <span>SARAVANAN</span>
                         </h1>
                         
                         <!-- Cursive Italic Script Subtitle -->
@@ -102,28 +103,28 @@
                     </div>
 
                     <!-- Bottom URL Watermark -->
-                    <div class="font-sans text-[10px] sm:text-xs font-bold text-neutral-600 tracking-wider">
+                    <div class="font-sans text-[11px] sm:text-xs font-bold text-neutral-700 tracking-wider pt-2">
                         IAMAJAIKANTH.IN
                     </div>
                 </div>
 
-                <!-- RIGHT PAGE: PHASE 01, BUILDING!!, Character with Speedlines -->
-                <div class="p-6 sm:p-10 md:p-14 flex flex-col justify-between relative overflow-hidden bg-[#f4f0e6]">
+                <!-- RIGHT PAGE: BUILDING!!, Character with Speedlines -->
+                <div class="p-6 sm:p-8 md:p-12 lg:p-14 flex flex-col justify-between relative overflow-hidden bg-[#f4f0e6]">
                     
                     <!-- Top Spacer -->
                     <div></div>
 
                     <!-- Top Right Action Text: BUILDING!! (Small & Clean) -->
-                    <div class="absolute top-6 right-8 sm:top-8 sm:right-10 z-10 transform rotate-[-2deg]">
+                    <div class="absolute top-5 right-6 sm:top-7 sm:right-8 z-10 transform rotate-[-2deg]">
                         <div class="text-lg sm:text-xl md:text-2xl font-black font-syne italic text-black tracking-tight">
                             BUILDING!!
                         </div>
                     </div>
 
                     <!-- Character Artwork with Radiating Speedlines -->
-                    <div class="relative flex-1 flex items-center justify-center my-auto">
+                    <div class="relative flex-1 flex items-center justify-center my-auto py-2">
                         <!-- Full-Body Standing Manga Character (Matching Reference) -->
-                        <div class="relative h-[250px] sm:h-[320px] md:h-[400px] max-h-full flex items-center justify-center z-10">
+                        <div class="relative h-[260px] sm:h-[340px] md:h-[420px] max-h-full flex items-center justify-center z-10">
                             <img src="assets/images/manga-ref-character.jpg" 
                                  alt="Ajaikanth Saravanan Manga Reference Character" 
                                  class="h-full w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.25)] rounded-sm">
