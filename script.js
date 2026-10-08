@@ -278,11 +278,10 @@ function initTypewriter() {
     if (!target) return;
 
     const roles = [
-        "AI & Data Science",
-        "Deep Learning",
-        "Multi-Agent AI",
-        "High-Scale Distributed",
-        "Full-Stack Intelligent"
+        "AI & Data Science Student",
+        "Java & Python Developer",
+        "React Native Mobile Dev",
+        "SIH 2025 National Winner"
     ];
 
     let roleIdx = 0;
@@ -429,53 +428,45 @@ function initFilterTabs() {
 // 9. MODALS SYSTEM (PROJECT DETAIL & RESUME VIEWER)                         //
 // ========================================================================= //
 const projectData = {
-    omnivision: {
-        title: "OmniVision Neural Engine",
-        category: "COMPUTER VISION & MULTIMODAL AI",
-        description: "A production-grade multimodal perception platform designed for zero-shot real-time object tracking, spatial relationship graph parsing, and automated natural language scene synthesis.",
-        architecture: "PyTorch, CUDA, FastAPI, YOLOv9, Vision-Language Transformers (CLIP + Qwen-VL), WebSockets.",
-        metrics: "Sub-25ms frame inference, 94.6% mean Average Precision (mAP), deployed across GPU clusters with ONNX Runtime acceleration.",
-        github: "https://github.com"
+    medroute: {
+        title: "MedRoute - Emergency Ambulance Optimization",
+        category: "MOBILE APP & GEO-ROUTING (JAVA / FIREBASE / MAPS API)",
+        description: "Mobile application developed to optimize emergency ambulance response routes by calculating shortest time paths and integrating real-time traffic updates. Incorporates live GPS location tracking for dispatch units and patient destinations.",
+        architecture: "Java, Android SDK, Firebase Realtime Database, Google Maps API, GPS Geolocation.",
+        metrics: "Calculates optimized response routes, integrates real-time traffic updates, and enables live ambulance tracking.",
+        github: "https://github.com/Ajaikanth123"
     },
-    nexus: {
-        title: "NexusAI Agentic Workflow Framework",
-        category: "AUTONOMOUS MULTI-AGENT ORCHESTRATION",
-        description: "An autonomous hierarchical agent orchestration engine that breaks down large-scale statistical data exploration into modular agent tasks (Data Profiler, Feature Synthesizer, Model Evaluator, Report Generator).",
-        architecture: "LangGraph, Python, OpenAI GPT-4o, AsyncIO, Vector Embeddings (ChromaDB), Streamlit UI.",
-        metrics: "Reduces exploratory data analysis turnaround time by 75% while producing reproducible Jupyter notebooks and executive summaries.",
-        github: "https://github.com"
+    medimartx: {
+        title: "MediMartX - Healthcare Ecommerce & Medicine Delivery",
+        category: "HEALTHCARE ECOMMERCE (REACT NATIVE / FIREBASE)",
+        description: "Cross-platform mobile commerce platform for purchasing medicines online, featuring prescription upload processing, live order status updates, category filtering, and real-time inventory management.",
+        architecture: "React Native, Expo, Firebase Firestore, Cloud Storage, Authentication.",
+        metrics: "Seamless prescription uploads, real-time inventory sync, and responsive checkout workflow.",
+        github: "https://github.com/Ajaikanth123"
     },
-    deepinsight: {
-        title: "DeepInsight Time-Series Forecaster",
-        category: "HIGH-FREQUENCY PREDICTIVE ANALYTICS",
-        description: "Advanced deep probabilistic forecasting system combining Temporal Fusion Transformers (TFT) with conformal prediction intervals for risk-aware telemetry and demand projections.",
-        architecture: "Python, PyTorch Forecasting, Pandas, NumPy, Optuna, Plotly, FastParquet.",
-        metrics: "Achieved 98.4% directional accuracy on benchmark telemetry datasets with strict calibrated confidence bounds.",
-        github: "https://github.com"
+    cookify: {
+        title: "Cookify - Recipe Discovery & Meal Planning App",
+        category: "RECIPE DISCOVERY APP (REACT NATIVE / REST API)",
+        description: "Mobile application enabling users to search, discover, and follow culinary recipes with category filtering, detailed ingredient breakdowns, step-by-step preparation guides, and bookmarking.",
+        architecture: "React Native, RESTful APIs, Local AsyncStorage, State Management.",
+        metrics: "Instant recipe search, category filtering, and step-by-step cooking companion mode.",
+        github: "https://github.com/Ajaikanth123"
     },
-    quantumscale: {
-        title: "QuantumScale Distributed Backend",
-        category: "HIGH-THROUGHPUT JAVA ENTERPRISE",
-        description: "Ultra low-latency Java 21 distributed microservices infrastructure with non-blocking virtual threads and Kafka event streaming for real-time transactions.",
-        architecture: "Java 21, Spring Boot 3, Apache Kafka, Redis Cluster, PostgreSQL, Docker, AWS ECS.",
-        metrics: "Zero-data-loss pipeline processing 25,000 requests/sec with p99 response time under 12ms.",
-        github: "https://github.com"
+    gym: {
+        title: "Gym Attendance & Member Management",
+        category: "CLIENT MOBILE APPLICATION (REACT NATIVE / FIREBASE)",
+        description: "Freelance production mobile solution for daily member check-ins, automated attendance records, membership renewal notifications, workout log tracking, and real-time sync with Firebase.",
+        architecture: "React Native, Firebase Firestore, Push Notifications, Authentication.",
+        metrics: "Deployed for real client operations with automated daily check-in logs and renewal reminders.",
+        github: "https://github.com/Ajaikanth123"
     },
-    aegis: {
-        title: "AegisSec Neural Shield",
-        category: "AI CYBERSECURITY & ADVERSARIAL DEFENSE",
-        description: "Real-time prompt injection and adversarial perturbation detection engine protecting production Large Language Model deployments.",
-        architecture: "PyTorch, Hugging Face Transformers, FastAPI, Redis, Docker, Prometheus.",
-        metrics: "99.1% detection rate on adversarial prompt benchmarks with under 15ms overhead per query.",
-        github: "https://github.com"
-    },
-    dataflow: {
-        title: "DataFlow Stream Engine",
-        category: "SCALABLE DATA PIPELINES",
-        description: "Unified streaming data pipeline framework built on Apache Spark & Iceberg for automated ETL, schema drift handling, and high-performance querying.",
-        architecture: "Apache Spark, PySpark, Apache Iceberg, PostgreSQL, Docker, Kubernetes.",
-        metrics: "Handles multi-gigabyte continuous event ingestion with automated compaction and sub-minute query latency.",
-        github: "https://github.com"
+    lunarguardians: {
+        title: "Team Lunar Guardians - SIH 2025 National Winner",
+        category: "SPACE TECHNOLOGY / AI & DATA SCIENCE",
+        description: "National Winner at Smart India Hackathon (SIH) 2025 under the Space Tech domain. Selected as Pre-Incubatee at Aakam360 incubation center for pioneering aerospace and space data tech solutions.",
+        architecture: "Python, AI/ML, Data Science, System Design, Space Tech.",
+        metrics: "Smart India Hackathon (SIH) 2025 National 1st Prize Winner & Pre-Incubatee @ Aakam360.",
+        github: "https://github.com/Ajaikanth123"
     }
 };
 
