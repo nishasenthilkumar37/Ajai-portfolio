@@ -798,15 +798,13 @@ function initScrollTopButton() {
 // 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
 // ========================================================================= //
 function initAvatarSpeechSystem() {
-    // Collect all avatar instances (Hero Section & About Section)
+    // Collect all interactive avatar instances (Hero Section)
     const avatarCards = [
-        document.getElementById('hero-manga-card'),
-        document.getElementById('about-avatar-card')
+        document.getElementById('hero-manga-card')
     ].filter(Boolean);
 
     const avatarImgs = [
-        document.getElementById('hero-avatar-img'),
-        document.getElementById('about-avatar-img')
+        document.getElementById('hero-avatar-img')
     ].filter(Boolean);
 
     const avatarVideos = [
@@ -824,23 +822,19 @@ function initAvatarSpeechSystem() {
     ].filter(Boolean);
 
     const speechBubbles = [
-        document.getElementById('hero-speech-bubble'),
-        document.getElementById('about-speech-bubble')
+        document.getElementById('hero-speech-bubble')
     ].filter(Boolean);
 
     const speechTexts = [
-        document.getElementById('hero-speech-bubble-text'),
-        document.getElementById('speech-bubble-text')
+        document.getElementById('hero-speech-bubble-text')
     ].filter(Boolean);
 
     const waveBoxes = [
-        document.getElementById('hero-speech-wave-box'),
-        document.getElementById('speech-wave-box')
+        document.getElementById('hero-speech-wave-box')
     ].filter(Boolean);
 
     const statusLabels = [
-        document.getElementById('hero-speech-status-label'),
-        document.getElementById('speech-status-label')
+        document.getElementById('hero-speech-status-label')
     ].filter(Boolean);
 
     if (avatarImgs.length === 0) return;
