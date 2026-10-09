@@ -272,6 +272,9 @@ function initIntroFlow() {
         portfolioApp.style.opacity = '1';
         document.body.style.overflow = 'auto';
         if (window.lucide) lucide.createIcons();
+        setTimeout(() => {
+            if (window.speakOnceOnEnter) window.speakOnceOnEnter();
+        }, 600);
     } else {
         // Initial Cinematic Fade Sequence
         setTimeout(() => {
@@ -308,6 +311,9 @@ function initIntroFlow() {
             if (portfolioApp) portfolioApp.style.opacity = '1';
             document.body.style.overflow = 'auto';
             if (window.lucide) lucide.createIcons();
+            setTimeout(() => {
+                if (window.speakOnceOnEnter) window.speakOnceOnEnter();
+            }, 500);
             return;
         }
 
@@ -330,6 +336,9 @@ function initIntroFlow() {
             }
             document.body.style.overflow = 'auto';
             if (window.lucide) lucide.createIcons();
+            setTimeout(() => {
+                if (window.speakOnceOnEnter) window.speakOnceOnEnter();
+            }, 600);
         }, 900);
     }
 
@@ -797,8 +806,6 @@ function initAvatarSpeechSystem() {
     const avatarVideo = document.getElementById('hero-avatar-video');
     const helloPill = document.getElementById('hero-say-hello-pill');
     const sayHelloText = document.getElementById('say-hello-text');
-    const speechBubble = document.getElementById('hero-speech-bubble');
-    const speechAudioBtn = document.getElementById('hero-speech-audio-btn');
 
     if (!avatarCard) return;
 
@@ -1008,8 +1015,34 @@ function initAvatarSpeechSystem() {
         scheduleNextBlink();
     }
 
-    // Attach click events to trigger greeting
-    const triggers = [helloPill, avatarVideo, avatarImg, speechBubble, speechAudioBtn];
+    // Export globally for automatic invocation
+    window.speakMangaGreeting = triggerGreeting;
+
+    let autoSpoken = false;
+    function speakOnceOnEnter() {
+        if (autoSpoken) return;
+        autoSpoken = true;
+        setTimeout(() => {
+            triggerGreeting();
+        }, 500);
+    }
+    window.speakOnceOnEnter = speakOnceOnEnter;
+
+    // First interaction fallback (unlocks browser audio if autoplay was blocked)
+    function onFirstUserInteraction() {
+        if (!autoSpoken) {
+            speakOnceOnEnter();
+        }
+        window.removeEventListener('click', onFirstUserInteraction);
+        window.removeEventListener('keydown', onFirstUserInteraction);
+        window.removeEventListener('touchstart', onFirstUserInteraction);
+    }
+    window.addEventListener('click', onFirstUserInteraction, { once: true });
+    window.addEventListener('keydown', onFirstUserInteraction, { once: true });
+    window.addEventListener('touchstart', onFirstUserInteraction, { once: true });
+
+    // Attach click events to trigger greeting manually
+    const triggers = [helloPill, avatarVideo, avatarImg];
     triggers.forEach(el => {
         if (el) {
             el.addEventListener('click', (e) => {
