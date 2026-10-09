@@ -322,19 +322,25 @@
 
                         </div>
 
-                        <!-- Right Column: Anime Illustration with 3D Perspective Tilt & Animated Manga Engine -->
+                        <!-- Right Column: Anime Illustration with 3D Perspective Tilt & Manga Video Engine -->
                         <div class="lg:col-span-5 flex items-center justify-center relative">
                             <div id="hero-manga-card" class="relative w-full max-w-md bg-white border-2 border-black p-3 shadow-[6px_6px_0px_#000] group transition-all duration-300">
                                 <div class="w-full aspect-[4/5] overflow-hidden relative bg-[#f4f0e6] border border-black flex items-center justify-center" id="hero-avatar-container">
                                     
-                                    <!-- Native HTML5 Video Layer (assets/videos/avatar-welcome.mp4) -->
-                                    <video id="hero-avatar-video" class="hidden w-full h-full object-cover" loop playsinline muted></video>
+                                    <!-- Native HTML5 Video Element for Generated Manga MP4 Video -->
+                                    <video id="hero-avatar-video" 
+                                           src="assets/videos/avatar-welcome.mp4" 
+                                           poster="assets/images/manga-character-wave.jpg" 
+                                           preload="metadata" 
+                                           playsinline 
+                                           class="w-full h-full object-cover object-center relative z-0 cursor-pointer transition-transform duration-700 group-hover:scale-105">
+                                    </video>
 
-                                    <!-- 2D Animated Manga Character Frame (Wave / Speak / Blink) -->
+                                    <!-- Fallback Manga Character Image (if video cannot load or file is missing) -->
                                     <img id="hero-avatar-img" 
                                          src="assets/images/manga-character-wave.jpg" 
-                                         alt="Ajaikanth Anime Illustration" 
-                                         class="w-full h-full object-contain filter contrast-110 brightness-100 transition-transform duration-700 manga-avatar-animated cursor-pointer group-hover:scale-105">
+                                         alt="Ajaikanth Manga Character" 
+                                         class="hidden w-full h-full object-cover object-center filter contrast-110 brightness-100 manga-avatar-animated cursor-pointer transition-transform duration-700 group-hover:scale-105">
                                     
                                     <div class="absolute inset-0 manga-dot-grid opacity-20 pointer-events-none"></div>
 
@@ -344,10 +350,10 @@
                                         <span>STATUS: SEEDATAMD INTERN</span>
                                     </div>
 
-                                    <!-- Interactive Voice Trigger Pill -->
-                                    <button id="hero-say-hello-pill" data-cursor="HELLO" title="Click to hear Ajaikanth say hello" class="absolute bottom-16 right-3 z-30 bg-black text-white hover:bg-white hover:text-black border-2 border-black px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider shadow-[2px_2px_0px_#000] flex items-center gap-1.5 transition-all active:scale-95">
+                                    <!-- Interactive Voice Trigger Pill (SAY HELLO) -->
+                                    <button id="hero-say-hello-pill" data-cursor="HELLO" title="Click to play manga greeting video" class="absolute bottom-16 right-3 z-30 bg-black text-white hover:bg-white hover:text-black border-2 border-black px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider shadow-[2px_2px_0px_#000] flex items-center gap-1.5 transition-all active:scale-95">
                                         <i data-lucide="mic" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                        <span>SAY HELLO</span>
+                                        <span id="say-hello-text">SAY HELLO</span>
                                     </button>
 
                                     <!-- Bottom Label Card -->

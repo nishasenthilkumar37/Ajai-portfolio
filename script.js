@@ -330,13 +330,6 @@ function initIntroFlow() {
             }
             document.body.style.overflow = 'auto';
             if (window.lucide) lucide.createIcons();
-
-            // Automatically say hello in manga character voice upon entering
-            setTimeout(() => {
-                if (window.speakMangaGreeting) {
-                    window.speakMangaGreeting();
-                }
-            }, 300);
         }, 900);
     }
 
@@ -796,68 +789,44 @@ function initScrollTopButton() {
 
 
 // ========================================================================= //
-// 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
+// 14. INTERACTIVE AVATAR VIDEO & SPEECH ENGINE                              //
 // ========================================================================= //
 function initAvatarSpeechSystem() {
-    // Interactive avatar instance elements in Hero Section
-    const avatarCards = [
-        document.getElementById('hero-manga-card')
-    ].filter(Boolean);
+    const avatarCard = document.getElementById('hero-manga-card');
+    const avatarImg = document.getElementById('hero-avatar-img');
+    const avatarVideo = document.getElementById('hero-avatar-video');
+    const helloPill = document.getElementById('hero-say-hello-pill');
+    const sayHelloText = document.getElementById('say-hello-text');
 
-    const avatarImgs = [
-        document.getElementById('hero-avatar-img')
-    ].filter(Boolean);
+    if (!avatarCard) return;
 
-    const avatarVideos = [
-        document.getElementById('hero-avatar-video')
-    ].filter(Boolean);
-
-    const voiceBtns = [
-        document.getElementById('hero-avatar-voice-btn')
-    ].filter(Boolean);
-
-    const helloPills = [
-        document.getElementById('hero-say-hello-pill')
-    ].filter(Boolean);
-
-    if (avatarImgs.length === 0 && avatarVideos.length === 0) return;
-
-    let isSpeaking = false;
+    let isPlaying = false;
     let lipSyncTimeouts = [];
     let blinkTimeout = null;
     let speechSafetyTimeout = null;
+    let videoIsReady = false;
 
     const waveFrame = 'assets/images/manga-character-wave.jpg';
     const speakFrame = 'assets/images/manga-character-wave-speak.jpg';
     const blinkFrame = 'assets/images/manga-character-blink.jpg';
     const exactDialogue = "Hello! Welcome to my portfolio!";
 
-    // Eagerly Preload all avatar keyframes for zero-latency frame transitions
+    // Eagerly preload keyframe images for fallback engine
     [waveFrame, speakFrame, blinkFrame].forEach(src => {
         const img = new Image();
         img.src = src;
     });
 
-    // 1. Natural Idle Blinking System (Every 3.5s - 5.5s)
+    // 1. Natural Idle Blinking Loop (Active on Fallback Image)
     function scheduleNextBlink() {
         if (blinkTimeout) clearTimeout(blinkTimeout);
         const nextBlinkDelay = Math.random() * 2000 + 3500;
         blinkTimeout = setTimeout(() => {
-            if (!isSpeaking) {
-                if (updateVideoFrame) updateVideoFrame('blink');
-                avatarImgs.forEach(img => {
-                    if (img && !img.classList.contains('hidden')) {
-                        img.src = blinkFrame;
-                    }
-                });
+            if (!isPlaying && avatarImg && !avatarImg.classList.contains('hidden')) {
+                avatarImg.src = blinkFrame;
                 setTimeout(() => {
-                    if (!isSpeaking) {
-                        if (updateVideoFrame) updateVideoFrame('wave');
-                        avatarImgs.forEach(img => {
-                            if (img && !img.classList.contains('hidden')) {
-                                img.src = waveFrame;
-                            }
-                        });
+                    if (!isPlaying && avatarImg) {
+                        avatarImg.src = waveFrame;
                     }
                     scheduleNextBlink();
                 }, 140);
@@ -869,94 +838,78 @@ function initAvatarSpeechSystem() {
 
     scheduleNextBlink();
 
-    // 2. Dynamic Video Stream & Native HTML5 Video Player Engine
-    let updateVideoFrame = null;
-    avatarVideos.forEach(vid => {
-        // First check if a physical MP4 video file is loaded
-        vid.addEventListener('loadeddata', () => {
-            vid.classList.remove('hidden');
-            avatarImgs.forEach(img => img.classList.add('hidden'));
-            vid.play().catch(() => {});
+    // 2. HTML5 Video Integration (assets/videos/avatar-welcome.mp4)
+    if (avatarVideo) {
+        avatarVideo.addEventListener('loadedmetadata', () => {
+            videoIsReady = true;
+            avatarVideo.classList.remove('hidden');
+            if (avatarImg) avatarImg.classList.add('hidden');
         });
 
-        vid.addEventListener('error', () => {
-            // Generate real-time 60fps video stream directly on HTML5 video element via Canvas captureStream
-            try {
-                const streamCanvas = document.createElement('canvas');
-                streamCanvas.width = 600;
-                streamCanvas.height = 750;
-                const streamCtx = streamCanvas.getContext('2d');
+        avatarVideo.addEventListener('canplay', () => {
+            videoIsReady = true;
+            avatarVideo.classList.remove('hidden');
+            if (avatarImg) avatarImg.classList.add('hidden');
+        });
 
-                const frameWave = new Image(); frameWave.src = waveFrame;
-                const frameSpeak = new Image(); frameSpeak.src = speakFrame;
-                const frameBlink = new Image(); frameBlink.src = blinkFrame;
-
-                let activeVideoFrame = frameWave;
-                let swayAngle = 0;
-
-                updateVideoFrame = function(frameType) {
-                    if (frameType === 'speak') activeVideoFrame = frameSpeak;
-                    else if (frameType === 'blink') activeVideoFrame = frameBlink;
-                    else activeVideoFrame = frameWave;
-                };
-
-                function renderStreamLoop() {
-                    swayAngle += 0.035;
-                    const breath = 1 + Math.sin(swayAngle) * 0.007;
-                    const waveY = Math.sin(swayAngle * 2.2) * 3;
-
-                    streamCtx.fillStyle = '#f4f0e6';
-                    streamCtx.fillRect(0, 0, streamCanvas.width, streamCanvas.height);
-
-                    streamCtx.save();
-                    streamCtx.translate(streamCanvas.width / 2, streamCanvas.height / 2);
-                    streamCtx.scale(breath, breath);
-                    if (activeVideoFrame.complete && activeVideoFrame.naturalWidth > 0) {
-                        streamCtx.drawImage(activeVideoFrame, -streamCanvas.width / 2, -streamCanvas.height / 2 + waveY, streamCanvas.width, streamCanvas.height);
-                    }
-                    streamCtx.restore();
-
-                    requestAnimationFrame(renderStreamLoop);
-                }
-
-                renderStreamLoop();
-
-                if (streamCanvas.captureStream) {
-                    const dynamicStream = streamCanvas.captureStream(30);
-                    vid.srcObject = dynamicStream;
-                    vid.classList.remove('hidden');
-                    avatarImgs.forEach(img => img.classList.add('hidden'));
-                    vid.play().catch(() => {});
-                } else {
-                    vid.classList.add('hidden');
-                    avatarImgs.forEach(img => img.classList.remove('hidden'));
-                }
-            } catch (err) {
-                vid.classList.add('hidden');
-                avatarImgs.forEach(img => img.classList.remove('hidden'));
+        avatarVideo.addEventListener('error', () => {
+            videoIsReady = false;
+            avatarVideo.classList.add('hidden');
+            if (avatarImg) {
+                avatarImg.classList.remove('hidden');
+                avatarImg.src = waveFrame;
             }
         });
 
-        vid.src = 'assets/videos/avatar-welcome.mp4';
-    });
+        avatarVideo.addEventListener('ended', () => {
+            resetPlaybackState();
+        });
+    }
 
-    // 3. Manga Character Voice Speech & Lip-Sync Activation Engine
-    function speakGreeting() {
-        if (isSpeaking) return;
-        isSpeaking = true;
+    // 3. Playback Trigger Engine (SAY HELLO / Card Click)
+    function triggerGreeting() {
+        if (isPlaying) {
+            resetPlaybackState();
+            return;
+        }
 
-        // Clear any active blink or sync timeouts
+        isPlaying = true;
         if (blinkTimeout) clearTimeout(blinkTimeout);
         if (speechSafetyTimeout) clearTimeout(speechSafetyTimeout);
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
-        // Visual State Activation on Hero Card
-        avatarCards.forEach(c => {
-            c.classList.add('speaking-active');
-            c.classList.add('manga-wave-active');
-        });
+        // Visual Active State on Character Card
+        if (avatarCard) {
+            avatarCard.classList.add('speaking-active');
+            avatarCard.classList.add('manga-wave-active');
+        }
+        if (sayHelloText) sayHelloText.textContent = "PLAYING...";
 
+        // If native MP4 video is ready and available:
+        if (avatarVideo && videoIsReady && !avatarVideo.classList.contains('hidden')) {
+            try {
+                avatarVideo.muted = false;
+                avatarVideo.currentTime = 0;
+                const playPromise = avatarVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // If unmuted playback is blocked by browser policy, play muted with Web Speech voice accompaniment
+                        avatarVideo.muted = true;
+                        avatarVideo.play().catch(() => {});
+                        playSpeechAudioFallback();
+                    });
+                }
+            } catch (e) {
+                playSpeechAudioFallback();
+            }
+        } else {
+            // Video not present or loading: run 2D Manga Image Animation + Web Speech Voice
+            play2DAnimationWithVoice();
+        }
+    }
+
+    function play2DAnimationWithVoice() {
         // Syllable-timed Lip-Sync Schedule for "Hello! Welcome to my portfolio!"
         const phonemeSchedule = [
             { time: 0, open: true },       // "Hel-"
@@ -973,42 +926,34 @@ function initAvatarSpeechSystem() {
             { time: 2550, open: false }    // End speech -> Smile
         ];
 
-        phonemeSchedule.forEach(step => {
-            const t = setTimeout(() => {
-                if (isSpeaking) {
-                    if (updateVideoFrame) updateVideoFrame(step.open ? 'speak' : 'wave');
-                    avatarImgs.forEach(img => {
-                        if (img && !img.classList.contains('hidden')) {
-                            img.src = step.open ? speakFrame : waveFrame;
-                        }
-                    });
-                }
-            }, step.time);
-            lipSyncTimeouts.push(t);
-        });
+        if (avatarImg) {
+            avatarImg.classList.remove('hidden');
+            if (avatarVideo) avatarVideo.classList.add('hidden');
+            phonemeSchedule.forEach(step => {
+                const t = setTimeout(() => {
+                    if (isPlaying && avatarImg) {
+                        avatarImg.src = step.open ? speakFrame : waveFrame;
+                    }
+                }, step.time);
+                lipSyncTimeouts.push(t);
+            });
+        }
 
-        // Replay any active videos
-        avatarVideos.forEach(vid => {
-            if (!vid.classList.contains('hidden')) {
-                vid.currentTime = 0;
-                vid.play().catch(() => {});
-            }
-        });
+        playSpeechAudioFallback();
+    }
 
-        // Anime Sparkle / Chime SFX
+    function playSpeechAudioFallback() {
         if (soundEnabled) {
             playTone(840, 'triangle', 0.12, 0.05);
             setTimeout(() => playTone(1120, 'sine', 0.18, 0.05), 100);
         }
 
-        // Manga Character Voice Speech Synthesis
         if ('speechSynthesis' in window) {
             try {
                 window.speechSynthesis.resume();
                 window.speechSynthesis.cancel();
 
                 const utterance = new SpeechSynthesisUtterance(exactDialogue);
-                // Energetic, youthful anime protagonist voice tuning
                 utterance.rate = 1.05;
                 utterance.pitch = 1.25;
                 utterance.volume = soundEnabled ? 1.0 : 0.0;
@@ -1022,8 +967,8 @@ function initAvatarSpeechSystem() {
                     if (preferredVoice) utterance.voice = preferredVoice;
                 }
 
-                utterance.onend = () => resetSpeakingState();
-                utterance.onerror = () => resetSpeakingState();
+                utterance.onend = () => resetPlaybackState();
+                utterance.onerror = () => resetPlaybackState();
 
                 window.speechSynthesis.speak(utterance);
             } catch (err) {
@@ -1031,54 +976,57 @@ function initAvatarSpeechSystem() {
             }
         }
 
-        // Safety fallback timer to guarantee reset even if browser speech API pauses or hangs
         speechSafetyTimeout = setTimeout(() => {
-            resetSpeakingState();
+            resetPlaybackState();
         }, 2750);
     }
 
-    function resetSpeakingState() {
-        if (!isSpeaking) return;
-        isSpeaking = false;
+    function resetPlaybackState() {
+        isPlaying = false;
 
         if (speechSafetyTimeout) clearTimeout(speechSafetyTimeout);
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
-        if (updateVideoFrame) updateVideoFrame('wave');
-        avatarImgs.forEach(img => {
-            if (img && !img.classList.contains('hidden')) {
-                img.src = waveFrame;
-            }
-        });
-        avatarCards.forEach(c => {
-            c.classList.remove('speaking-active');
-            c.classList.remove('manga-wave-active');
-        });
+        if (avatarVideo && !avatarVideo.classList.contains('hidden')) {
+            avatarVideo.pause();
+        }
 
-        // Restart idle blink loop
+        if (avatarImg && !avatarImg.classList.contains('hidden')) {
+            avatarImg.src = waveFrame;
+        }
+
+        if (avatarCard) {
+            avatarCard.classList.remove('speaking-active');
+            avatarCard.classList.remove('manga-wave-active');
+        }
+
+        if (sayHelloText) sayHelloText.textContent = "SAY HELLO";
+
         scheduleNextBlink();
     }
 
-    // Export globally for automatic invocation
-    window.speakMangaGreeting = speakGreeting;
+    // Attach click events to trigger greeting
+    if (helloPill) {
+        helloPill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerGreeting();
+        });
+    }
 
-    // Attach Click Events to all Interactive Greeting Triggers
-    const triggerElements = [
-        ...voiceBtns,
-        ...helloPills,
-        ...avatarImgs,
-        ...avatarVideos
-    ];
+    if (avatarVideo) {
+        avatarVideo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerGreeting();
+        });
+    }
 
-    triggerElements.forEach(el => {
-        if (el) {
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                speakGreeting();
-            });
-        }
-    });
+    if (avatarImg) {
+        avatarImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerGreeting();
+        });
+    }
 
     // Warm-up SpeechSynthesis voices
     if ('speechSynthesis' in window) {
