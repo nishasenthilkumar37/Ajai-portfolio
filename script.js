@@ -799,25 +799,21 @@ function initScrollTopButton() {
 // 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
 // ========================================================================= //
 function initAvatarSpeechSystem() {
-    // Interactive avatar instance elements in Hero Section & About Section
+    // Interactive avatar instance elements in Hero Section
     const avatarCards = [
-        document.getElementById('hero-manga-card'),
-        document.getElementById('about-avatar-card')
+        document.getElementById('hero-manga-card')
     ].filter(Boolean);
 
     const avatarImgs = [
-        document.getElementById('hero-avatar-img'),
-        document.getElementById('about-avatar-img')
+        document.getElementById('hero-avatar-img')
     ].filter(Boolean);
 
     const avatarVideos = [
-        document.getElementById('hero-avatar-video'),
-        document.getElementById('about-avatar-video')
+        document.getElementById('hero-avatar-video')
     ].filter(Boolean);
 
     const voiceBtns = [
-        document.getElementById('hero-avatar-voice-btn'),
-        document.getElementById('about-voice-btn')
+        document.getElementById('hero-avatar-voice-btn')
     ].filter(Boolean);
 
     const helloPills = [
