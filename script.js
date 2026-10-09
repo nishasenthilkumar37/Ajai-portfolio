@@ -813,6 +813,7 @@ function initAvatarSpeechSystem() {
     let lipSyncTimeouts = [];
     let blinkTimeout = null;
     let speechSafetyTimeout = null;
+    let videoDurationLimitTimeout = null;
     let videoIsReady = false;
 
     const waveFrame = 'assets/images/manga-character-wave.jpg';
@@ -873,6 +874,13 @@ function initAvatarSpeechSystem() {
         avatarVideo.addEventListener('ended', () => {
             resetPlaybackState();
         });
+
+        // Strict 5-Second playback cutoff
+        avatarVideo.addEventListener('timeupdate', () => {
+            if (isPlaying && avatarVideo.currentTime >= 5.0) {
+                resetPlaybackState();
+            }
+        });
     }
 
     // 3. Playback Trigger Engine (SAY HELLO / Card Click)
@@ -885,6 +893,7 @@ function initAvatarSpeechSystem() {
         isPlaying = true;
         if (blinkTimeout) clearTimeout(blinkTimeout);
         if (speechSafetyTimeout) clearTimeout(speechSafetyTimeout);
+        if (videoDurationLimitTimeout) clearTimeout(videoDurationLimitTimeout);
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
@@ -894,6 +903,11 @@ function initAvatarSpeechSystem() {
             avatarCard.classList.add('manga-wave-active');
         }
         if (sayHelloText) sayHelloText.textContent = "PLAYING...";
+
+        // Set 5-second hard limit timer
+        videoDurationLimitTimeout = setTimeout(() => {
+            resetPlaybackState();
+        }, 5000);
 
         // If native MP4 video is ready and available:
         if (avatarVideo && videoIsReady && !avatarVideo.classList.contains('hidden')) {
@@ -994,11 +1008,13 @@ function initAvatarSpeechSystem() {
         isPlaying = false;
 
         if (speechSafetyTimeout) clearTimeout(speechSafetyTimeout);
+        if (videoDurationLimitTimeout) clearTimeout(videoDurationLimitTimeout);
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
         if (avatarVideo && !avatarVideo.classList.contains('hidden')) {
             avatarVideo.pause();
+            avatarVideo.currentTime = 0;
         }
 
         if (avatarImg && !avatarImg.classList.contains('hidden')) {
