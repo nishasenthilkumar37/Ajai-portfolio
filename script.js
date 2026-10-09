@@ -330,6 +330,13 @@ function initIntroFlow() {
             }
             document.body.style.overflow = 'auto';
             if (window.lucide) lucide.createIcons();
+
+            // Automatically say hello in manga character voice upon entering
+            setTimeout(() => {
+                if (window.speakMangaGreeting) {
+                    window.speakMangaGreeting();
+                }
+            }, 300);
         }, 900);
     }
 
@@ -791,14 +798,8 @@ function initScrollTopButton() {
 // ========================================================================= //
 // 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
 // ========================================================================= //
-// ========================================================================= //
-// 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
-// ========================================================================= //
-// ========================================================================= //
-// 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
-// ========================================================================= //
 function initAvatarSpeechSystem() {
-    // Collect all interactive avatar instances (Hero Section)
+    // Interactive avatar instance elements in Hero Section
     const avatarCards = [
         document.getElementById('hero-manga-card')
     ].filter(Boolean);
@@ -808,36 +809,18 @@ function initAvatarSpeechSystem() {
     ].filter(Boolean);
 
     const avatarVideos = [
-        document.getElementById('about-avatar-video')
+        document.getElementById('hero-avatar-video')
     ].filter(Boolean);
 
     const voiceBtns = [
-        document.getElementById('hero-avatar-voice-btn'),
-        document.getElementById('avatar-voice-btn')
+        document.getElementById('hero-avatar-voice-btn')
     ].filter(Boolean);
 
     const helloPills = [
-        document.getElementById('hero-say-hello-pill'),
-        document.getElementById('say-hello-pill')
+        document.getElementById('hero-say-hello-pill')
     ].filter(Boolean);
 
-    const speechBubbles = [
-        document.getElementById('hero-speech-bubble')
-    ].filter(Boolean);
-
-    const speechTexts = [
-        document.getElementById('hero-speech-bubble-text')
-    ].filter(Boolean);
-
-    const waveBoxes = [
-        document.getElementById('hero-speech-wave-box')
-    ].filter(Boolean);
-
-    const statusLabels = [
-        document.getElementById('hero-speech-status-label')
-    ].filter(Boolean);
-
-    if (avatarImgs.length === 0) return;
+    if (avatarImgs.length === 0 && avatarVideos.length === 0) return;
 
     let isSpeaking = false;
     let lipSyncTimeouts = [];
@@ -884,11 +867,12 @@ function initAvatarSpeechSystem() {
 
     scheduleNextBlink();
 
-    // 2. Video fallback check (If MP4 video exists in assets/videos/)
+    // 2. Video check (If MP4 video exists in assets/videos/avatar-welcome.mp4)
     avatarVideos.forEach(vid => {
         vid.addEventListener('loadeddata', () => {
             vid.classList.remove('hidden');
             avatarImgs.forEach(img => img.classList.add('hidden'));
+            vid.play().catch(() => {});
         });
         vid.addEventListener('error', () => {
             vid.classList.add('hidden');
@@ -897,7 +881,7 @@ function initAvatarSpeechSystem() {
         vid.src = 'assets/videos/avatar-welcome.mp4';
     });
 
-    // 3. Speech and Syllable Lip-Sync Activation Engine
+    // 3. Manga Character Voice Speech & Lip-Sync Activation Engine
     function speakGreeting() {
         if (isSpeaking) return;
         isSpeaking = true;
@@ -908,20 +892,13 @@ function initAvatarSpeechSystem() {
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
-        // Visual State Activation across both cards
-        speechBubbles.forEach(b => b.classList.add('speaking-active'));
+        // Visual State Activation on Hero Card
         avatarCards.forEach(c => {
             c.classList.add('speaking-active');
             c.classList.add('manga-wave-active');
         });
-        waveBoxes.forEach(wb => {
-            wb.classList.remove('hidden');
-            wb.classList.add('inline-flex');
-        });
-        statusLabels.forEach(lbl => lbl.textContent = "SPEAKING...");
-        speechTexts.forEach(st => st.textContent = `"${exactDialogue}"`);
 
-        // Accurate Syllable-timed Lip-Sync Schedule for "Hello! Welcome to my portfolio!"
+        // Syllable-timed Lip-Sync Schedule for "Hello! Welcome to my portfolio!"
         const phonemeSchedule = [
             { time: 0, open: true },       // "Hel-"
             { time: 220, open: true },     // "-lo!"
@@ -958,29 +935,30 @@ function initAvatarSpeechSystem() {
             }
         });
 
-        // Manga Sound SFX Chime
+        // Anime Sparkle / Chime SFX
         if (soundEnabled) {
-            playTone(720, 'sine', 0.15, 0.04);
-            setTimeout(() => playTone(980, 'triangle', 0.2, 0.05), 120);
+            playTone(840, 'triangle', 0.12, 0.05);
+            setTimeout(() => playTone(1120, 'sine', 0.18, 0.05), 100);
         }
 
-        // Voice Speech Synthesis Execution
+        // Manga Character Voice Speech Synthesis
         if ('speechSynthesis' in window) {
             try {
                 window.speechSynthesis.resume();
                 window.speechSynthesis.cancel();
 
                 const utterance = new SpeechSynthesisUtterance(exactDialogue);
-                utterance.rate = 1.0;
-                utterance.pitch = 1.08;
+                // Energetic, youthful anime protagonist voice tuning
+                utterance.rate = 1.05;
+                utterance.pitch = 1.25;
                 utterance.volume = soundEnabled ? 1.0 : 0.0;
 
                 const voices = window.speechSynthesis.getVoices();
                 if (voices.length > 0) {
                     const preferredVoice = voices.find(v => 
                         v.lang.startsWith('en') && 
-                        (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('David') || v.name.includes('Guy') || v.name.includes('Male') || v.name.includes('English'))
-                    );
+                        (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Guy') || v.name.includes('David') || v.name.includes('Daniel') || v.name.includes('Male'))
+                    ) || voices.find(v => v.lang.startsWith('en'));
                     if (preferredVoice) utterance.voice = preferredVoice;
                 }
 
@@ -1012,27 +990,23 @@ function initAvatarSpeechSystem() {
                 img.src = waveFrame;
             }
         });
-        speechBubbles.forEach(b => b.classList.remove('speaking-active'));
         avatarCards.forEach(c => {
             c.classList.remove('speaking-active');
             c.classList.remove('manga-wave-active');
         });
-        waveBoxes.forEach(wb => {
-            wb.classList.add('hidden');
-            wb.classList.remove('inline-flex');
-        });
-        statusLabels.forEach(lbl => lbl.textContent = "TAP TO HEAR VOICE");
 
         // Restart idle blink loop
         scheduleNextBlink();
     }
+
+    // Export globally for automatic invocation
+    window.speakMangaGreeting = speakGreeting;
 
     // Attach Click Events to all Interactive Greeting Triggers
     const triggerElements = [
         ...voiceBtns,
         ...helloPills,
         ...avatarImgs,
-        ...speechBubbles,
         ...avatarVideos
     ];
 
