@@ -791,6 +791,9 @@ function initScrollTopButton() {
 // ========================================================================= //
 // 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
 // ========================================================================= //
+// ========================================================================= //
+// 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
+// ========================================================================= //
 function initAvatarSpeechSystem() {
     const avatarCard = document.getElementById('about-avatar-card');
     const avatarImg = document.getElementById('about-avatar-img');
@@ -802,19 +805,27 @@ function initAvatarSpeechSystem() {
     const waveBox = document.getElementById('speech-wave-box');
     const statusLabel = document.getElementById('speech-status-label');
 
-    if (!avatarCard) return;
+    if (!avatarCard || !avatarImg) return;
 
     let isSpeaking = false;
     let lipSyncTimeouts = [];
     let blinkTimeout = null;
+    let speechSafetyTimeout = null;
 
     const waveFrame = 'assets/images/manga-character-wave.jpg';
     const speakFrame = 'assets/images/manga-character-wave-speak.jpg';
     const blinkFrame = 'assets/images/manga-character-blink.jpg';
     const exactDialogue = "Hello! Welcome to my portfolio!";
 
+    // Eagerly Preload all avatar keyframes for zero-latency frame transitions
+    [waveFrame, speakFrame, blinkFrame].forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+
     // 1. Natural Idle Blinking System (Every 3.5s - 5.5s)
     function scheduleNextBlink() {
+        if (blinkTimeout) clearTimeout(blinkTimeout);
         const nextBlinkDelay = Math.random() * 2000 + 3500;
         blinkTimeout = setTimeout(() => {
             if (!isSpeaking && avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
@@ -824,7 +835,7 @@ function initAvatarSpeechSystem() {
                         avatarImg.src = waveFrame;
                     }
                     scheduleNextBlink();
-                }, 130);
+                }, 140);
             } else {
                 scheduleNextBlink();
             }
@@ -833,26 +844,28 @@ function initAvatarSpeechSystem() {
 
     scheduleNextBlink();
 
-    // 2. Native HTML5 Video Check (assets/videos/avatar-welcome.mp4)
+    // 2. Video fallback check (If MP4 video exists in assets/videos/)
     if (avatarVideo) {
-        avatarVideo.src = 'assets/videos/avatar-welcome.mp4';
         avatarVideo.addEventListener('loadeddata', () => {
             avatarVideo.classList.remove('hidden');
             if (avatarImg) avatarImg.classList.add('hidden');
-            avatarVideo.play().catch(() => {});
         });
         avatarVideo.addEventListener('error', () => {
             avatarVideo.classList.add('hidden');
             if (avatarImg) avatarImg.classList.remove('hidden');
         });
+        // Try loading video source gracefully
+        avatarVideo.src = 'assets/videos/avatar-welcome.mp4';
     }
 
-    // 3. Speech and Syllable Lip-Sync Activation
+    // 3. Speech and Syllable Lip-Sync Activation Engine
     function speakGreeting() {
         if (isSpeaking) return;
         isSpeaking = true;
 
-        // Clear any pending lip-sync timers
+        // Clear any active blink or sync timeouts
+        if (blinkTimeout) clearTimeout(blinkTimeout);
+        if (speechSafetyTimeout) clearTimeout(speechSafetyTimeout);
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
@@ -870,7 +883,7 @@ function initAvatarSpeechSystem() {
         if (speechText) speechText.textContent = `"${exactDialogue}"`;
 
         // Accurate Syllable-timed Lip-Sync Schedule for "Hello! Welcome to my portfolio!"
-        // Duration ~ 2.4s: Open on active syllables, close on stops/pauses
+        // Open mouth during vowels/phonemes, close during plosives and pauses
         const phonemeSchedule = [
             { time: 0, open: true },       // "Hel-"
             { time: 220, open: true },     // "-lo!"
@@ -883,7 +896,7 @@ function initAvatarSpeechSystem() {
             { time: 1780, open: false },   // "-fo-"
             { time: 1980, open: true },    // "-li-"
             { time: 2220, open: true },    // "-o!"
-            { time: 2500, open: false }    // End speech -> Smile
+            { time: 2550, open: false }    // End speech -> Smile
         ];
 
         if (avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
@@ -897,28 +910,38 @@ function initAvatarSpeechSystem() {
             });
         }
 
-        // If native video is active, restart from beginning
+        // If native video is active, replay
         if (avatarVideo && !avatarVideo.classList.contains('hidden')) {
             avatarVideo.currentTime = 0;
             avatarVideo.play().catch(() => {});
         }
 
-        // Manga Chime SFX
-        playTone(720, 'sine', 0.15, 0.04);
-        setTimeout(() => playTone(980, 'triangle', 0.2, 0.05), 120);
+        // Manga Sound SFX Chime
+        if (soundEnabled) {
+            playTone(720, 'sine', 0.15, 0.04);
+            setTimeout(() => playTone(980, 'triangle', 0.2, 0.05), 120);
+        }
 
-        // Web Speech API with Natural Young Male English Voice
+        // Voice Speech Synthesis Execution
+        let speechExecuted = false;
         if ('speechSynthesis' in window) {
             try {
+                window.speechSynthesis.resume();
                 window.speechSynthesis.cancel();
+
                 const utterance = new SpeechSynthesisUtterance(exactDialogue);
                 utterance.rate = 1.0;
                 utterance.pitch = 1.08;
                 utterance.volume = soundEnabled ? 1.0 : 0.0;
 
                 const voices = window.speechSynthesis.getVoices();
-                const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('David') || v.name.includes('Guy') || v.name.includes('Male')));
-                if (preferredVoice) utterance.voice = preferredVoice;
+                if (voices.length > 0) {
+                    const preferredVoice = voices.find(v => 
+                        v.lang.startsWith('en') && 
+                        (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('David') || v.name.includes('Guy') || v.name.includes('Male') || v.name.includes('English'))
+                    );
+                    if (preferredVoice) utterance.voice = preferredVoice;
+                }
 
                 utterance.onend = () => {
                     resetSpeakingState();
@@ -928,18 +951,23 @@ function initAvatarSpeechSystem() {
                 };
 
                 window.speechSynthesis.speak(utterance);
-            } catch (e) {
-                const fallbackTimer = setTimeout(resetSpeakingState, 2800);
-                lipSyncTimeouts.push(fallbackTimer);
+                speechExecuted = true;
+            } catch (err) {
+                console.warn("SpeechSynthesis error:", err);
             }
-        } else {
-            const fallbackTimer = setTimeout(resetSpeakingState, 2800);
-            lipSyncTimeouts.push(fallbackTimer);
         }
+
+        // Safety fallback timer to guarantee reset even if browser speech API pauses or hangs
+        speechSafetyTimeout = setTimeout(() => {
+            resetSpeakingState();
+        }, 2750);
     }
 
     function resetSpeakingState() {
+        if (!isSpeaking) return;
         isSpeaking = false;
+
+        if (speechSafetyTimeout) clearTimeout(speechSafetyTimeout);
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
@@ -956,22 +984,50 @@ function initAvatarSpeechSystem() {
             waveBox.classList.remove('inline-flex');
         }
         if (statusLabel) statusLabel.textContent = "TAP TO HEAR VOICE";
+
+        // Restart idle blink loop
+        scheduleNextBlink();
     }
 
-    if (voiceBtn) voiceBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        speakGreeting();
-    });
+    // Attach Click Events to all Interactive Greeting Triggers
+    if (voiceBtn) {
+        voiceBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakGreeting();
+        });
+    }
 
-    if (helloPill) helloPill.addEventListener('click', (e) => {
-        e.stopPropagation();
-        speakGreeting();
-    });
+    if (helloPill) {
+        helloPill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakGreeting();
+        });
+    }
 
-    if (avatarImg) avatarImg.addEventListener('click', speakGreeting);
-    if (avatarVideo) avatarVideo.addEventListener('click', speakGreeting);
+    if (avatarImg) {
+        avatarImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakGreeting();
+        });
+    }
 
+    if (speechBubble) {
+        speechBubble.addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakGreeting();
+        });
+    }
+
+    if (avatarVideo) {
+        avatarVideo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakGreeting();
+        });
+    }
+
+    // Warm-up SpeechSynthesis voices
     if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
         window.speechSynthesis.onvoiceschanged = () => {
             window.speechSynthesis.getVoices();
         };

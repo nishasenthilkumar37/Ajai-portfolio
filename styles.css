@@ -527,6 +527,19 @@ body:not(.dark-mode) .custom-cursor.on-cream.hovering .cursor-label {
     animation: avatarWavePulse 0.9s ease-in-out infinite alternate;
 }
 
+.manga-wave-active img {
+    animation: avatarWaveArm 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes avatarWaveArm {
+    0% {
+        transform: rotate(0deg) scale(1.02);
+    }
+    100% {
+        transform: rotate(1.8deg) translateY(-3px) scale(1.035);
+    }
+}
+
 @keyframes avatarWavePulse {
     0% {
         transform: rotate(0deg) scale(1);
