@@ -392,12 +392,17 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                         
-                        <!-- Left: Character Profile Card with Speaking Avatar & Speech Bubble -->
+                        <!-- Left: Character Profile Card with Animated Speaking Avatar & Speech Bubble -->
                         <div class="lg:col-span-5 manga-card flex flex-col justify-between p-6">
-                            <div class="relative w-full aspect-square rounded-none overflow-hidden border-2 border-black bg-[#f4f0e6] mb-6 group shadow-[3px_3px_0px_#000]" id="about-avatar-card">
-                                <img id="about-avatar-img" src="assets/images/manga-character-profile.jpg" alt="Ajaikanth Profile" class="w-full h-full object-cover filter contrast-110 transition-transform duration-500 group-hover:scale-105 cursor-pointer">
+                            <div class="relative w-full aspect-[3/4] rounded-none overflow-hidden border-2 border-black bg-[#f4f0e6] mb-6 group shadow-[3px_3px_0px_#000]" id="about-avatar-card">
                                 
-                                <!-- Floating Manga Speech Bubble ("Hello!") -->
+                                <!-- Video Player (if MP4 video is provided) -->
+                                <video id="about-avatar-video" class="hidden w-full h-full object-cover" loop playsinline muted></video>
+                                
+                                <!-- 2D Animated Manga Character Frame -->
+                                <img id="about-avatar-img" src="assets/images/manga-character-wave.jpg" alt="Ajaikanth Waving Anime Avatar" class="w-full h-full object-cover filter contrast-110 transition-transform duration-500 group-hover:scale-105 cursor-pointer">
+                                
+                                <!-- Floating Manga Speech Bubble ("Hello! Welcome to my portfolio!") -->
                                 <div id="about-speech-bubble" class="manga-speech-bubble-about absolute top-3 left-3 right-3 bg-white border-2 border-black p-3 shadow-[3px_3px_0px_#000] z-20 transition-all duration-300">
                                     <div class="flex items-start justify-between gap-2">
                                         <div class="space-y-1">
@@ -411,7 +416,7 @@
                                                 <span id="speech-status-label">TAP TO HEAR VOICE</span>
                                             </div>
                                             <p id="speech-bubble-text" class="font-syne font-extrabold text-xs sm:text-sm text-black leading-snug">
-                                                "Hello! I'm Ajaikanth — Welcome to my Chronicles!"
+                                                "Hello! Welcome to my portfolio!"
                                             </p>
                                         </div>
                                         <button id="avatar-voice-btn" data-cursor="SPEAK" title="Click to hear Ajaikanth speak" class="w-8 h-8 bg-black text-white hover:bg-neutral-800 flex items-center justify-center rounded-none shadow-[2px_2px_0px_#000] shrink-0 active:scale-95 transition-all">

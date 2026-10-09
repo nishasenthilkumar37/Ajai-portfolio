@@ -789,11 +789,12 @@ function initScrollTopButton() {
 
 
 // ========================================================================= //
-// 14. INTERACTIVE AVATAR SPEECH SYNTHESIS ENGINE ("SAY HELLO")              //
+// 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
 // ========================================================================= //
 function initAvatarSpeechSystem() {
     const avatarCard = document.getElementById('about-avatar-card');
     const avatarImg = document.getElementById('about-avatar-img');
+    const avatarVideo = document.getElementById('about-avatar-video');
     const voiceBtn = document.getElementById('avatar-voice-btn');
     const helloPill = document.getElementById('say-hello-pill');
     const speechBubble = document.getElementById('about-speech-bubble');
@@ -804,19 +805,28 @@ function initAvatarSpeechSystem() {
     if (!avatarCard) return;
 
     let isSpeaking = false;
-    const greetings = [
-        "Hello! I am Ajaikanth Saravanan. Welcome to The Developer Chronicles!",
-        "Hello! I'm an AI & Data Science developer and Smart India Hackathon 2025 Winner.",
-        "Hello! Excited to build intelligent AI systems, high-scale Java backends, and React Native mobile apps with you!"
-    ];
-    let greetingIdx = 0;
+    let mouthInterval = null;
+    const waveFrame = 'assets/images/manga-character-wave.jpg';
+    const speakFrame = 'assets/images/manga-character-wave-speak.jpg';
+    const exactDialogue = "Hello! Welcome to my portfolio!";
+
+    // Check if MP4 video exists and play seamlessly if available
+    if (avatarVideo) {
+        avatarVideo.src = 'assets/videos/avatar-welcome.mp4';
+        avatarVideo.addEventListener('loadeddata', () => {
+            avatarVideo.classList.remove('hidden');
+            if (avatarImg) avatarImg.classList.add('hidden');
+            avatarVideo.play().catch(() => {});
+        });
+        avatarVideo.addEventListener('error', () => {
+            avatarVideo.classList.add('hidden');
+            if (avatarImg) avatarImg.classList.remove('hidden');
+        });
+    }
 
     function speakGreeting() {
         if (isSpeaking) return;
         isSpeaking = true;
-
-        const currentText = greetings[greetingIdx];
-        greetingIdx = (greetingIdx + 1) % greetings.length;
 
         // Visual State Activation
         if (speechBubble) speechBubble.classList.add('speaking-active');
@@ -826,23 +836,39 @@ function initAvatarSpeechSystem() {
             waveBox.classList.add('inline-flex');
         }
         if (statusLabel) statusLabel.textContent = "SPEAKING...";
-        if (speechText) speechText.textContent = `"${currentText}"`;
+        if (speechText) speechText.textContent = `"${exactDialogue}"`;
+
+        // Switch to waving & speaking mouth animation cycle
+        if (avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
+            avatarImg.src = speakFrame;
+            let toggle = false;
+            mouthInterval = setInterval(() => {
+                toggle = !toggle;
+                avatarImg.src = toggle ? speakFrame : waveFrame;
+            }, 260);
+        }
+
+        // If video is present, restart video
+        if (avatarVideo && !avatarVideo.classList.contains('hidden')) {
+            avatarVideo.currentTime = 0;
+            avatarVideo.play().catch(() => {});
+        }
 
         // Manga Chime SFX
         playTone(720, 'sine', 0.15, 0.04);
         setTimeout(() => playTone(980, 'triangle', 0.2, 0.05), 120);
 
-        // Web Speech API
+        // Web Speech API with Young Male Voice
         if ('speechSynthesis' in window) {
             try {
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(currentText);
+                const utterance = new SpeechSynthesisUtterance(exactDialogue);
                 utterance.rate = 1.0;
-                utterance.pitch = 1.05;
+                utterance.pitch = 1.08;
                 utterance.volume = soundEnabled ? 1.0 : 0.0;
 
                 const voices = window.speechSynthesis.getVoices();
-                const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('David') || v.name.includes('Male')));
+                const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('David') || v.name.includes('Guy') || v.name.includes('Male')));
                 if (preferredVoice) utterance.voice = preferredVoice;
 
                 utterance.onend = () => {
@@ -854,15 +880,22 @@ function initAvatarSpeechSystem() {
 
                 window.speechSynthesis.speak(utterance);
             } catch (e) {
-                setTimeout(resetSpeakingState, 3500);
+                setTimeout(resetSpeakingState, 3000);
             }
         } else {
-            setTimeout(resetSpeakingState, 3500);
+            setTimeout(resetSpeakingState, 3000);
         }
     }
 
     function resetSpeakingState() {
         isSpeaking = false;
+        if (mouthInterval) {
+            clearInterval(mouthInterval);
+            mouthInterval = null;
+        }
+        if (avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
+            avatarImg.src = waveFrame;
+        }
         if (speechBubble) speechBubble.classList.remove('speaking-active');
         if (avatarCard) avatarCard.classList.remove('speaking-active');
         if (waveBox) {
@@ -883,6 +916,7 @@ function initAvatarSpeechSystem() {
     });
 
     if (avatarImg) avatarImg.addEventListener('click', speakGreeting);
+    if (avatarVideo) avatarVideo.addEventListener('click', speakGreeting);
 
     if ('speechSynthesis' in window) {
         window.speechSynthesis.onvoiceschanged = () => {
