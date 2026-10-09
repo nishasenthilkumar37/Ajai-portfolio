@@ -844,6 +844,7 @@ function initAvatarSpeechSystem() {
         const nextBlinkDelay = Math.random() * 2000 + 3500;
         blinkTimeout = setTimeout(() => {
             if (!isSpeaking) {
+                if (updateVideoFrame) updateVideoFrame('blink');
                 avatarImgs.forEach(img => {
                     if (img && !img.classList.contains('hidden')) {
                         img.src = blinkFrame;
@@ -851,6 +852,7 @@ function initAvatarSpeechSystem() {
                 });
                 setTimeout(() => {
                     if (!isSpeaking) {
+                        if (updateVideoFrame) updateVideoFrame('wave');
                         avatarImgs.forEach(img => {
                             if (img && !img.classList.contains('hidden')) {
                                 img.src = waveFrame;
@@ -867,17 +869,74 @@ function initAvatarSpeechSystem() {
 
     scheduleNextBlink();
 
-    // 2. Video check (If MP4 video exists in assets/videos/avatar-welcome.mp4)
+    // 2. Dynamic Video Stream & Native HTML5 Video Player Engine
+    let updateVideoFrame = null;
     avatarVideos.forEach(vid => {
+        // First check if a physical MP4 video file is loaded
         vid.addEventListener('loadeddata', () => {
             vid.classList.remove('hidden');
             avatarImgs.forEach(img => img.classList.add('hidden'));
             vid.play().catch(() => {});
         });
+
         vid.addEventListener('error', () => {
-            vid.classList.add('hidden');
-            avatarImgs.forEach(img => img.classList.remove('hidden'));
+            // Generate real-time 60fps video stream directly on HTML5 video element via Canvas captureStream
+            try {
+                const streamCanvas = document.createElement('canvas');
+                streamCanvas.width = 600;
+                streamCanvas.height = 750;
+                const streamCtx = streamCanvas.getContext('2d');
+
+                const frameWave = new Image(); frameWave.src = waveFrame;
+                const frameSpeak = new Image(); frameSpeak.src = speakFrame;
+                const frameBlink = new Image(); frameBlink.src = blinkFrame;
+
+                let activeVideoFrame = frameWave;
+                let swayAngle = 0;
+
+                updateVideoFrame = function(frameType) {
+                    if (frameType === 'speak') activeVideoFrame = frameSpeak;
+                    else if (frameType === 'blink') activeVideoFrame = frameBlink;
+                    else activeVideoFrame = frameWave;
+                };
+
+                function renderStreamLoop() {
+                    swayAngle += 0.035;
+                    const breath = 1 + Math.sin(swayAngle) * 0.007;
+                    const waveY = Math.sin(swayAngle * 2.2) * 3;
+
+                    streamCtx.fillStyle = '#f4f0e6';
+                    streamCtx.fillRect(0, 0, streamCanvas.width, streamCanvas.height);
+
+                    streamCtx.save();
+                    streamCtx.translate(streamCanvas.width / 2, streamCanvas.height / 2);
+                    streamCtx.scale(breath, breath);
+                    if (activeVideoFrame.complete && activeVideoFrame.naturalWidth > 0) {
+                        streamCtx.drawImage(activeVideoFrame, -streamCanvas.width / 2, -streamCanvas.height / 2 + waveY, streamCanvas.width, streamCanvas.height);
+                    }
+                    streamCtx.restore();
+
+                    requestAnimationFrame(renderStreamLoop);
+                }
+
+                renderStreamLoop();
+
+                if (streamCanvas.captureStream) {
+                    const dynamicStream = streamCanvas.captureStream(30);
+                    vid.srcObject = dynamicStream;
+                    vid.classList.remove('hidden');
+                    avatarImgs.forEach(img => img.classList.add('hidden'));
+                    vid.play().catch(() => {});
+                } else {
+                    vid.classList.add('hidden');
+                    avatarImgs.forEach(img => img.classList.remove('hidden'));
+                }
+            } catch (err) {
+                vid.classList.add('hidden');
+                avatarImgs.forEach(img => img.classList.remove('hidden'));
+            }
         });
+
         vid.src = 'assets/videos/avatar-welcome.mp4';
     });
 
@@ -917,6 +976,7 @@ function initAvatarSpeechSystem() {
         phonemeSchedule.forEach(step => {
             const t = setTimeout(() => {
                 if (isSpeaking) {
+                    if (updateVideoFrame) updateVideoFrame(step.open ? 'speak' : 'wave');
                     avatarImgs.forEach(img => {
                         if (img && !img.classList.contains('hidden')) {
                             img.src = step.open ? speakFrame : waveFrame;
@@ -985,6 +1045,7 @@ function initAvatarSpeechSystem() {
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
+        if (updateVideoFrame) updateVideoFrame('wave');
         avatarImgs.forEach(img => {
             if (img && !img.classList.contains('hidden')) {
                 img.src = waveFrame;
