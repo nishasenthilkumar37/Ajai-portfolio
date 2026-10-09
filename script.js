@@ -794,18 +794,56 @@ function initScrollTopButton() {
 // ========================================================================= //
 // 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
 // ========================================================================= //
+// ========================================================================= //
+// 14. INTERACTIVE AVATAR SPEECH & ANIMATION ENGINE ("SAY HELLO")            //
+// ========================================================================= //
 function initAvatarSpeechSystem() {
-    const avatarCard = document.getElementById('about-avatar-card');
-    const avatarImg = document.getElementById('about-avatar-img');
-    const avatarVideo = document.getElementById('about-avatar-video');
-    const voiceBtn = document.getElementById('avatar-voice-btn');
-    const helloPill = document.getElementById('say-hello-pill');
-    const speechBubble = document.getElementById('about-speech-bubble');
-    const speechText = document.getElementById('speech-bubble-text');
-    const waveBox = document.getElementById('speech-wave-box');
-    const statusLabel = document.getElementById('speech-status-label');
+    // Collect all avatar instances (Hero Section & About Section)
+    const avatarCards = [
+        document.getElementById('hero-manga-card'),
+        document.getElementById('about-avatar-card')
+    ].filter(Boolean);
 
-    if (!avatarCard || !avatarImg) return;
+    const avatarImgs = [
+        document.getElementById('hero-avatar-img'),
+        document.getElementById('about-avatar-img')
+    ].filter(Boolean);
+
+    const avatarVideos = [
+        document.getElementById('about-avatar-video')
+    ].filter(Boolean);
+
+    const voiceBtns = [
+        document.getElementById('hero-avatar-voice-btn'),
+        document.getElementById('avatar-voice-btn')
+    ].filter(Boolean);
+
+    const helloPills = [
+        document.getElementById('hero-say-hello-pill'),
+        document.getElementById('say-hello-pill')
+    ].filter(Boolean);
+
+    const speechBubbles = [
+        document.getElementById('hero-speech-bubble'),
+        document.getElementById('about-speech-bubble')
+    ].filter(Boolean);
+
+    const speechTexts = [
+        document.getElementById('hero-speech-bubble-text'),
+        document.getElementById('speech-bubble-text')
+    ].filter(Boolean);
+
+    const waveBoxes = [
+        document.getElementById('hero-speech-wave-box'),
+        document.getElementById('speech-wave-box')
+    ].filter(Boolean);
+
+    const statusLabels = [
+        document.getElementById('hero-speech-status-label'),
+        document.getElementById('speech-status-label')
+    ].filter(Boolean);
+
+    if (avatarImgs.length === 0) return;
 
     let isSpeaking = false;
     let lipSyncTimeouts = [];
@@ -828,11 +866,19 @@ function initAvatarSpeechSystem() {
         if (blinkTimeout) clearTimeout(blinkTimeout);
         const nextBlinkDelay = Math.random() * 2000 + 3500;
         blinkTimeout = setTimeout(() => {
-            if (!isSpeaking && avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
-                avatarImg.src = blinkFrame;
+            if (!isSpeaking) {
+                avatarImgs.forEach(img => {
+                    if (img && !img.classList.contains('hidden')) {
+                        img.src = blinkFrame;
+                    }
+                });
                 setTimeout(() => {
-                    if (!isSpeaking && avatarImg) {
-                        avatarImg.src = waveFrame;
+                    if (!isSpeaking) {
+                        avatarImgs.forEach(img => {
+                            if (img && !img.classList.contains('hidden')) {
+                                img.src = waveFrame;
+                            }
+                        });
                     }
                     scheduleNextBlink();
                 }, 140);
@@ -845,18 +891,17 @@ function initAvatarSpeechSystem() {
     scheduleNextBlink();
 
     // 2. Video fallback check (If MP4 video exists in assets/videos/)
-    if (avatarVideo) {
-        avatarVideo.addEventListener('loadeddata', () => {
-            avatarVideo.classList.remove('hidden');
-            if (avatarImg) avatarImg.classList.add('hidden');
+    avatarVideos.forEach(vid => {
+        vid.addEventListener('loadeddata', () => {
+            vid.classList.remove('hidden');
+            avatarImgs.forEach(img => img.classList.add('hidden'));
         });
-        avatarVideo.addEventListener('error', () => {
-            avatarVideo.classList.add('hidden');
-            if (avatarImg) avatarImg.classList.remove('hidden');
+        vid.addEventListener('error', () => {
+            vid.classList.add('hidden');
+            avatarImgs.forEach(img => img.classList.remove('hidden'));
         });
-        // Try loading video source gracefully
-        avatarVideo.src = 'assets/videos/avatar-welcome.mp4';
-    }
+        vid.src = 'assets/videos/avatar-welcome.mp4';
+    });
 
     // 3. Speech and Syllable Lip-Sync Activation Engine
     function speakGreeting() {
@@ -869,21 +914,20 @@ function initAvatarSpeechSystem() {
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
-        // Visual State Activation
-        if (speechBubble) speechBubble.classList.add('speaking-active');
-        if (avatarCard) {
-            avatarCard.classList.add('speaking-active');
-            avatarCard.classList.add('manga-wave-active');
-        }
-        if (waveBox) {
-            waveBox.classList.remove('hidden');
-            waveBox.classList.add('inline-flex');
-        }
-        if (statusLabel) statusLabel.textContent = "SPEAKING...";
-        if (speechText) speechText.textContent = `"${exactDialogue}"`;
+        // Visual State Activation across both cards
+        speechBubbles.forEach(b => b.classList.add('speaking-active'));
+        avatarCards.forEach(c => {
+            c.classList.add('speaking-active');
+            c.classList.add('manga-wave-active');
+        });
+        waveBoxes.forEach(wb => {
+            wb.classList.remove('hidden');
+            wb.classList.add('inline-flex');
+        });
+        statusLabels.forEach(lbl => lbl.textContent = "SPEAKING...");
+        speechTexts.forEach(st => st.textContent = `"${exactDialogue}"`);
 
         // Accurate Syllable-timed Lip-Sync Schedule for "Hello! Welcome to my portfolio!"
-        // Open mouth during vowels/phonemes, close during plosives and pauses
         const phonemeSchedule = [
             { time: 0, open: true },       // "Hel-"
             { time: 220, open: true },     // "-lo!"
@@ -899,22 +943,26 @@ function initAvatarSpeechSystem() {
             { time: 2550, open: false }    // End speech -> Smile
         ];
 
-        if (avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
-            phonemeSchedule.forEach(step => {
-                const t = setTimeout(() => {
-                    if (isSpeaking && avatarImg) {
-                        avatarImg.src = step.open ? speakFrame : waveFrame;
-                    }
-                }, step.time);
-                lipSyncTimeouts.push(t);
-            });
-        }
+        phonemeSchedule.forEach(step => {
+            const t = setTimeout(() => {
+                if (isSpeaking) {
+                    avatarImgs.forEach(img => {
+                        if (img && !img.classList.contains('hidden')) {
+                            img.src = step.open ? speakFrame : waveFrame;
+                        }
+                    });
+                }
+            }, step.time);
+            lipSyncTimeouts.push(t);
+        });
 
-        // If native video is active, replay
-        if (avatarVideo && !avatarVideo.classList.contains('hidden')) {
-            avatarVideo.currentTime = 0;
-            avatarVideo.play().catch(() => {});
-        }
+        // Replay any active videos
+        avatarVideos.forEach(vid => {
+            if (!vid.classList.contains('hidden')) {
+                vid.currentTime = 0;
+                vid.play().catch(() => {});
+            }
+        });
 
         // Manga Sound SFX Chime
         if (soundEnabled) {
@@ -923,7 +971,6 @@ function initAvatarSpeechSystem() {
         }
 
         // Voice Speech Synthesis Execution
-        let speechExecuted = false;
         if ('speechSynthesis' in window) {
             try {
                 window.speechSynthesis.resume();
@@ -943,15 +990,10 @@ function initAvatarSpeechSystem() {
                     if (preferredVoice) utterance.voice = preferredVoice;
                 }
 
-                utterance.onend = () => {
-                    resetSpeakingState();
-                };
-                utterance.onerror = () => {
-                    resetSpeakingState();
-                };
+                utterance.onend = () => resetSpeakingState();
+                utterance.onerror = () => resetSpeakingState();
 
                 window.speechSynthesis.speak(utterance);
-                speechExecuted = true;
             } catch (err) {
                 console.warn("SpeechSynthesis error:", err);
             }
@@ -971,59 +1013,43 @@ function initAvatarSpeechSystem() {
         lipSyncTimeouts.forEach(t => clearTimeout(t));
         lipSyncTimeouts = [];
 
-        if (avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
-            avatarImg.src = waveFrame;
-        }
-        if (speechBubble) speechBubble.classList.remove('speaking-active');
-        if (avatarCard) {
-            avatarCard.classList.remove('speaking-active');
-            avatarCard.classList.remove('manga-wave-active');
-        }
-        if (waveBox) {
-            waveBox.classList.add('hidden');
-            waveBox.classList.remove('inline-flex');
-        }
-        if (statusLabel) statusLabel.textContent = "TAP TO HEAR VOICE";
+        avatarImgs.forEach(img => {
+            if (img && !img.classList.contains('hidden')) {
+                img.src = waveFrame;
+            }
+        });
+        speechBubbles.forEach(b => b.classList.remove('speaking-active'));
+        avatarCards.forEach(c => {
+            c.classList.remove('speaking-active');
+            c.classList.remove('manga-wave-active');
+        });
+        waveBoxes.forEach(wb => {
+            wb.classList.add('hidden');
+            wb.classList.remove('inline-flex');
+        });
+        statusLabels.forEach(lbl => lbl.textContent = "TAP TO HEAR VOICE");
 
         // Restart idle blink loop
         scheduleNextBlink();
     }
 
     // Attach Click Events to all Interactive Greeting Triggers
-    if (voiceBtn) {
-        voiceBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            speakGreeting();
-        });
-    }
+    const triggerElements = [
+        ...voiceBtns,
+        ...helloPills,
+        ...avatarImgs,
+        ...speechBubbles,
+        ...avatarVideos
+    ];
 
-    if (helloPill) {
-        helloPill.addEventListener('click', (e) => {
-            e.stopPropagation();
-            speakGreeting();
-        });
-    }
-
-    if (avatarImg) {
-        avatarImg.addEventListener('click', (e) => {
-            e.stopPropagation();
-            speakGreeting();
-        });
-    }
-
-    if (speechBubble) {
-        speechBubble.addEventListener('click', (e) => {
-            e.stopPropagation();
-            speakGreeting();
-        });
-    }
-
-    if (avatarVideo) {
-        avatarVideo.addEventListener('click', (e) => {
-            e.stopPropagation();
-            speakGreeting();
-        });
-    }
+    triggerElements.forEach(el => {
+        if (el) {
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                speakGreeting();
+            });
+        }
+    });
 
     // Warm-up SpeechSynthesis voices
     if ('speechSynthesis' in window) {
