@@ -805,12 +805,35 @@ function initAvatarSpeechSystem() {
     if (!avatarCard) return;
 
     let isSpeaking = false;
-    let mouthInterval = null;
+    let lipSyncTimeouts = [];
+    let blinkTimeout = null;
+
     const waveFrame = 'assets/images/manga-character-wave.jpg';
     const speakFrame = 'assets/images/manga-character-wave-speak.jpg';
+    const blinkFrame = 'assets/images/manga-character-blink.jpg';
     const exactDialogue = "Hello! Welcome to my portfolio!";
 
-    // Check if MP4 video exists and play seamlessly if available
+    // 1. Natural Idle Blinking System (Every 3.5s - 5.5s)
+    function scheduleNextBlink() {
+        const nextBlinkDelay = Math.random() * 2000 + 3500;
+        blinkTimeout = setTimeout(() => {
+            if (!isSpeaking && avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
+                avatarImg.src = blinkFrame;
+                setTimeout(() => {
+                    if (!isSpeaking && avatarImg) {
+                        avatarImg.src = waveFrame;
+                    }
+                    scheduleNextBlink();
+                }, 130);
+            } else {
+                scheduleNextBlink();
+            }
+        }, nextBlinkDelay);
+    }
+
+    scheduleNextBlink();
+
+    // 2. Native HTML5 Video Check (assets/videos/avatar-welcome.mp4)
     if (avatarVideo) {
         avatarVideo.src = 'assets/videos/avatar-welcome.mp4';
         avatarVideo.addEventListener('loadeddata', () => {
@@ -824,13 +847,21 @@ function initAvatarSpeechSystem() {
         });
     }
 
+    // 3. Speech and Syllable Lip-Sync Activation
     function speakGreeting() {
         if (isSpeaking) return;
         isSpeaking = true;
 
+        // Clear any pending lip-sync timers
+        lipSyncTimeouts.forEach(t => clearTimeout(t));
+        lipSyncTimeouts = [];
+
         // Visual State Activation
         if (speechBubble) speechBubble.classList.add('speaking-active');
-        if (avatarCard) avatarCard.classList.add('speaking-active');
+        if (avatarCard) {
+            avatarCard.classList.add('speaking-active');
+            avatarCard.classList.add('manga-wave-active');
+        }
         if (waveBox) {
             waveBox.classList.remove('hidden');
             waveBox.classList.add('inline-flex');
@@ -838,17 +869,35 @@ function initAvatarSpeechSystem() {
         if (statusLabel) statusLabel.textContent = "SPEAKING...";
         if (speechText) speechText.textContent = `"${exactDialogue}"`;
 
-        // Switch to waving & speaking mouth animation cycle
+        // Accurate Syllable-timed Lip-Sync Schedule for "Hello! Welcome to my portfolio!"
+        // Duration ~ 2.4s: Open on active syllables, close on stops/pauses
+        const phonemeSchedule = [
+            { time: 0, open: true },       // "Hel-"
+            { time: 220, open: true },     // "-lo!"
+            { time: 480, open: false },    // [pause]
+            { time: 640, open: true },     // "Wel-"
+            { time: 880, open: false },    // "-come"
+            { time: 1080, open: true },    // "to"
+            { time: 1280, open: true },    // "my"
+            { time: 1520, open: true },    // "port-"
+            { time: 1780, open: false },   // "-fo-"
+            { time: 1980, open: true },    // "-li-"
+            { time: 2220, open: true },    // "-o!"
+            { time: 2500, open: false }    // End speech -> Smile
+        ];
+
         if (avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
-            avatarImg.src = speakFrame;
-            let toggle = false;
-            mouthInterval = setInterval(() => {
-                toggle = !toggle;
-                avatarImg.src = toggle ? speakFrame : waveFrame;
-            }, 260);
+            phonemeSchedule.forEach(step => {
+                const t = setTimeout(() => {
+                    if (isSpeaking && avatarImg) {
+                        avatarImg.src = step.open ? speakFrame : waveFrame;
+                    }
+                }, step.time);
+                lipSyncTimeouts.push(t);
+            });
         }
 
-        // If video is present, restart video
+        // If native video is active, restart from beginning
         if (avatarVideo && !avatarVideo.classList.contains('hidden')) {
             avatarVideo.currentTime = 0;
             avatarVideo.play().catch(() => {});
@@ -858,7 +907,7 @@ function initAvatarSpeechSystem() {
         playTone(720, 'sine', 0.15, 0.04);
         setTimeout(() => playTone(980, 'triangle', 0.2, 0.05), 120);
 
-        // Web Speech API with Young Male Voice
+        // Web Speech API with Natural Young Male English Voice
         if ('speechSynthesis' in window) {
             try {
                 window.speechSynthesis.cancel();
@@ -880,24 +929,28 @@ function initAvatarSpeechSystem() {
 
                 window.speechSynthesis.speak(utterance);
             } catch (e) {
-                setTimeout(resetSpeakingState, 3000);
+                const fallbackTimer = setTimeout(resetSpeakingState, 2800);
+                lipSyncTimeouts.push(fallbackTimer);
             }
         } else {
-            setTimeout(resetSpeakingState, 3000);
+            const fallbackTimer = setTimeout(resetSpeakingState, 2800);
+            lipSyncTimeouts.push(fallbackTimer);
         }
     }
 
     function resetSpeakingState() {
         isSpeaking = false;
-        if (mouthInterval) {
-            clearInterval(mouthInterval);
-            mouthInterval = null;
-        }
+        lipSyncTimeouts.forEach(t => clearTimeout(t));
+        lipSyncTimeouts = [];
+
         if (avatarImg && (!avatarVideo || avatarVideo.classList.contains('hidden'))) {
             avatarImg.src = waveFrame;
         }
         if (speechBubble) speechBubble.classList.remove('speaking-active');
-        if (avatarCard) avatarCard.classList.remove('speaking-active');
+        if (avatarCard) {
+            avatarCard.classList.remove('speaking-active');
+            avatarCard.classList.remove('manga-wave-active');
+        }
         if (waveBox) {
             waveBox.classList.add('hidden');
             waveBox.classList.remove('inline-flex');

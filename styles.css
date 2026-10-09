@@ -502,6 +502,40 @@ body:not(.dark-mode) .custom-cursor.on-cream.hovering .cursor-label {
     50% { transform: translateY(-4px); }
 }
 
+.manga-avatar-animated {
+    animation: avatarIdleSway 5s ease-in-out infinite;
+    transform-origin: bottom center;
+    will-change: transform;
+}
+
+@keyframes avatarIdleSway {
+    0%, 100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+    30% {
+        transform: translateY(-2px) scale(1.008) rotate(0.4deg);
+    }
+    60% {
+        transform: translateY(-4px) scale(1.012) rotate(-0.3deg);
+    }
+    85% {
+        transform: translateY(-1px) scale(1.004) rotate(0.2deg);
+    }
+}
+
+.manga-wave-active {
+    animation: avatarWavePulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes avatarWavePulse {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    100% {
+        transform: rotate(1.2deg) translateY(-2px) scale(1.015);
+    }
+}
+
 .speaking-active {
     box-shadow: 0 0 0 3px #000000, 0 0 15px rgba(0, 0, 0, 0.25) !important;
     animation: speakingPulse 0.6s infinite alternate ease-in-out !important;

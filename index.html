@@ -400,7 +400,7 @@
                                 <video id="about-avatar-video" class="hidden w-full h-full object-cover" loop playsinline muted></video>
                                 
                                 <!-- 2D Animated Manga Character Frame -->
-                                <img id="about-avatar-img" src="assets/images/manga-character-wave.jpg" alt="Ajaikanth Waving Anime Avatar" class="w-full h-full object-cover filter contrast-110 transition-transform duration-500 group-hover:scale-105 cursor-pointer">
+                                <img id="about-avatar-img" src="assets/images/manga-character-wave.jpg" alt="Ajaikanth Waving Anime Avatar" class="w-full h-full object-cover filter contrast-110 manga-avatar-animated cursor-pointer transition-transform duration-500 group-hover:scale-105">
                                 
                                 <!-- Floating Manga Speech Bubble ("Hello! Welcome to my portfolio!") -->
                                 <div id="about-speech-bubble" class="manga-speech-bubble-about absolute top-3 left-3 right-3 bg-white border-2 border-black p-3 shadow-[3px_3px_0px_#000] z-20 transition-all duration-300">
@@ -419,9 +419,11 @@
                                                 "Hello! Welcome to my portfolio!"
                                             </p>
                                         </div>
-                                        <button id="avatar-voice-btn" data-cursor="SPEAK" title="Click to hear Ajaikanth speak" class="w-8 h-8 bg-black text-white hover:bg-neutral-800 flex items-center justify-center rounded-none shadow-[2px_2px_0px_#000] shrink-0 active:scale-95 transition-all">
-                                            <i data-lucide="volume-2" class="w-4 h-4"></i>
-                                        </button>
+                                        <div class="flex items-center gap-1">
+                                            <button id="avatar-voice-btn" data-cursor="SPEAK" title="Click to hear Ajaikanth speak" class="w-8 h-8 bg-black text-white hover:bg-neutral-800 flex items-center justify-center rounded-none shadow-[2px_2px_0px_#000] shrink-0 active:scale-95 transition-all">
+                                                <i data-lucide="volume-2" class="w-4 h-4"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <!-- Manga Speech Bubble Tail -->
                                     <div class="absolute -bottom-2.5 left-7 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[10px] border-t-black"></div>
