@@ -406,14 +406,34 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                         
-                        <!-- Left: Character Profile Card with Previous Manga Profile Artwork -->
+                        <!-- Left: Character Profile Card with Auto-playing Video & Same Manga Character Animation -->
                         <div class="lg:col-span-5 manga-card flex flex-col justify-between p-6">
-                            <div class="relative w-full aspect-square rounded-none overflow-hidden border-2 border-black bg-[#f4f0e6] mb-6 group shadow-[3px_3px_0px_#000]" id="about-avatar-card">
-                                <img id="about-avatar-img" src="assets/images/manga-character-profile.jpg" alt="Ajaikanth Profile" class="w-full h-full object-cover filter contrast-110 transition-transform duration-500 group-hover:scale-105">
+                            <div class="relative w-full aspect-[3/4] sm:aspect-square rounded-none overflow-hidden border-2 border-black bg-[#f4f0e6] mb-6 group shadow-[3px_3px_0px_#000]" id="about-avatar-card">
                                 
-                                <div class="absolute bottom-3 left-3 right-3 bg-white/95 border-2 border-black p-2 font-mono shadow-[2px_2px_0px_#000] z-10">
-                                    <div class="text-black font-black font-syne text-sm">AJAIKANTH SARAVANAN</div>
-                                    <div class="text-neutral-700 text-[10px] font-bold">AI & FULL-STACK DEVELOPER</div>
+                                <!-- Auto-playing Native HTML5 Video Element -->
+                                <video id="about-avatar-video" class="hidden w-full h-full object-cover" autoplay loop muted playsinline src="assets/videos/avatar-welcome.mp4"></video>
+
+                                <!-- Same Manga Style Animated Character Frame (Automatic Waving, Blinking & Speaking) -->
+                                <img id="about-avatar-img" 
+                                     src="assets/images/manga-character-wave.jpg" 
+                                     alt="Ajaikanth Manga Character" 
+                                     class="w-full h-full object-contain filter contrast-110 brightness-100 transition-transform duration-500 manga-avatar-animated cursor-pointer group-hover:scale-105">
+                                
+                                <div class="absolute inset-0 manga-dot-grid opacity-20 pointer-events-none"></div>
+
+                                <!-- Auto-play Audio / Voice Trigger Button -->
+                                <button id="about-voice-btn" data-cursor="SPEAK" title="Click to hear manga voice" class="absolute top-3 right-3 z-20 w-8 h-8 bg-black text-white hover:bg-neutral-800 border-2 border-black flex items-center justify-center rounded-none shadow-[2px_2px_0px_#000] active:scale-95 transition-all">
+                                    <i data-lucide="volume-2" class="w-4 h-4"></i>
+                                </button>
+
+                                <div class="absolute bottom-3 left-3 right-3 bg-white/95 border-2 border-black p-2 font-mono shadow-[2px_2px_0px_#000] z-10 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-black font-black font-syne text-sm">AJAIKANTH SARAVANAN</div>
+                                        <div class="text-neutral-700 text-[10px] font-bold">AI & FULL-STACK DEVELOPER</div>
+                                    </div>
+                                    <div class="text-[9px] font-mono font-bold text-emerald-700 border border-emerald-600 px-1.5 py-0.5 bg-emerald-50">
+                                        AUTO-PLAY ON
+                                    </div>
                                 </div>
                             </div>
 
