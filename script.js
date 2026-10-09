@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroTilt();
     initTypewriter();
     initFilterTabs();
+    initAvatarSpeechSystem();
     initModals();
     initContactForm();
     initMobileNav();
@@ -785,3 +786,108 @@ function initScrollTopButton() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
+
+
+// ========================================================================= //
+// 14. INTERACTIVE AVATAR SPEECH SYNTHESIS ENGINE ("SAY HELLO")              //
+// ========================================================================= //
+function initAvatarSpeechSystem() {
+    const avatarCard = document.getElementById('about-avatar-card');
+    const avatarImg = document.getElementById('about-avatar-img');
+    const voiceBtn = document.getElementById('avatar-voice-btn');
+    const helloPill = document.getElementById('say-hello-pill');
+    const speechBubble = document.getElementById('about-speech-bubble');
+    const speechText = document.getElementById('speech-bubble-text');
+    const waveBox = document.getElementById('speech-wave-box');
+    const statusLabel = document.getElementById('speech-status-label');
+
+    if (!avatarCard) return;
+
+    let isSpeaking = false;
+    const greetings = [
+        "Hello! I am Ajaikanth Saravanan. Welcome to The Developer Chronicles!",
+        "Hello! I'm an AI & Data Science developer and Smart India Hackathon 2025 Winner.",
+        "Hello! Excited to build intelligent AI systems, high-scale Java backends, and React Native mobile apps with you!"
+    ];
+    let greetingIdx = 0;
+
+    function speakGreeting() {
+        if (isSpeaking) return;
+        isSpeaking = true;
+
+        const currentText = greetings[greetingIdx];
+        greetingIdx = (greetingIdx + 1) % greetings.length;
+
+        // Visual State Activation
+        if (speechBubble) speechBubble.classList.add('speaking-active');
+        if (avatarCard) avatarCard.classList.add('speaking-active');
+        if (waveBox) {
+            waveBox.classList.remove('hidden');
+            waveBox.classList.add('inline-flex');
+        }
+        if (statusLabel) statusLabel.textContent = "SPEAKING...";
+        if (speechText) speechText.textContent = `"${currentText}"`;
+
+        // Manga Chime SFX
+        playTone(720, 'sine', 0.15, 0.04);
+        setTimeout(() => playTone(980, 'triangle', 0.2, 0.05), 120);
+
+        // Web Speech API
+        if ('speechSynthesis' in window) {
+            try {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(currentText);
+                utterance.rate = 1.0;
+                utterance.pitch = 1.05;
+                utterance.volume = soundEnabled ? 1.0 : 0.0;
+
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('David') || v.name.includes('Male')));
+                if (preferredVoice) utterance.voice = preferredVoice;
+
+                utterance.onend = () => {
+                    resetSpeakingState();
+                };
+                utterance.onerror = () => {
+                    resetSpeakingState();
+                };
+
+                window.speechSynthesis.speak(utterance);
+            } catch (e) {
+                setTimeout(resetSpeakingState, 3500);
+            }
+        } else {
+            setTimeout(resetSpeakingState, 3500);
+        }
+    }
+
+    function resetSpeakingState() {
+        isSpeaking = false;
+        if (speechBubble) speechBubble.classList.remove('speaking-active');
+        if (avatarCard) avatarCard.classList.remove('speaking-active');
+        if (waveBox) {
+            waveBox.classList.add('hidden');
+            waveBox.classList.remove('inline-flex');
+        }
+        if (statusLabel) statusLabel.textContent = "TAP TO HEAR VOICE";
+    }
+
+    if (voiceBtn) voiceBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        speakGreeting();
+    });
+
+    if (helloPill) helloPill.addEventListener('click', (e) => {
+        e.stopPropagation();
+        speakGreeting();
+    });
+
+    if (avatarImg) avatarImg.addEventListener('click', speakGreeting);
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+        };
+    }
+}
+

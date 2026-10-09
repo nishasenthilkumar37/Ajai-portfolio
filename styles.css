@@ -492,6 +492,38 @@ body:not(.dark-mode) .custom-cursor.on-cream.hovering .cursor-label {
     50% { opacity: 0.4; }
 }
 
+/* Manga Character Speech Bubble & Voice Waveform */
+.manga-speech-bubble-about {
+    animation: speechBounce 4s ease-in-out infinite;
+}
+
+@keyframes speechBounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+}
+
+.speaking-active {
+    box-shadow: 0 0 0 3px #000000, 0 0 15px rgba(0, 0, 0, 0.25) !important;
+    animation: speakingPulse 0.6s infinite alternate ease-in-out !important;
+}
+
+@keyframes speakingPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.02); }
+}
+
+.soundwave-bar {
+    animation: soundWave 0.8s ease-in-out infinite alternate;
+}
+.soundwave-bar:nth-child(2) { animation-delay: 0.2s; }
+.soundwave-bar:nth-child(3) { animation-delay: 0.4s; }
+.soundwave-bar:nth-child(4) { animation-delay: 0.15s; }
+
+@keyframes soundWave {
+    0% { height: 3px; }
+    100% { height: 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after {
         animation-duration: 0.01ms !important;
