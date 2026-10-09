@@ -797,6 +797,8 @@ function initAvatarSpeechSystem() {
     const avatarVideo = document.getElementById('hero-avatar-video');
     const helloPill = document.getElementById('hero-say-hello-pill');
     const sayHelloText = document.getElementById('say-hello-text');
+    const speechBubble = document.getElementById('hero-speech-bubble');
+    const speechAudioBtn = document.getElementById('hero-speech-audio-btn');
 
     if (!avatarCard) return;
 
@@ -1007,26 +1009,15 @@ function initAvatarSpeechSystem() {
     }
 
     // Attach click events to trigger greeting
-    if (helloPill) {
-        helloPill.addEventListener('click', (e) => {
-            e.stopPropagation();
-            triggerGreeting();
-        });
-    }
-
-    if (avatarVideo) {
-        avatarVideo.addEventListener('click', (e) => {
-            e.stopPropagation();
-            triggerGreeting();
-        });
-    }
-
-    if (avatarImg) {
-        avatarImg.addEventListener('click', (e) => {
-            e.stopPropagation();
-            triggerGreeting();
-        });
-    }
+    const triggers = [helloPill, avatarVideo, avatarImg, speechBubble, speechAudioBtn];
+    triggers.forEach(el => {
+        if (el) {
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                triggerGreeting();
+            });
+        }
+    });
 
     // Warm-up SpeechSynthesis voices
     if ('speechSynthesis' in window) {
